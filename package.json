@@ -25,6 +25,8 @@
   },
   "homepage": "https://github.com/adrinux/web-starter-hugo#readme",
   "devDependencies": {
+    "babel-core": "^6.3.21",
+    "babel-preset-es2015": "^6.3.13",
     "gulp": "github:gulpjs/gulp#4.0"
   }
 }
