@@ -23,5 +23,8 @@
   "bugs": {
     "url": "https://github.com/adrinux/web-starter-hugo/issues"
   },
-  "homepage": "https://github.com/adrinux/web-starter-hugo#readme"
+  "homepage": "https://github.com/adrinux/web-starter-hugo#readme",
+  "devDependencies": {
+    "gulp": "github:gulpjs/gulp#4.0"
+  }
 }
