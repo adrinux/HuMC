@@ -1,1 +1,12 @@
+# node
 node_modules
+
+# bower
+bower_components
+
+# Hugo
+public
+static
+
+# OSX
+.DS_Store
