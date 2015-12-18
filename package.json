@@ -1,0 +1,27 @@
+{
+  "name": "web-starter-hugo",
+  "version": "0.0.1",
+  "description": "A static web site starter kit using Gulp and Hugo static site generator",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adrinux/web-starter-hugo.git"
+  },
+  "keywords": [
+    "web",
+    "starter",
+    "kit",
+    "hugo",
+    "browsersync",
+    "sass"
+  ],
+  "author": "Adrian Simmons",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/adrinux/web-starter-hugo/issues"
+  },
+  "homepage": "https://github.com/adrinux/web-starter-hugo#readme"
+}
