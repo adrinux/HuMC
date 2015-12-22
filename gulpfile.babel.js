@@ -20,11 +20,10 @@ const sassPaths = {
 
 
 gulp.task('styles', () => {
-  let processors = [autoprefixer];
+  let processors = [autoprefixer({browsers: ['> 1%', 'last 2 versions', 'Firefox ESR']})];
   return gulp.src(sassPaths.src)
     .pipe(sourcemaps.init())
     .pipe(sass.sync().on('error', sass.logError))
-    //.pipe(autoprefixer())
     .pipe(postcss(processors))
     .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest(sassPaths.dest));
