@@ -1,29 +1,30 @@
 'use strict';
 
 import gulp from 'gulp';
+import rename from 'gulp-rename';
 import sass from 'gulp-sass';
 import sourcemaps from 'gulp-sourcemaps';
 import postcss from 'gulp-postcss';
 import autoprefixer from 'autoprefixer';
 import colorguard from 'colorguard';
+import minifyCss from 'gulp-minify-css'
 import reporter from 'postcss-reporter';
 
 
+// Constants
 const dirs = {
   src: 'src',
   dest: 'hugo/static'
 };
 
-
-
-
-
-// CSS processing, Linting
 const sassPaths = {
   src: `${dirs.src}/sass/main.scss`,
   dest: `${dirs.dest}/styles/`
 };
 
+
+
+// CSS processing, Linting
 gulp.task('styles', () => {
   let processors = [
     colorguard({threshold: ['3']}),
@@ -38,7 +39,13 @@ gulp.task('styles', () => {
     .pipe(gulp.dest(sassPaths.dest));
 });
 
-// CSS minification (only for production)(review when hosting via http2)
+// CSS minification and revision
+gulp.task('minstyles', () => {
+  return gulp.src(sassPaths.dest+'/main.css')
+    .pipe(minifyCss())
+    .pipe(rename({extname: '.min.css'}))
+    .pipe(gulp.dest(sassPaths.dest));
+});
 
 
 
@@ -52,6 +59,7 @@ gulp.task('styles', () => {
 
 
 // Watch for changes
+// browsersync too
 
 // Build (staging and prod)
 
@@ -60,3 +68,5 @@ gulp.task('styles', () => {
 
 // Tasks
 gulp.task('default', gulp.series('styles'));
+gulp.task('prod', gulp.series('styles','minstyles'));
+
