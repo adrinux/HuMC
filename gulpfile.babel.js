@@ -48,6 +48,9 @@ gulp.task('minstyles', () => {
 });
 
 
+// Javascript processing and minification
+
+
 
 // Image processing (with gm/im)
 
@@ -56,6 +59,10 @@ gulp.task('minstyles', () => {
 
 // HTML Linting
 // HTML minification?
+// Will need to run hugo first, then check output?
+
+
+// Testing
 
 
 // Watch for changes
