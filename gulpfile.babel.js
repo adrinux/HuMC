@@ -49,7 +49,9 @@ gulp.task('minstyles', () => {
 
 
 // Javascript processing and minification
+gulp.task('scripts'), () => {
 
+};
 
 
 // Image processing (with gm/im)
