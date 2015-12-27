@@ -18,8 +18,8 @@ const dirs = {
 };
 
 const sassPaths = {
-  src: `${dirs.src}/sass/main.scss`,
-  dest: `${dirs.dest}/styles/`
+  src: '${dirs.src}/sass/main.scss',
+  dest: '${dirs.dest}/styles/'
 };
 
 
@@ -41,7 +41,7 @@ gulp.task('styles', () => {
 
 // CSS minification and revision
 gulp.task('minstyles', () => {
-  return gulp.src(sassPaths.dest+'/main.css')
+  return gulp.src('${sassPaths.dest}/main.css')
     .pipe(minifyCss())
     .pipe(rename({extname: '.min.css'}))
     .pipe(gulp.dest(sassPaths.dest));
@@ -49,9 +49,12 @@ gulp.task('minstyles', () => {
 
 
 // Javascript processing and minification
-gulp.task('scripts'), () => {
-
-};
+gulp.task('scripts', () => {
+  return gulp.src('${dirs.src}/scripts/*.js')
+    .pipe(uglify())
+    .pipe(rename({extname: '.min.js'}))
+    .pipe(gulp.dest('${dirs.dest}/scripts/'));
+});
 
 
 // Image processing (with gm/im)
@@ -76,6 +79,6 @@ gulp.task('scripts'), () => {
 
 
 // Tasks
-gulp.task('default', gulp.series('styles'));
-gulp.task('prod', gulp.series('styles','minstyles'));
+gulp.task('default', gulp.series('styles','scripts'));
+gulp.task('prod', gulp.series('styles','minstyles','scripts'));
 
