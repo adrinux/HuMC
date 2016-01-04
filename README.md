@@ -14,9 +14,11 @@ You're reading it. For further info see docs for incorportated tools
 (Hugo)[https://gohugo.io/overview/introduction/]
 
 ### Gulp plugins used
+(gulp-load-plugins)[https://www.npmjs.com/package/gulp-load-plugins]
 (gulp-sass)[https://www.npmjs.com/package/gulp-sass]
 (gulp-sourcemaps)[https://www.npmjs.com/package/gulp-sourcemaps]
 (gulp-postcss)[https://www.npmjs.com/package/gulp-postcss]
+(gulp-uglify)[https://www.npmjs.com/package/gulp-uglify]
 
 ### PostCSS plugins used
 (Autoprefixer)[https://www.npmjs.com/package/autoprefixer]
