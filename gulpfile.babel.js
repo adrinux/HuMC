@@ -60,6 +60,9 @@ gulp.task('scripts', () => {
 // Image optimisation
 
 
+// Hugo
+
+
 // HTML Linting
 // HTML minification?
 // Will need to run hugo first, then check output?
