@@ -1,15 +1,13 @@
 'use strict';
 
 import gulp from 'gulp';
-import rename from 'gulp-rename';
-import sass from 'gulp-sass';
-import sourcemaps from 'gulp-sourcemaps';
-import postcss from 'gulp-postcss';
+import gulpLoadPlugins from 'gulp-load-plugins';
 import autoprefixer from 'autoprefixer';
 import colorguard from 'colorguard';
-import minifyCss from 'gulp-minify-css'
 import reporter from 'postcss-reporter';
 
+// Auto load Gulp plugins
+const $ = gulpLoadPlugins();
 
 // Constants
 const dirs = {
@@ -18,8 +16,8 @@ const dirs = {
 };
 
 const sassPaths = {
-  src: '${dirs.src}/sass/main.scss',
-  dest: '${dirs.dest}/styles/'
+  src: dirs.src+'/sass/main.scss',
+  dest: dirs.dest+'/styles/'
 };
 
 
@@ -32,18 +30,18 @@ gulp.task('styles', () => {
     reporter()
   ];
   return gulp.src(sassPaths.src)
-    .pipe(sourcemaps.init())
-    .pipe(sass.sync().on('error', sass.logError))
-    .pipe(postcss(processors))
-    .pipe(sourcemaps.write('.'))
+    .pipe($.sourcemaps.init())
+    .pipe($.sass.sync().on('error', $.sass.logError))
+    .pipe($.postcss(processors))
+    .pipe($.sourcemaps.write('.'))
     .pipe(gulp.dest(sassPaths.dest));
 });
 
 // CSS minification and revision
 gulp.task('minstyles', () => {
   return gulp.src('${sassPaths.dest}/main.css')
-    .pipe(minifyCss())
-    .pipe(rename({extname: '.min.css'}))
+    .pipe($.minifyCss())
+    .pipe($.rename({extname: '.min.css'}))
     .pipe(gulp.dest(sassPaths.dest));
 });
 
@@ -51,8 +49,8 @@ gulp.task('minstyles', () => {
 // Javascript processing and minification
 gulp.task('scripts', () => {
   return gulp.src('${dirs.src}/scripts/*.js')
-    .pipe(uglify())
-    .pipe(rename({extname: '.min.js'}))
+    .pipe($.uglify())
+    .pipe($.rename({extname: '.min.js'}))
     .pipe(gulp.dest('${dirs.dest}/scripts/'));
 });
 
