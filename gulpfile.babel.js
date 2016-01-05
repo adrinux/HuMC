@@ -20,6 +20,13 @@ const sassPaths = {
   dest: dirs.dest+'/styles/'
 };
 
+const hugoPaths = {
+  src: ,
+  dev: ,
+  stage: ,
+  production:
+}
+
 
 
 // CSS processing, Linting
@@ -61,7 +68,16 @@ gulp.task('scripts', () => {
 
 
 // Hugo
+function hugo() {
 
+// define paths
+
+// define command
+
+// run command
+
+
+}
 
 // HTML Linting
 // HTML minification?
