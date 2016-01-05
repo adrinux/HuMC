@@ -7,26 +7,20 @@ import colorguard from 'colorguard';
 import reporter from 'postcss-reporter';
 
 // Auto load Gulp plugins
-const $ = gulpLoadPlugins();
+const $ = gulpLoadPlugins({
+  rename: {'gulp-util': 'gutil'}
+});
 
 // Constants
 const dirs = {
-  src: 'src',
-  dest: 'hugo/static'
+  src: 'src/',
+  dest: 'hugo/static/'
 };
 
 const sassPaths = {
-  src: dirs.src+'/sass/main.scss',
-  dest: dirs.dest+'/styles/'
+  src: dirs.src+'sass/main.scss',
+  dest: dirs.dest+'styles/'
 };
-
-const hugoPaths = {
-  src: ,
-  dev: ,
-  stage: ,
-  production:
-}
-
 
 
 // CSS processing, Linting
@@ -68,16 +62,37 @@ gulp.task('scripts', () => {
 
 
 // Hugo
-function hugo() {
+function hugo(dev,stage,live) {
 
-// define paths
+  let exec = require('child_process').execSync;
+  let cmd = 'hugo --config=hugo/config.toml -s hugo/';
+  if (stage) {
+      cmd += ' -d published/stage/';
+  }
+  else if (live) {
+      cmd += ' -d published/live/';
+  }
+  else {
+      cmd += ' -d published/dev/';
+  }
 
-// define command
-
-// run command
-
+  let result = exec(cmd, {encoding: 'utf-8'});
+  $.gutil.log('hugo reports: \n' + result);
 
 }
+
+gulp.task('hugoDev', () => {
+  return Promise.all([ hugo() ])
+});
+
+gulp.task('hugoStage', () => {
+  return Promise.all([ hugo(stage); ])
+});
+
+gulp.task('hugoLive', () => {
+  return Promise.all([ hugo(live); ])
+});
+
 
 // HTML Linting
 // HTML minification?
@@ -97,5 +112,7 @@ function hugo() {
 
 // Tasks
 gulp.task('default', gulp.series('styles','scripts'));
-gulp.task('prod', gulp.series('styles','minstyles','scripts'));
+gulp.task('dev', gulp.series('styles','scripts','hugoDev'));
+gulp.task('stage', gulp.series('styles','minstyles','scripts'));
+gulp.task('live', gulp.series('styles','minstyles','scripts'));
 
