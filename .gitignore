@@ -5,6 +5,7 @@ node_modules
 bower_components
 
 # Hugo
+published
 public
 static
 
