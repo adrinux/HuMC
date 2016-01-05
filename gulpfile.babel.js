@@ -22,6 +22,11 @@ const sassPaths = {
   dest: dirs.dest+'styles/'
 };
 
+const hugoPaths = {
+  StageBaseUrl: "http://stage.example.com/",
+  LiveBaseUrl: "http://example.com/",
+};
+
 
 // CSS processing, Linting
 gulp.task('styles', () => {
@@ -40,7 +45,7 @@ gulp.task('styles', () => {
 
 // CSS minification and revision
 gulp.task('minstyles', () => {
-  return gulp.src('${sassPaths.dest}/main.css')
+  return gulp.src(sassPaths.dest+'main.css')
     .pipe($.minifyCss())
     .pipe($.rename({extname: '.min.css'}))
     .pipe(gulp.dest(sassPaths.dest));
@@ -49,10 +54,10 @@ gulp.task('minstyles', () => {
 
 // Javascript processing and minification
 gulp.task('scripts', () => {
-  return gulp.src('${dirs.src}/scripts/*.js')
+  return gulp.src(dirs.src+'scripts/*.js')
     .pipe($.uglify())
     .pipe($.rename({extname: '.min.js'}))
-    .pipe(gulp.dest('${dirs.dest}/scripts/'));
+    .pipe(gulp.dest(dirs.dest+'scripts/'));
 });
 
 
@@ -62,18 +67,23 @@ gulp.task('scripts', () => {
 
 
 // Hugo
-function hugo(dev,stage,live) {
+// -D is buildDrafts
+// -F is buildFuture
+function hugo(status) {
 
   let exec = require('child_process').execSync;
   let cmd = 'hugo --config=hugo/config.toml -s hugo/';
-  if (stage) {
-      cmd += ' -d published/stage/';
+  if (status == 'stage') {
+      cmd += ' -D -d published/stage/ --baseURL="' + hugoPaths.StageBaseUrl + '"';
+      $.gutil.log('hugo command: \n' + cmd);
   }
-  else if (live) {
-      cmd += ' -d published/live/';
+  else if (status == 'live') {
+      cmd += ' -d published/live/ --baseURL="' + hugoPaths.LiveBaseUrl + '"';
+      $.gutil.log('hugo command: \n' + cmd);
   }
   else {
-      cmd += ' -d published/dev/';
+      cmd += ' -DF -d published/dev/';
+      $.gutil.log('hugo command: \n' + cmd);
   }
 
   let result = exec(cmd, {encoding: 'utf-8'});
@@ -86,11 +96,11 @@ gulp.task('hugoDev', () => {
 });
 
 gulp.task('hugoStage', () => {
-  return Promise.all([ hugo(stage); ])
+  return Promise.all([ hugo('stage') ])
 });
 
 gulp.task('hugoLive', () => {
-  return Promise.all([ hugo(live); ])
+  return Promise.all([ hugo('live') ])
 });
 
 
@@ -113,6 +123,6 @@ gulp.task('hugoLive', () => {
 // Tasks
 gulp.task('default', gulp.series('styles','scripts'));
 gulp.task('dev', gulp.series('styles','scripts','hugoDev'));
-gulp.task('stage', gulp.series('styles','minstyles','scripts'));
-gulp.task('live', gulp.series('styles','minstyles','scripts'));
+gulp.task('stage', gulp.series('styles','minstyles','scripts','hugoStage'));
+gulp.task('live', gulp.series('styles','minstyles','scripts','hugoLive'));
 
