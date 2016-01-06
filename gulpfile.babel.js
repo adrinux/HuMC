@@ -2,6 +2,7 @@
 
 import gulp from 'gulp';
 import gulpLoadPlugins from 'gulp-load-plugins';
+import del from 'del';
 import autoprefixer from 'autoprefixer';
 import colorguard from 'colorguard';
 import reporter from 'postcss-reporter';
@@ -112,6 +113,19 @@ gulp.task('hugoLive', () => {
 // Testing
 
 
+// Cleaning
+
+// Specific cleaning tasks for dev/stage/live of hugo/published.
+gulp.task('clean:dev', () => {
+  return Promise.all([ del('hugo/published/dev/') ])
+});
+gulp.task('clean:stage', () => {
+  return Promise.all([ del('hugo/published/stage/') ])
+});
+gulp.task('clean:live', () => {
+  return Promise.all([ del('hugo/published/live/') ])
+});
+
 // Watch for changes
 // browsersync too
 
@@ -122,7 +136,7 @@ gulp.task('hugoLive', () => {
 
 // Tasks
 gulp.task('default', gulp.series('styles','scripts'));
-gulp.task('dev', gulp.series('styles','scripts','hugoDev'));
-gulp.task('stage', gulp.series('styles','minstyles','scripts','hugoStage'));
-gulp.task('live', gulp.series('styles','minstyles','scripts','hugoLive'));
+gulp.task('dev', gulp.series('clean:dev','styles','scripts','hugoDev'));
+gulp.task('stage', gulp.series('clean:stage','styles','minstyles','scripts','hugoStage'));
+gulp.task('live', gulp.series('clean:live','styles','minstyles','scripts','hugoLive'));
 
