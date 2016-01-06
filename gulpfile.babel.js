@@ -96,7 +96,7 @@ gulp.task('hugoDev', () => {
   return Promise.all([ hugo() ])
 });
 
-gulp.task('hugoStage', () => {
+gulp.task('hugoStage',  () => {
   return Promise.all([ hugo('stage') ])
 });
 
@@ -129,14 +129,16 @@ gulp.task('clean:live', () => {
 // Watch for changes
 // browsersync too
 
-// Build (staging and prod)
+// Build (staging and prod)?
+// Is this really needed
 
-// serve (dev)
+// serve/watch (dev)
+// needs to spawn a hugo watch task too (and pass back hugo errors)
 
 
 // Tasks
-gulp.task('default', gulp.series('styles','scripts'));
+gulp.task('default', gulp.parallel('styles','scripts'));
 gulp.task('dev', gulp.series('clean:dev','styles','scripts','hugoDev'));
-gulp.task('stage', gulp.series('clean:stage','styles','minstyles','scripts','hugoStage'));
-gulp.task('live', gulp.series('clean:live','styles','minstyles','scripts','hugoLive'));
+gulp.task('stage', gulp.series('clean:stage', gulp.parallel('styles','scripts'),'minstyles','hugoStage'));
+gulp.task('live', gulp.series('clean:live', gulp.parallel('styles','scripts'),'minstyles','hugoLive'));
 
