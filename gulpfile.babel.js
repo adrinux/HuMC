@@ -25,8 +25,8 @@ const sassPaths = {
 };
 
 const hugoPaths = {
-  StageBaseUrl: "http://stage.example.com/",
-  LiveBaseUrl: "http://example.com/"
+  StageBaseUrl: 'http://stage.example.com/',
+  LiveBaseUrl: 'http://example.com/'
 };
 
 // CSS processing, Linting
