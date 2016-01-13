@@ -33,6 +33,9 @@ You're reading it. For further info see docs for incorportated tools
 - [PostCSS Reporter](https://www.npmjs.com/package/postcss-reporter)
 
 
+## Editor setup
+### Linting
+(Describe .eslintrc.json use with sublime text and linters)
 
 
 ## Someday features
