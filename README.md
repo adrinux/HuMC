@@ -15,13 +15,16 @@ You're reading it. For further info see docs for incorportated tools
 
 ### npm modules used
 - [del](https://www.npmjs.com/package/del)
+- [babel-core and related(see package.json)](https://github.com/babel/babel/tree/master/packages/babel-core)
 
 ### Gulp plugins used
 - [gulp-load-plugins](https://www.npmjs.com/package/gulp-load-plugins)
 - [gulp-sass](https://www.npmjs.com/package/gulp-sass)
 - [gulp-sourcemaps](https://www.npmjs.com/package/gulp-sourcemaps)
 - [gulp-postcss](https://www.npmjs.com/package/gulp-postcss)
+- [gulp-eslint](https://www.npmjs.com/package/gulp-eslint)
 - [gulp-uglify](https://www.npmjs.com/package/gulp-uglify)
+- [gulp-rename](https://www.npmjs.com/package/gulp-rename)
 - [gulp-util](https://www.npmjs.com/package/gulp-util)
 
 ### PostCSS plugins used
