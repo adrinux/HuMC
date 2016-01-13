@@ -6,11 +6,15 @@ import gulpLoadPlugins from 'gulp-load-plugins';
 import del from 'del';
 import autoprefixer from 'autoprefixer';
 import colorguard from 'colorguard';
+import cssnano from 'cssnano';
 import reporter from 'postcss-reporter';
+
 
 // Auto load Gulp plugins
 const $ = gulpLoadPlugins({
-  rename: {'gulp-util': 'gutil'}
+  rename: {
+    'gulp-util': 'gutil'
+  }
 });
 
 //
@@ -39,18 +43,22 @@ gulp.task('styles', () => {
     reporter()
   ];
   return gulp.src(sassPaths.src)
-    .pipe($.sourcemaps.init())
     .pipe($.sass.sync().on('error', $.sass.logError))
     .pipe($.postcss(processors))
-    .pipe($.sourcemaps.write('.'))
     .pipe(gulp.dest(sassPaths.dest));
 });
 
 // CSS minification and revision
 gulp.task('minstyles', () => {
+  let processors = [
+    cssnano(),
+    reporter()
+  ];
   return gulp.src(sassPaths.dest + 'main.css')
-    .pipe($.minifyCss())
-    .pipe($.rename({extname: '.min.css'}))
+    .pipe($.sourcemaps.init())
+      .pipe($.postcss(processors))
+      .pipe($.rename({extname: '.min.css'}))
+    .pipe($.sourcemaps.write('.'))
     .pipe(gulp.dest(sassPaths.dest));
 });
 
