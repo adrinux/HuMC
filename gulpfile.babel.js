@@ -13,7 +13,8 @@ const $ = gulpLoadPlugins({
   rename: {'gulp-util': 'gutil'}
 });
 
-// Constants
+//
+// Constants, mostly paths
 const dirs = {
   src: 'src/',
   dest: 'hugo/static/'
@@ -29,6 +30,7 @@ const hugoPaths = {
   LiveBaseUrl: 'http://example.com/'
 };
 
+//
 // CSS processing, Linting
 gulp.task('styles', () => {
   let processors = [
@@ -52,17 +54,39 @@ gulp.task('minstyles', () => {
     .pipe(gulp.dest(sassPaths.dest));
 });
 
-// Javascript processing and minification
+//
+// Javascript linting and minification
+// .eslintrc.json can be used by your editor (see README.md)
+// eslint rules for js aimed at browser are here
+// TODO Possibly add concatenation (not needed with HTTP2)
 gulp.task('scripts', () => {
   return gulp.src(dirs.src + 'scripts/*.js')
-    .pipe($.uglify())
-    .pipe($.rename({extname: '.min.js'}))
+    .pipe($.eslint({
+      extends: 'eslint:recommended',
+      env: {
+        es6: true,
+        node: false,
+        browser: true
+      },
+      rules: {
+        indent:            [ 2, 2 ],
+        'linebreak-style': [ 2, 'unix' ],
+        'quote-props':     [ 2, 'as-needed' ],
+        quotes:            [ 2, 'single', 'avoid-escape' ],
+        semi:              [ 2, 'always' ],
+        'no-extra-semi':   [ 2 ],
+        'no-console':      [ 1 ]
+      }
+    }))
+    .pipe($.eslint.format())
+    .pipe($.sourcemaps.init())
+      .pipe($.uglify())
+      .pipe($.rename({extname: '.min.js'}))
+    .pipe($.sourcemaps.write('.'))
     .pipe(gulp.dest(dirs.dest + 'scripts/'));
 });
-// eslint on gulpfile? as well as scripts
-// eslint vs uglify
-// babel compilation of ES6? Still needed?
 
+//
 // Image processing (with gm/im)
 
 // THIS NEEDS CONVERTED
@@ -109,6 +133,7 @@ gulp.task('scripts', () => {
 //   }
 // },
 
+//
 // Responsive Images
 // Generate diiferent sized images for srcset
 
@@ -129,6 +154,7 @@ gulp.task('scripts', () => {
 //   }
 // },
 
+//
 // Hugo
 // -D is buildDrafts
 // -F is buildFuture
@@ -162,17 +188,21 @@ gulp.task('hugoLive', () => {
   return Promise.all([ hugo('live') ]);
 });
 
+//
 // Wiredep
 // modernizr, generate a custom build like generator-webapp
 // Susy?
 
+//
 // HTML Linting
 // HTML minification?
 // Will need to run hugo first, then check output?
 
+//
 // Testing
 // Jasmine, Mocha...
 
+//
 // Cleaning
 // Specific cleaning tasks for dev/stage/live of hugo/published.
 gulp.task('clean:dev', () => {
@@ -185,15 +215,19 @@ gulp.task('clean:live', () => {
   return Promise.all([ del('hugo/published/live/') ]);
 });
 
-// Watch for changes
-// browsersync too
-
+//
 // Build (staging and prod)?
 // Is this really needed. Might simplify task definitions
 
+//
+// Watch for changes
+// browsersync too
+
+//
 // serve/watch (dev)
 // needs to spawn a hugo watch task too (and pass back hugo errors)
 
+//
 // Deploy
 // NEES CONVERSION
 // Update stage and production sites
