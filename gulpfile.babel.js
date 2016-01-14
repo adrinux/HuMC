@@ -4,6 +4,7 @@ import 'babel-polyfill';
 import gulp from 'gulp';
 import gulpLoadPlugins from 'gulp-load-plugins';
 import del from 'del';
+import browserSync from 'browser-sync';
 import autoprefixer from 'autoprefixer';
 import colorguard from 'colorguard';
 import cssnano from 'cssnano';
@@ -11,11 +12,15 @@ import reporter from 'postcss-reporter';
 
 
 // Auto load Gulp plugins
-const $ = gulpLoadPlugins({
+const plugins = gulpLoadPlugins({
   rename: {
-    'gulp-util': 'gutil'
+    'gulp-util': 'gulpUtil'
   }
 });
+
+
+// Simplify calls to browser-sync
+const sync = browserSync.create();
 
 //
 // Constants, mostly paths
@@ -30,8 +35,9 @@ const sassPaths = {
 };
 
 const hugoPaths = {
-  StageBaseUrl: 'http://stage.example.com/',
-  LiveBaseUrl: 'http://example.com/'
+  StageBaseUrl: 'http://stage.example.com',
+  LiveBaseUrl: 'http://example.com',
+  DevBaseUrl: 'http://localhost:3000'
 };
 
 //
@@ -43,9 +49,10 @@ gulp.task('styles', () => {
     reporter()
   ];
   return gulp.src(sassPaths.src)
-    .pipe($.sass.sync().on('error', $.sass.logError))
-    .pipe($.postcss(processors))
-    .pipe(gulp.dest(sassPaths.dest));
+    .pipe(plugins.sass.sync().on('error', plugins.sass.logError))
+    .pipe(plugins.postcss(processors))
+    .pipe(gulp.dest(sassPaths.dest))
+    .pipe(sync.stream());
 });
 
 // CSS minification and revision
@@ -55,10 +62,10 @@ gulp.task('minstyles', () => {
     reporter()
   ];
   return gulp.src(sassPaths.dest + 'main.css')
-    .pipe($.sourcemaps.init())
-      .pipe($.postcss(processors))
-      .pipe($.rename({extname: '.min.css'}))
-    .pipe($.sourcemaps.write('.'))
+    .pipe(plugins.sourcemaps.init())
+      .pipe(plugins.postcss(processors))
+      .pipe(plugins.rename({extname: '.min.css'}))
+    .pipe(plugins.sourcemaps.write('.'))
     .pipe(gulp.dest(sassPaths.dest));
 });
 
@@ -69,7 +76,7 @@ gulp.task('minstyles', () => {
 // TODO Possibly add concatenation (not needed with HTTP2)
 gulp.task('scripts', () => {
   return gulp.src(dirs.src + 'scripts/*.js')
-    .pipe($.eslint({
+    .pipe(plugins.eslint({
       extends: 'eslint:recommended',
       env: {
         es6: true,
@@ -86,16 +93,17 @@ gulp.task('scripts', () => {
         'no-console':      [ 1 ]
       }
     }))
-    .pipe($.eslint.format())
-    .pipe($.sourcemaps.init())
-      .pipe($.uglify())
-      .pipe($.rename({extname: '.min.js'}))
-    .pipe($.sourcemaps.write('.'))
+    .pipe(plugins.eslint.format())
+    .pipe(plugins.sourcemaps.init())
+      .pipe(plugins.uglify())
+      .pipe(plugins.rename({extname: '.min.js'}))
+    .pipe(plugins.sourcemaps.write('.'))
     .pipe(gulp.dest(dirs.dest + 'scripts/'));
 });
 
 //
 // Image processing (with gm/im)
+// move this to an external file, may not be used for all projects
 
 // THIS NEEDS CONVERTED
 // Process Images with graphicsmagick or imagemagick
@@ -171,17 +179,17 @@ function hugo (status) {
   let cmd = 'hugo --config=hugo/config.toml -s hugo/';
   if (status === 'stage') {
     cmd += ' -D -d published/stage/ --baseURL="' + hugoPaths.StageBaseUrl + '"';
-    $.gutil.log('hugo command: \n' + cmd);
+    plugins.gulpUtil.log('hugo command: \n' + cmd);
   } else if (status === 'live') {
     cmd += ' -d published/live/ --baseURL="' + hugoPaths.LiveBaseUrl + '"';
-    $.gutil.log('hugo command: \n' + cmd);
+    plugins.gulpUtil.log('hugo command: \n' + cmd);
   } else {
-    cmd += ' -DF -d published/dev/';
-    $.gutil.log('hugo command: \n' + cmd);
+    cmd += ' -DF -d published/dev/ --baseURL="' + hugoPaths.DevBaseUrl + '"';
+    plugins.gulpUtil.log('hugo command: \n' + cmd);
   }
 
   let result = exec(cmd, {encoding: 'utf-8'});
-  $.gutil.log('hugo reports: \n' + result);
+  plugins.gulpUtil.log('hugo reports: \n' + result);
 }
 
 gulp.task('hugoDev', () => {
@@ -199,7 +207,7 @@ gulp.task('hugoLive', () => {
 //
 // Wiredep
 // modernizr, generate a custom build like generator-webapp
-// Susy?
+// Bower components? Susy?
 
 //
 // HTML Linting
@@ -209,6 +217,7 @@ gulp.task('hugoLive', () => {
 //
 // Testing
 // Jasmine, Mocha...
+// what to test?
 
 //
 // Cleaning
@@ -229,11 +238,41 @@ gulp.task('clean:live', () => {
 
 //
 // Watch for changes
-// browsersync too
+// Watch styles, scripts, images, hugo content, hugo templates and calls to
+// reprocess those files.
+gulp.task('watch', () => {
+  gulp.watch([
+    dirs.src + '/**/*',
+    'hugo/archetypes/*',
+    'hugo/layouts',
+    'hugo/content',
+    'hugo/data',
+    'hugo/themes'
+  ]).on('change', sync.reload);
+});
+//
 
 //
-// serve/watch (dev)
-// needs to spawn a hugo watch task too (and pass back hugo errors)
+// Serve with Browsersync
+// needs to spawn a hugo watch task too
+gulp.task('serve', () => {
+  sync.init({
+    server: {
+      baseDir: 'hugo/published/dev'
+    }
+  });
+
+  gulp.watch(dirs.src + 'sass/*.scss', gulp.series('styles', 'hugoDev'));
+  gulp.watch(dirs.src + 'scripts/*.js', gulp.series('scripts', 'hugoDev'));
+  gulp.watch([
+    'hugo/archetypes/*',
+    'hugo/layouts',
+    'hugo/content',
+    'hugo/data',
+    'hugo/themes'
+  ], gulp.series('hugoDev')).on('change', sync.reload);
+});
+//
 
 //
 // Deploy
@@ -275,8 +314,16 @@ gulp.task('clean:live', () => {
 // },
 
 // Tasks
-gulp.task('default', gulp.parallel('styles', 'scripts'));
-gulp.task('dev', gulp.series('clean:dev', 'styles', 'scripts', 'hugoDev'));
-gulp.task('stage', gulp.series('clean:stage', gulp.parallel('styles', 'scripts'), 'minstyles', 'hugoStage'));
-gulp.task('live', gulp.series('clean:live', gulp.parallel('styles', 'scripts'), 'minstyles', 'hugoLive'));
+gulp.task('default',
+  gulp.parallel('styles', 'scripts')
+);
+gulp.task('dev',
+  gulp.series('clean:dev', 'styles', 'scripts', 'hugoDev')
+);
+gulp.task('stage',
+  gulp.series('clean:stage', gulp.parallel('styles', 'scripts'), 'minstyles', 'hugoStage')
+);
+gulp.task('live',
+  gulp.series('clean:live', gulp.parallel('styles', 'scripts'), 'minstyles', 'hugoLive')
+);
 
