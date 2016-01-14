@@ -209,6 +209,8 @@ gulp.task('hugoLive', () => {
 // Wiredep
 // modernizr, generate a custom build like generator-webapp
 // Bower components? Susy?
+// Need to link to different css and js files on dev vs stage and live
+// the latter should use minified versions
 
 //
 // HTML Linting
@@ -232,26 +234,15 @@ gulp.task('clean:stage', () => {
 gulp.task('clean:live', () => {
   return Promise.all([ del('hugo/published/live/') ]);
 });
-
-//
-// Build (staging and prod)?
-// Is this really needed. Might simplify task definitions
-
-//
-// Watch for changes
-// Watch styles, scripts, images, hugo content, hugo templates and calls to
-// reprocess those files.
-gulp.task('watch', () => {
-  gulp.watch([
-    dirs.src + '/**/*',
-    'hugo/archetypes/*',
-    'hugo/layouts',
-    'hugo/content',
-    'hugo/data',
-    'hugo/themes'
-  ]).on('change', sync.reload);
+// Clean any assets we output into hugo/static
+gulp.task('clean:static', () => {
+  return Promise.all([ del(
+    'hugo/static/scripts/*.js',
+    'hugo/static/scripts/*.js.map',
+    'hugo/static/styles/*.css',
+    'hugo/static/styles/*.css.map'
+  )]);
 });
-//
 
 //
 // Serve with Browsersync
@@ -315,15 +306,30 @@ gulp.task('serve', () => {
 
 // Tasks
 gulp.task('default',
-  gulp.parallel('styles', 'scripts')
+  gulp.series('serve')
 );
 gulp.task('dev',
-  gulp.series('clean:dev', 'styles', 'scripts', 'hugoDev')
+  gulp.series(
+    gulp.parallel('clean:static', 'clean:dev'),
+    'styles',
+    'scripts',
+    'hugoDev'
+  )
 );
 gulp.task('stage',
-  gulp.series('clean:stage', gulp.parallel('styles', 'scripts'), 'minstyles', 'hugoStage')
+  gulp.series(
+    gulp.parallel('clean:static', 'clean:stage'),
+    gulp.parallel('styles', 'scripts'),
+    'minstyles',
+    'hugoStage'
+  )
 );
 gulp.task('live',
-  gulp.series('clean:live', gulp.parallel('styles', 'scripts'), 'minstyles', 'hugoLive')
+  gulp.series(
+    gulp.parallel('clean:static', 'clean:live'),
+    gulp.parallel('styles', 'scripts'),
+    'minstyles',
+    'hugoLive'
+  )
 );
 
