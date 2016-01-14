@@ -98,7 +98,8 @@ gulp.task('scripts', () => {
       .pipe(plugins.uglify())
       .pipe(plugins.rename({extname: '.min.js'}))
     .pipe(plugins.sourcemaps.write('.'))
-    .pipe(gulp.dest(dirs.dest + 'scripts/'));
+    .pipe(gulp.dest(dirs.dest + 'scripts/'))
+    .pipe(sync.stream());
 });
 
 //
@@ -268,8 +269,7 @@ gulp.task('serve', () => {
     'hugo/archetypes/*',
     'hugo/layouts',
     'hugo/content',
-    'hugo/data',
-    'hugo/themes'
+    'hugo/data'
   ], gulp.series('hugoDev')).on('change', sync.reload);
 });
 //
