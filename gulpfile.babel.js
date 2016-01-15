@@ -111,18 +111,12 @@ gulp.task('minscripts', () => {
 //
 // Inject css and js
 // Inject minified assets in only in stage/live
-gulp.task('inject:head', () => {
-  return gulp.src('hugo/layouts/partials/head-content.html')
-    // May need to inject some js files into head too. Naming convention and
-    // gulp-inject's 'name' option? Or seperate src folders...
-    //.pipe(plugins.inject(gulp.src('hugo/static/scripts/*.js', {read: false})))
-    .pipe(plugins.inject(gulp.src('hugo/static/styles/*.css', {read: false})))
-    .pipe(gulp.dest('hugo/layouts/partials/head-content.html'));
-});
-gulp.task('inject:body', () => {
-  return gulp.src('hugo/layouts/partials/body-scripts.html')
+gulp.task('inject', () => {
+  gulp.src('hugo/layouts/index.html')
+    .pipe(plugins.inject(gulp.src('hugo/static/scripts_head/*.js', {read: false}, {name: 'head'})))
     .pipe(plugins.inject(gulp.src('hugo/static/scripts/*.js', {read: false})))
-    .pipe(gulp.dest('hugo/layouts/partials/body-scripts.html'));
+    .pipe(plugins.inject(gulp.src('hugo/static/styles/*.css', {read: false})))
+    .pipe(gulp.dest('hugo/layouts/index.html'));
 });
 
 //

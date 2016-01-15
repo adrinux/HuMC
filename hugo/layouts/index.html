@@ -1,16 +1,43 @@
 <!doctype html>
-    <head class="no-js" lang="{{ .Site.LanguageCode}}">
-        {{ partial "head-content.html" . }}
-    </head>
-    <body>
-        <!--[if lt IE 8]>
-            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-        <![endif]-->
+  <head class="no-js" lang="{{ .Site.LanguageCode}}">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>{{ if .Title }}{{ .Title }} - {{ end }}{{ .Site.Title }}</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <h1>Web Starter Hugo</h1>
+    <link rel="apple-touch-icon" href="{{ .Site.BaseURL }}apple-touch-icon.png">
 
-        <p>If you're seeing this file, that means you've successfully set up with H5BP for Hugo, this is <code>hugo/layouts/index.html</code>.</p>
+    <!-- Hugo-specific bits -->
+    <link href="{{ .RSSlink }}" rel="alternate" type="application/rss+xml" title="{{ .Site.Title }}" />
+    {{ .Hugo.Generator }}
 
-        {{ partial "body-scripts.html" . }}
-    </body>
+
+    <!-- bower:css -->
+    <!-- endbower -->
+
+    <!-- inject:css -->
+    <!-- endinject -->
+
+    <!-- head:js -->
+    <!-- endinject -->
+
+  </head>
+  <body>
+    <!--[if lt IE 8]>
+        <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+    <h1>Web Starter Hugo</h1>
+
+    <p>If you're seeing this file, that means you've successfully set up with H5BP for Hugo, this is <code>hugo/layouts/index.html</code>.</p>
+
+
+
+    <!-- bower:js -->
+    <!-- endbower -->
+
+    <!-- inject:js -->
+    <!-- endinject -->
+  </body>
 </html>
