@@ -15,7 +15,8 @@ import {stream as wiredep} from 'wiredep';
 // Auto load Gulp plugins
 const plugins = gulpLoadPlugins({
   rename: {
-    'gulp-util': 'gulpUtil'
+    'gulp-util': 'gulpUtil',
+    'gulp-inject': 'inject'
   }
 });
 
@@ -110,8 +111,18 @@ gulp.task('minscripts', () => {
 //
 // Inject css and js
 // Inject minified assets in only in stage/live
-gulp.task('inject', () => {
-
+gulp.task('inject:head', () => {
+  return gulp.src('hugo/layouts/partials/head-content.html')
+    // May need to inject some js files into head too. Naming convention and
+    // gulp-inject's 'name' option? Or seperate src folders...
+    //.pipe(plugins.inject(gulp.src('hugo/static/scripts/*.js', {read: false})))
+    .pipe(plugins.inject(gulp.src('hugo/static/styles/*.css', {read: false})))
+    .pipe(gulp.dest('hugo/layouts/partials/head-content.html'));
+});
+gulp.task('inject:body', () => {
+  return gulp.src('hugo/layouts/partials/body-scripts.html')
+    .pipe(plugins.inject(gulp.src('hugo/static/scripts/*.js', {read: false})))
+    .pipe(gulp.dest('hugo/layouts/partials/body-scripts.html'));
 });
 
 //
