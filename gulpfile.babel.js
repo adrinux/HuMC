@@ -71,10 +71,9 @@ gulp.task('minstyles', () => {
 });
 
 //
-// Javascript linting and minification
+// Javascript linting
 // .eslintrc.json can be used by your editor (see README.md)
 // eslint rules for js aimed at browser are here
-// TODO Possibly add concatenation (not needed with HTTP2)
 gulp.task('scripts', () => {
   return gulp.src(dirs.src + 'scripts/*.js')
     .pipe(plugins.eslint({
@@ -95,12 +94,19 @@ gulp.task('scripts', () => {
       }
     }))
     .pipe(plugins.eslint.format())
+    .pipe(gulp.dest(dirs.dest + 'scripts/'))
+    .pipe(sync.stream());
+});
+
+// Javascript minification and source mapping
+// TODO Possibly add concatenation (not really needed when served via HTTP2)
+gulp.task('minscripts', () => {
+  return gulp.src(dirs.src + 'scripts/*.js')
     .pipe(plugins.sourcemaps.init())
       .pipe(plugins.uglify())
       .pipe(plugins.rename({extname: '.min.js'}))
     .pipe(plugins.sourcemaps.write('.'))
-    .pipe(gulp.dest(dirs.dest + 'scripts/'))
-    .pipe(sync.stream());
+    .pipe(gulp.dest(dirs.dest + 'scripts/'));
 });
 
 //
@@ -326,7 +332,7 @@ gulp.task('stage',
   gulp.series(
     gulp.parallel('clean:static', 'clean:stage'),
     gulp.parallel('styles', 'scripts'),
-    'minstyles',
+    gulp.parallel('minstyles','minscripts'),
     'hugoStage'
   )
 );
@@ -334,7 +340,7 @@ gulp.task('live',
   gulp.series(
     gulp.parallel('clean:static', 'clean:live'),
     gulp.parallel('styles', 'scripts'),
-    'minstyles',
+    gulp.parallel('minstyles','minscripts'),
     'hugoLive'
   )
 );
