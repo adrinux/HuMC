@@ -9,6 +9,7 @@ import autoprefixer from 'autoprefixer';
 import colorguard from 'colorguard';
 import cssnano from 'cssnano';
 import reporter from 'postcss-reporter';
+import {stream as wiredep} from 'wiredep';
 
 
 // Auto load Gulp plugins
@@ -212,6 +213,9 @@ gulp.task('hugoLive', () => {
 // Need to link to different css and js files on dev vs stage and live
 // the latter should use minified versions
 
+
+
+
 //
 // HTML Linting
 // HTML minification?
@@ -245,9 +249,8 @@ gulp.task('clean:static', () => {
 });
 
 //
-// Serve with Browsersync
-// needs to spawn a hugo watch task too
-gulp.task('serve', () => {
+// Watch files and serve with Browsersync
+gulp.task('watchnsync', () => {
   sync.init({
     server: {
       baseDir: 'hugo/published/dev'
@@ -263,7 +266,6 @@ gulp.task('serve', () => {
     'hugo/data'
   ], gulp.series('hugoDev')).on('change', sync.reload);
 });
-//
 
 //
 // Deploy
@@ -306,13 +308,17 @@ gulp.task('serve', () => {
 
 // Tasks
 gulp.task('default',
-  gulp.series('serve')
+  gulp.series(
+    gulp.parallel('clean:static', 'clean:dev'),
+    gulp.parallel('styles', 'scripts'),
+    'hugoDev',
+    'watchnsync'
+  )
 );
 gulp.task('dev',
   gulp.series(
     gulp.parallel('clean:static', 'clean:dev'),
-    'styles',
-    'scripts',
+    gulp.parallel('styles', 'scripts'),
     'hugoDev'
   )
 );
@@ -332,4 +338,3 @@ gulp.task('live',
     'hugoLive'
   )
 );
-
