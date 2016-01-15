@@ -42,7 +42,7 @@ const hugoPaths = {
 };
 
 //
-// CSS processing, Linting
+// CSS processing, linting
 gulp.task('styles', () => {
   let processors = [
     colorguard({threshold: ['3']}),
@@ -56,14 +56,17 @@ gulp.task('styles', () => {
     .pipe(sync.stream());
 });
 
-// CSS minification and revision
+// CSS processing, linting, minification
 gulp.task('minstyles', () => {
   let processors = [
+    colorguard({threshold: ['3']}),
+    autoprefixer({browsers: ['> 1%', 'last 2 versions', 'Firefox ESR']}),
     cssnano(),
     reporter()
   ];
-  return gulp.src(sassPaths.dest + 'main.css')
+  return gulp.src(sassPaths.src)
     .pipe(plugins.sourcemaps.init())
+      .pipe(plugins.sass.sync().on('error', plugins.sass.logError))
       .pipe(plugins.postcss(processors))
       .pipe(plugins.rename({extname: '.min.css'}))
     .pipe(plugins.sourcemaps.write('.'))
@@ -76,23 +79,7 @@ gulp.task('minstyles', () => {
 // eslint rules for js aimed at browser are here
 gulp.task('scripts', () => {
   return gulp.src(dirs.src + 'scripts/*.js')
-    .pipe(plugins.eslint({
-      extends: 'eslint:recommended',
-      env: {
-        es6: true,
-        node: false,
-        browser: true
-      },
-      rules: {
-        indent:            [ 2, 2 ],
-        'linebreak-style': [ 2, 'unix' ],
-        'quote-props':     [ 2, 'as-needed' ],
-        quotes:            [ 2, 'single', 'avoid-escape' ],
-        semi:              [ 2, 'always' ],
-        'no-extra-semi':   [ 2 ],
-        'no-console':      [ 1 ]
-      }
-    }))
+    .pipe(plugins.eslint('config/eslint.json'))
     .pipe(plugins.eslint.format())
     .pipe(gulp.dest(dirs.dest + 'scripts/'))
     .pipe(sync.stream());
@@ -102,11 +89,29 @@ gulp.task('scripts', () => {
 // TODO Possibly add concatenation (not really needed when served via HTTP2)
 gulp.task('minscripts', () => {
   return gulp.src(dirs.src + 'scripts/*.js')
+    .pipe(plugins.eslint({
+      config: 'config/eslint.json'
+    }))
+    .pipe(plugins.eslint.format())
     .pipe(plugins.sourcemaps.init())
       .pipe(plugins.uglify())
       .pipe(plugins.rename({extname: '.min.js'}))
     .pipe(plugins.sourcemaps.write('.'))
     .pipe(gulp.dest(dirs.dest + 'scripts/'));
+});
+
+//
+// Wiredep
+// modernizr, generate a custom build like generator-webapp
+// Bower components? Susy?
+// Need to link to different css and js files on dev vs stage and live
+// the latter should use minified versions
+
+//
+// Inject css and js
+// Inject minified assets in only in stage/live
+gulp.task('inject', () => {
+
 });
 
 //
@@ -213,16 +218,6 @@ gulp.task('hugoLive', () => {
 });
 
 //
-// Wiredep
-// modernizr, generate a custom build like generator-webapp
-// Bower components? Susy?
-// Need to link to different css and js files on dev vs stage and live
-// the latter should use minified versions
-
-
-
-
-//
 // HTML Linting
 // HTML minification?
 // Will need to run hugo first, then check output?
@@ -246,12 +241,10 @@ gulp.task('clean:live', () => {
 });
 // Clean any assets we output into hugo/static
 gulp.task('clean:static', () => {
-  return Promise.all([ del(
-    'hugo/static/scripts/*.js',
-    'hugo/static/scripts/*.js.map',
-    'hugo/static/styles/*.css',
-    'hugo/static/styles/*.css.map'
-  )]);
+  return Promise.all([
+    del('hugo/static/scripts/*'),
+    del('hugo/static/styles/*')
+  ]);
 });
 
 //
@@ -331,7 +324,6 @@ gulp.task('dev',
 gulp.task('stage',
   gulp.series(
     gulp.parallel('clean:static', 'clean:stage'),
-    gulp.parallel('styles', 'scripts'),
     gulp.parallel('minstyles','minscripts'),
     'hugoStage'
   )
@@ -339,7 +331,6 @@ gulp.task('stage',
 gulp.task('live',
   gulp.series(
     gulp.parallel('clean:static', 'clean:live'),
-    gulp.parallel('styles', 'scripts'),
     gulp.parallel('minstyles','minscripts'),
     'hugoLive'
   )
