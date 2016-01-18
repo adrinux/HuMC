@@ -1,3 +1,3 @@
 // main-head.js
 
-alert('raa');
+//alert('raa');
