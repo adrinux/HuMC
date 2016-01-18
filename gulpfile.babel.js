@@ -4,6 +4,7 @@ import 'babel-polyfill';
 import gulp from 'gulp';
 import gulpLoadPlugins from 'gulp-load-plugins';
 import del from 'del';
+import lazypipe from 'lazypipe';
 import browserSync from 'browser-sync';
 import autoprefixer from 'autoprefixer';
 import colorguard from 'colorguard';
@@ -75,30 +76,49 @@ gulp.task('minstyles', () => {
 });
 
 //
-// Javascript linting
+// Javascript processing
+//
+// Linting
 // .eslintrc.json can be used by your editor (see README.md)
-// eslint rules for js aimed at browser are here
-gulp.task('scripts', () => {
-  return gulp.src(dirs.src + 'scripts/*.js')
-    .pipe(plugins.eslint('config/eslint.json'))
-    .pipe(plugins.eslint.format())
-    .pipe(gulp.dest(dirs.dest + 'scripts/'))
-    .pipe(sync.stream());
-});
+// eslint rules for js aimed at browser in config/
+let lintJs = lazypipe()
+    .pipe(plugins.eslint, 'config/eslint.json')
+    .pipe(plugins.eslint.format);
 
 // Javascript minification and source mapping
 // TODO Possibly add concatenation (not really needed when served via HTTP2)
+let minJs = lazypipe()
+    .pipe(plugins.sourcemaps.init)
+      .pipe(plugins.uglify)
+      .pipe(plugins.rename, {extname: '.min.js'})
+    .pipe(plugins.sourcemaps.write, '.');
+
+// dev js tasks
+gulp.task('scripts', () => {
+  return gulp.src(dirs.src + 'scripts/*.js')
+    .pipe(lintJs())
+    .pipe(gulp.dest(dirs.dest + 'scripts/'))
+    .pipe(sync.stream());
+});
+gulp.task('scriptsHead', () => {
+  return gulp.src(dirs.src + 'scripts_head/*.js')
+    .pipe(lintJs())
+    .pipe(gulp.dest(dirs.dest + 'scripts_head/'))
+    .pipe(sync.stream());
+});
+
+// stage and live js tasks
 gulp.task('minscripts', () => {
   return gulp.src(dirs.src + 'scripts/*.js')
-    .pipe(plugins.eslint({
-      config: 'config/eslint.json'
-    }))
-    .pipe(plugins.eslint.format())
-    .pipe(plugins.sourcemaps.init())
-      .pipe(plugins.uglify())
-      .pipe(plugins.rename({extname: '.min.js'}))
-    .pipe(plugins.sourcemaps.write('.'))
+    .pipe(lintJs())
+    .pipe(minJs())
     .pipe(gulp.dest(dirs.dest + 'scripts/'));
+});
+gulp.task('minscriptsHead', () => {
+  return gulp.src(dirs.src + 'scripts_head/*.js')
+    .pipe(lintJs())
+    .pipe(minJs())
+    .pipe(gulp.dest(dirs.dest + 'scripts_head/'));
 });
 
 //
@@ -112,11 +132,11 @@ gulp.task('minscripts', () => {
 // Inject css and js
 // Inject minified assets in only in stage/live
 gulp.task('inject', () => {
-  gulp.src('hugo/layouts/index.html')
-    .pipe(plugins.inject(gulp.src('hugo/static/scripts_head/*.js', {read: false}, {name: 'head'})))
-    .pipe(plugins.inject(gulp.src('hugo/static/scripts/*.js', {read: false})))
-    .pipe(plugins.inject(gulp.src('hugo/static/styles/*.css', {read: false})))
-    .pipe(gulp.dest('hugo/layouts/index.html'));
+  return gulp.src('hugo/layouts/index.html')
+    .pipe(plugins.inject(gulp.src('hugo/static/scripts_head/*.js', {read: false}), {ignorePath: 'hugo/static/', name: 'head'}))
+    .pipe(plugins.inject(gulp.src('hugo/static/scripts/*.js', {read: false}), {ignorePath: 'hugo/static/'}))
+    .pipe(plugins.inject(gulp.src('hugo/static/styles/*.css', {read: false}), {ignorePath: 'hugo/static/'}))
+    .pipe(gulp.dest('hugo/layouts/'));
 });
 
 //
@@ -248,6 +268,7 @@ gulp.task('clean:live', () => {
 gulp.task('clean:static', () => {
   return Promise.all([
     del('hugo/static/scripts/*'),
+    del('hugo/static/scripts_head/*'),
     del('hugo/static/styles/*')
   ]);
 });
@@ -263,6 +284,7 @@ gulp.task('watchnsync', () => {
 
   gulp.watch(dirs.src + 'sass/*.scss', gulp.series('styles', 'hugoDev'));
   gulp.watch(dirs.src + 'scripts/*.js', gulp.series('scripts', 'hugoDev'));
+  gulp.watch(dirs.src + 'scripts_head/*.js', gulp.series('scriptsHead', 'hugoDev'));
   gulp.watch([
     'hugo/archetypes/*',
     'hugo/layouts',
@@ -310,33 +332,41 @@ gulp.task('watchnsync', () => {
 //   }
 // },
 
-// Tasks
+//
+// 'gulp' is the main development task, essentially dev + watch + browsersync
 gulp.task('default',
   gulp.series(
     gulp.parallel('clean:static', 'clean:dev'),
-    gulp.parallel('styles', 'scripts'),
+    gulp.parallel('styles', 'scripts', 'scriptsHead'),
+    'inject',
     'hugoDev',
     'watchnsync'
   )
 );
+// 'gulp dev' a single run, hugo will generate pages for drafts and future posts
 gulp.task('dev',
   gulp.series(
     gulp.parallel('clean:static', 'clean:dev'),
-    gulp.parallel('styles', 'scripts'),
+    gulp.parallel('styles', 'scripts', 'scriptsHead'),
+    'inject',
     'hugoDev'
   )
 );
+// 'gulp stage' a single run, hugo will generate pages for drafts
 gulp.task('stage',
   gulp.series(
     gulp.parallel('clean:static', 'clean:stage'),
-    gulp.parallel('minstyles','minscripts'),
+    gulp.parallel('minstyles','minscripts', 'minscriptsHead'),
+    'inject',
     'hugoStage'
   )
 );
+// 'gulp live' a single run, production only
 gulp.task('live',
   gulp.series(
     gulp.parallel('clean:static', 'clean:live'),
-    gulp.parallel('minstyles','minscripts'),
+    gulp.parallel('minstyles','minscripts', 'minscriptsHead'),
+    'inject',
     'hugoLive'
   )
 );
