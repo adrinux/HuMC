@@ -15,6 +15,7 @@ You're reading it. For further info see docs for incorportated tools
 
 ### npm modules used
 - [del](https://www.npmjs.com/package/del)
+- [lazypipe](https://www.npmjs.com/package/lazypipe)
 - [babel-core and related(see package.json)](https://github.com/babel/babel/tree/master/packages/babel-core)
 
 ### Gulp plugins used
