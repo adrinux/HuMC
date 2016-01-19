@@ -27,6 +27,7 @@ const sync = browserSync.create();
 
 //
 // Constants, mostly paths
+// TODO: Move these out into a seperate config.js
 const dirs = {
   src: 'src/',
   dest: 'hugo/static/'
@@ -125,8 +126,9 @@ gulp.task('minscriptsHead', () => {
 // Wiredep
 // modernizr, generate a custom build like generator-webapp
 // Bower components? Susy?
-// Need to link to different css and js files on dev vs stage and live
-// the latter should use minified versions
+gulp.task('wiredep', () => {
+
+});
 
 //
 // Inject css and js
@@ -282,9 +284,9 @@ gulp.task('watchnsync', () => {
     }
   });
 
-  gulp.watch(dirs.src + 'sass/*.scss', gulp.series('styles', 'hugoDev'));
-  gulp.watch(dirs.src + 'scripts/*.js', gulp.series('scripts', 'hugoDev'));
-  gulp.watch(dirs.src + 'scripts_head/*.js', gulp.series('scriptsHead', 'hugoDev'));
+  gulp.watch(dirs.src + 'sass/*.scss', gulp.series('styles', 'inject', 'hugoDev'));
+  gulp.watch(dirs.src + 'scripts/*.js', gulp.series('scripts', 'inject', 'hugoDev'));
+  gulp.watch(dirs.src + 'scripts_head/*.js', gulp.series('scriptsHead', 'inject', 'hugoDev'));
   gulp.watch([
     'hugo/archetypes/*',
     'hugo/layouts',
