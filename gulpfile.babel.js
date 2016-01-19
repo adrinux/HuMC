@@ -122,17 +122,23 @@ gulp.task('minscriptsHead', () => {
     .pipe(gulp.dest(dirs.dest + 'scripts_head/'));
 });
 
+
+//
+// modernizr, generate a custom build
+// probably use node module directly and pass in config from here
+// keep config in seperate config file
+
+
 //
 // Wiredep
-// modernizr, generate a custom build like generator-webapp
 // Bower components? Susy?
 gulp.task('wiredep', () => {
-  let wiredepoptions = {
+  let wiredepOptions = {
     directory: 'bower_components'
   };
   return gulp.src('hugo/layouts/index.html')
-    .pipe(wiredep);
-
+    .pipe(wiredep(wiredepOptions))
+    .pipe(gulp.dest('hugo/layouts/'));
 });
 
 //

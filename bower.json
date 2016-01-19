@@ -1,3 +1,7 @@
 {
-  "name": "web-starter-hugo"
+  "name": "web-starter-hugo",
+  "dependencies": {
+    "susy": "~2.2.11",
+    "modernizr": "~3.3.1"
+  }
 }
