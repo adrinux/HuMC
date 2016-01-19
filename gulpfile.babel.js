@@ -127,6 +127,11 @@ gulp.task('minscriptsHead', () => {
 // modernizr, generate a custom build like generator-webapp
 // Bower components? Susy?
 gulp.task('wiredep', () => {
+  let wiredepoptions = {
+    directory: 'bower_components'
+  };
+  return gulp.src('hugo/layouts/index.html')
+    .pipe(wiredep);
 
 });
 
