@@ -11,3 +11,6 @@ static
 
 # OSX
 .DS_Store
+
+# Sublime Text 3
+.deprc
