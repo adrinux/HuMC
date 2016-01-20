@@ -17,7 +17,8 @@ import {stream as wiredep} from 'wiredep';
 const plugins = gulpLoadPlugins({
   rename: {
     'gulp-util': 'gulpUtil',
-    'gulp-inject': 'inject'
+    'gulp-inject': 'inject',
+    'gulp-useref': 'useref'
   }
 });
 
@@ -131,14 +132,24 @@ gulp.task('minscriptsHead', () => {
 
 //
 // Wiredep
-// Bower components? Susy?
+// Bower components injected
 gulp.task('wiredep', () => {
   let wiredepOptions = {
-    directory: 'bower_components'
+    directory: 'bower_components',
   };
   return gulp.src('hugo/layouts/index.html')
     .pipe(wiredep(wiredepOptions))
     .pipe(gulp.dest('hugo/layouts/'));
+});
+
+//
+// Useref
+gulp.task('useref', () => {
+  let userefOptions = {
+  };
+  return gulp.src('hugo/layouts/index.html')
+    .pipe(wiredep(userefOptions))
+    .pipe(gulp.dest('hugo/static/'));
 });
 
 //
