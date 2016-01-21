@@ -125,9 +125,12 @@ gulp.task('minscriptsHead', () => {
 
 
 //
-// modernizr, generate a custom build
-// probably use node module directly and pass in config from here
+// modernizr, generate a custom build via the node module
+// use config options passed via gulp to generate build rather than automatic
+// apps which scan js (reputedly tend to break things)
 // keep config in seperate config file
+// make sure resulting modernizr.js is injected into head, either with its own
+// task or by extending scriptsHead, minscriptsHead
 
 
 //
@@ -148,7 +151,7 @@ gulp.task('useref', () => {
   let userefOptions = {
   };
   return gulp.src('hugo/layouts/index.html')
-    .pipe(wiredep(userefOptions))
+    .pipe(plugins.useref(userefOptions))
     .pipe(gulp.dest('hugo/static/'));
 });
 
@@ -309,6 +312,7 @@ gulp.task('watchnsync', () => {
   gulp.watch(dirs.src + 'sass/*.scss', gulp.series('styles', 'inject', 'hugoDev'));
   gulp.watch(dirs.src + 'scripts/*.js', gulp.series('scripts', 'inject', 'hugoDev'));
   gulp.watch(dirs.src + 'scripts_head/*.js', gulp.series('scriptsHead', 'inject', 'hugoDev'));
+  gulp.watch('bower_components', gulp.series('wiredep', 'useref', 'hugoDev'));
   gulp.watch([
     'hugo/archetypes/*',
     'hugo/layouts',
@@ -362,6 +366,8 @@ gulp.task('default',
   gulp.series(
     gulp.parallel('clean:static', 'clean:dev'),
     gulp.parallel('styles', 'scripts', 'scriptsHead'),
+    'wiredep',
+    'useref',
     'inject',
     'hugoDev',
     'watchnsync'
@@ -372,6 +378,8 @@ gulp.task('dev',
   gulp.series(
     gulp.parallel('clean:static', 'clean:dev'),
     gulp.parallel('styles', 'scripts', 'scriptsHead'),
+    'wiredep',
+    'useref',
     'inject',
     'hugoDev'
   )
