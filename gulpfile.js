@@ -131,6 +131,8 @@ gulp.task('minscriptsHead', () => {
 // keep config in seperate config file
 // make sure resulting modernizr.js is injected into head, either with its own
 // task or by extending scriptsHead, minscriptsHead
+// currently processing it into static/scripts_head will allow inject task to
+// include it automatically, but still need to correct order of linking
 
 
 //
