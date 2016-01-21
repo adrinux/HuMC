@@ -1,16 +1,16 @@
 'use strict';
 
-import 'babel-polyfill';
-import gulp from 'gulp';
-import gulpLoadPlugins from 'gulp-load-plugins';
-import del from 'del';
-import lazypipe from 'lazypipe';
-import browserSync from 'browser-sync';
-import autoprefixer from 'autoprefixer';
-import colorguard from 'colorguard';
-import cssnano from 'cssnano';
-import reporter from 'postcss-reporter';
-import {stream as wiredep} from 'wiredep';
+require('babel-polyfill');
+var gulp = require('gulp');
+var gulpLoadPlugins = require('gulp-load-plugins');
+var del = require('del');
+var lazypipe = require('lazypipe');
+var browserSync = require('browser-sync');
+var autoprefixer = require('autoprefixer');
+var colorguard = require('colorguard');
+var cssnano = require('cssnano');
+var reporter = require('postcss-reporter');
+var wiredep = require('wiredep').stream;
 
 
 // Auto load Gulp plugins
@@ -329,7 +329,7 @@ gulp.task('watchnsync', () => {
 // specifically excluded. Prevents orphan files server side.
 // Uncomment this section, configure dest/host.
 // Uncomment the upstage and upprod task at the bottom of this gruntfile
-// Make sure you can rsync from the CLI before running the 'grunt upstage'
+// Make sure you can rsync = require() the CLI before running the 'grunt upstage'
 // or 'grunt upprod' tasks.
 // rsync: {
 //   options: {
