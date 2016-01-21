@@ -8,6 +8,7 @@ bower_components
 published
 public
 static
+layouts
 
 # OSX
 .DS_Store
