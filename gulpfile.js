@@ -155,11 +155,12 @@ gulp.task('bowercss', () => {
 
 // SASS
 // auto link bower based sass like susy into a main sass
+// needs gulp-inject and transform function
 // gulp.task('bowersass', () => {
-//   let onlycss = gulpFilter(['*.scss']);
+//   let onlySass = gulpFilter(['*.scss']);
 //   return gulp.src(mainBowerFiles())
-//     .pipe(onlycss)
-//     .pipe(gulp.dest('src/sass/'));
+//     .pipe(onlySass)
+//     .pipe(gulp.dest('src/sass/main.scss'));
 // });
 
 
@@ -315,9 +316,9 @@ gulp.task('htmlmin', () => {
     conservativeCollapse: true,
     preserveLineBreaks: true
   };
-  return gulp.src('hugo/layouts/**/*.html')
+  return gulp.src('hugo/published/**/*.html')
     .pipe(plugins.htmlmin(htmlminOptions))
-    .pipe(gulp.dest('hugo/layouts/'));
+    .pipe(gulp.dest('hugo/published/'));
 });
 
 
@@ -436,7 +437,8 @@ gulp.task('dev',
     gulp.parallel('sass', 'scripts', 'scriptsHead'),
     'html',
     'inject',
-    'hugoDev'
+    'hugoDev',
+    'tidy'
   )
 );
 // 'gulp stage' a single run, hugo will generate pages for drafts
@@ -447,7 +449,8 @@ gulp.task('stage',
     gulp.parallel('minsass','minscripts', 'minscriptsHead'),
     'html',
     'inject',
-    'hugoStage'
+    'hugoStage',
+    'tidy'
   )
 );
 // 'gulp live' a single run, production only
