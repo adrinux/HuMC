@@ -295,30 +295,38 @@ gulp.task('hugoLive', () => {
 
 
 //
-// Lint HTML with htmltidy
-gulp.task('tidy', () => {
-  let tidyOptions = {
-    doctype: 'html5',
-    hideComments: true,
-    indent: true,
-    indentSpaces: 2
-  };
+// HTML linting & minification
+let tidyOptions = {
+  doctype: 'html5',
+  hideComments: true,
+  indent: true,
+  indentSpaces: 2
+};
+
+let htmlminOptions = {
+  collapseWhitespace: true,
+  conservativeCollapse: true,
+  preserveLineBreaks: true
+};
+
+gulp.task('htmlDev', () => {
   return gulp.src('hugo/published/dev/**/*.html')
     .pipe(plugins.htmltidy(tidyOptions))
     .pipe(gulp.dest('hugo/published/dev/'));
 });
 
-//
-// Minify HTML htmlmin
-gulp.task('htmlmin', () => {
-  let htmlminOptions = {
-    collapseWhitespace: true,
-    conservativeCollapse: true,
-    preserveLineBreaks: true
-  };
-  return gulp.src('hugo/published/**/*.html')
+gulp.task('htmlStage', () => {
+  return gulp.src('hugo/published/stage/**/*.html')
+    .pipe(plugins.htmltidy(tidyOptions))
     .pipe(plugins.htmlmin(htmlminOptions))
-    .pipe(gulp.dest('hugo/published/'));
+    .pipe(gulp.dest('hugo/published/stage/'));
+});
+
+gulp.task('htmlLive', () => {
+  return gulp.src('hugo/published/live/**/*.html')
+    .pipe(plugins.htmltidy(tidyOptions))
+    .pipe(plugins.htmlmin(htmlminOptions))
+    .pipe(gulp.dest('hugo/published/live/'));
 });
 
 
@@ -359,10 +367,10 @@ gulp.task('watchnsync', () => {
   });
 
   gulp.watch('src/sass/*.scss', gulp.series('sass', 'inject', 'hugoDev'));
-  gulp.watch('src/scripts/*.js', gulp.series('scripts', 'inject', 'hugoDev'));
-  gulp.watch('src/scripts_head/*.js', gulp.series('scriptsHead', 'inject', 'hugoDev'));
-  gulp.watch('bower_components', gulp.series('bowerjs', 'bowercss', 'inject', 'hugoDev'));
-  gulp.watch('src/layouts/layouts', gulp.series('bowerjs', 'bowercss', 'inject', 'hugoDev'));
+  gulp.watch('src/scripts/*.js', gulp.series('scripts', 'inject', 'hugoDev', 'htmlDev'));
+  gulp.watch('src/scripts_head/*.js', gulp.series('scriptsHead', 'inject', 'hugoDev', 'htmlDev'));
+  gulp.watch('bower_components', gulp.series('bowerjs', 'bowercss', 'inject', 'hugoDev', 'htmlDev'));
+  gulp.watch('src/layouts/layouts', gulp.series('bowerjs', 'bowercss', 'inject', 'hugoDev','htmlDev'));
   gulp.watch([
     'hugo/archetypes/*',
     'hugo/content/',
@@ -426,6 +434,7 @@ gulp.task('default',
     'html',
     'inject',
     'hugoDev',
+    'htmlDev',
     'watchnsync'
   )
 );
@@ -438,7 +447,7 @@ gulp.task('dev',
     'html',
     'inject',
     'hugoDev',
-    'tidy'
+    'htmlDev'
   )
 );
 // 'gulp stage' a single run, hugo will generate pages for drafts
@@ -450,7 +459,7 @@ gulp.task('stage',
     'html',
     'inject',
     'hugoStage',
-    'tidy'
+    'htmlStage'
   )
 );
 // 'gulp live' a single run, production only
@@ -461,6 +470,7 @@ gulp.task('live',
     gulp.parallel('minsass','minscripts', 'minscriptsHead'),
     'html',
     'inject',
-    'hugoLive'
+    'hugoLive',
+    'htmlLive'
   )
 );
