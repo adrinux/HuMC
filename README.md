@@ -30,6 +30,7 @@ You're reading it. For further info see docs for incorportated tools
 - [gulp-rename](https://www.npmjs.com/package/gulp-rename)
 - [gulp-util](https://www.npmjs.com/package/gulp-util)
 - [gulp-filter](https://www.npmjs.com/package/gulp-filter)
+- [gulp-htmlmin](https://www.npmjs.com/package/gulp-htmlmin)
 
 ### PostCSS plugins used
 - [Autoprefixer](https://www.npmjs.com/package/autoprefixer)
