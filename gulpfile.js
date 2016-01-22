@@ -17,7 +17,8 @@ var reporter = require('postcss-reporter');
 const plugins = gulpLoadPlugins({
   rename: {
     'gulp-util': 'gulpUtil',
-    'gulp-inject': 'inject'
+    'gulp-inject': 'inject',
+    'gulp-concat': 'concat'
   }
 });
 
@@ -120,7 +121,7 @@ gulp.task('minscriptsHead', () => {
 
 
 //
-// TODO modernizr, generate a custom build via the node module
+// TODO modernizr, generate a custom build via the node module NOT bower
 // use config options passed via gulp to generate build rather than automatic
 // apps which scan js (reputedly tend to break things)
 // keep config in seperate config file
@@ -132,16 +133,41 @@ gulp.task('minscriptsHead', () => {
 
 //
 // Bower components process
-gulp.task('bowrangle', () => {
-  let onlyjs = gulpFilter(['*.js'], {restore: true});
-  let onlycss = gulpFilter(['*.css'], {restore: true});
-
+// Javascript
+gulp.task('bowerjs', () => {
+  let onlyjs = gulpFilter(['*.js']);
   return gulp.src(mainBowerFiles())
     .pipe(onlyjs)
-    .pipe(gulp.dest('src/scripts/'))
-    .pipe(onlyjs.restore)
+    .pipe(plugins.concat('bower-concat.js'))
+    .pipe(minJs())
+    .pipe(gulp.dest('hugo/static/scripts/'));
+});
+
+// CSS
+gulp.task('bowercss', () => {
+  let onlycss = gulpFilter(['*.css']);
+  return gulp.src(mainBowerFiles())
     .pipe(onlycss)
     .pipe(gulp.dest('hugo/static/styles/'));
+});
+
+// SASS
+// auto link bower based sass like susy into a main sass
+// gulp.task('bowersass', () => {
+//   let onlycss = gulpFilter(['*.scss']);
+//   return gulp.src(mainBowerFiles())
+//     .pipe(onlycss)
+//     .pipe(gulp.dest('src/sass/'));
+// });
+
+
+//
+// HTML templates
+// Copy HTML templates from src/layouts to hugo/layouts
+// We cant lint and minify here because of hugo specific code
+gulp.task('html', () => {
+  return gulp.src('src/layouts/**/*.html')
+    .pipe(gulp.dest('hugo/layouts/'))
 });
 
 
@@ -151,10 +177,15 @@ gulp.task('bowrangle', () => {
 gulp.task('inject', () => {
   return gulp.src('hugo/layouts/index.html')
     .pipe(plugins.inject(gulp.src('hugo/static/scripts_head/*.js', {read: false}), {ignorePath: 'hugo/static/', name: 'head'}))
-    .pipe(plugins.inject(gulp.src('hugo/static/scripts/*.js', {read: false}), {ignorePath: 'hugo/static/'}))
+    .pipe(plugins.inject(gulp.src('hugo/static/scripts/bower-concat.min.js', {read: false}), {ignorePath: 'hugo/static/'}))
+    .pipe(plugins.inject(gulp.src(['hugo/static/scripts/*.js', '!hugo/static/scripts/bower-concat.min.js'], {read: false}), {ignorePath: 'hugo/static/'}))
     .pipe(plugins.inject(gulp.src('hugo/static/styles/*.css', {read: false}), {ignorePath: 'hugo/static/'}))
     .pipe(gulp.dest('hugo/layouts/'));
 });
+
+
+
+
 
 //
 // Image processing (with gm/im)
@@ -259,15 +290,13 @@ gulp.task('hugoLive', () => {
   return Promise.all([ hugo('live') ]);
 });
 
-//
-// HTML Linting
-// HTML minification?
-// Will need to run hugo first, then check output?
 
-//
-// Testing
-// Jasmine, Mocha...
-// what to test?
+// Lint HTML templates
+
+
+// Lint & Minify HTML templates
+
+
 
 //
 // Cleaning
@@ -289,6 +318,12 @@ gulp.task('clean:static', () => {
     del('hugo/static/styles/*')
   ]);
 });
+// Clean any assets we output into hugo/layouts
+gulp.task('clean:layouts', () => {
+  return Promise.all([
+    del('hugo/layouts/**/*.html')
+  ]);
+});
 
 //
 // Watch files and serve with Browsersync
@@ -299,15 +334,15 @@ gulp.task('watchnsync', () => {
     }
   });
 
-  gulp.watch('src/sass/*.scss', gulp.series('styles', 'inject', 'hugoDev'));
+  gulp.watch('src/sass/*.scss', gulp.series('sass', 'inject', 'hugoDev'));
   gulp.watch('src/scripts/*.js', gulp.series('scripts', 'inject', 'hugoDev'));
   gulp.watch('src/scripts_head/*.js', gulp.series('scriptsHead', 'inject', 'hugoDev'));
-  gulp.watch('bower_components', gulp.series('wiredep', 'useref', 'hugoDev'));
+  gulp.watch('bower_components', gulp.series('bowerjs', 'bowercss', 'inject', 'hugoDev'));
+  gulp.watch('src/layouts/layouts', gulp.series('bowerjs', 'bowercss', 'inject', 'hugoDev'));
   gulp.watch([
     'hugo/archetypes/*',
-    'hugo/layouts',
-    'hugo/content',
-    'hugo/data'
+    'hugo/content/',
+    'hugo/data/'
   ], gulp.series('hugoDev')).on('change', sync.reload);
 });
 
@@ -350,12 +385,21 @@ gulp.task('watchnsync', () => {
 //   }
 // },
 
+
+//
+// Testing
+// Jasmine, Mocha...
+// what to test?
+
+
 //
 // 'gulp' is the main development task, essentially dev + watch + browsersync
 gulp.task('default',
   gulp.series(
-    gulp.parallel('clean:static', 'clean:dev'),
+    gulp.parallel('clean:static', 'clean:dev', 'clean:layouts'),
+    gulp.parallel('bowerjs', 'bowercss'),
     gulp.parallel('sass', 'scripts', 'scriptsHead'),
+    'html',
     'inject',
     'hugoDev',
     'watchnsync'
@@ -364,8 +408,10 @@ gulp.task('default',
 // 'gulp dev' a single run, hugo will generate pages for drafts and future posts
 gulp.task('dev',
   gulp.series(
-    gulp.parallel('clean:static', 'clean:dev'),
+    gulp.parallel('clean:static', 'clean:dev', 'clean:layouts'),
+    gulp.parallel('bowerjs', 'bowercss'),
     gulp.parallel('sass', 'scripts', 'scriptsHead'),
+    'html',
     'inject',
     'hugoDev'
   )
@@ -373,8 +419,10 @@ gulp.task('dev',
 // 'gulp stage' a single run, hugo will generate pages for drafts
 gulp.task('stage',
   gulp.series(
-    gulp.parallel('clean:static', 'clean:stage'),
+    gulp.parallel('clean:static', 'clean:stage', 'clean:layouts'),
+    gulp.parallel('bowerjs', 'bowercss'),
     gulp.parallel('minsass','minscripts', 'minscriptsHead'),
+    'html',
     'inject',
     'hugoStage'
   )
@@ -382,8 +430,10 @@ gulp.task('stage',
 // 'gulp live' a single run, production only
 gulp.task('live',
   gulp.series(
-    gulp.parallel('clean:static', 'clean:live'),
+    gulp.parallel('clean:static', 'clean:live', 'clean:layouts'),
+    gulp.parallel('bowerjs', 'bowercss'),
     gulp.parallel('minsass','minscripts', 'minscriptsHead'),
+    'html',
     'inject',
     'hugoLive'
   )
