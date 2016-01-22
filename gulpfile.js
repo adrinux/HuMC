@@ -18,7 +18,9 @@ const plugins = gulpLoadPlugins({
   rename: {
     'gulp-util': 'gulpUtil',
     'gulp-inject': 'inject',
-    'gulp-concat': 'concat'
+    'gulp-concat': 'concat',
+    'gulp-htmlmin': 'htmlmin',
+    'gulp-htmltidy': 'htmltidy'
   }
 });
 
@@ -167,7 +169,7 @@ gulp.task('bowercss', () => {
 // We cant lint and minify here because of hugo specific code
 gulp.task('html', () => {
   return gulp.src('src/layouts/**/*.html')
-    .pipe(gulp.dest('hugo/layouts/'))
+    .pipe(gulp.dest('hugo/layouts/'));
 });
 
 
@@ -176,7 +178,7 @@ gulp.task('html', () => {
 // Inject minified assets in only in stage/live
 gulp.task('inject', () => {
   return gulp.src('hugo/layouts/index.html')
-    .pipe(plugins.inject(gulp.src('hugo/static/scripts_head/*.js', {read: false}), {ignorePath: 'hugo/static/', name: 'head'}))
+    .pipe(plugins.inject(gulp.src('hugo/static/scripts_head/*.js', {read: false}), {selfClosingTag: true, ignorePath: 'hugo/static/', name: 'head'}))
     .pipe(plugins.inject(gulp.src('hugo/static/scripts/bower-concat.min.js', {read: false}), {ignorePath: 'hugo/static/'}))
     .pipe(plugins.inject(gulp.src(['hugo/static/scripts/*.js', '!hugo/static/scripts/bower-concat.min.js'], {read: false}), {ignorePath: 'hugo/static/'}))
     .pipe(plugins.inject(gulp.src('hugo/static/styles/*.css', {read: false}), {ignorePath: 'hugo/static/'}))
@@ -291,11 +293,32 @@ gulp.task('hugoLive', () => {
 });
 
 
-// Lint HTML templates
+//
+// Lint HTML with htmltidy
+gulp.task('tidy', () => {
+  let tidyOptions = {
+    doctype: 'html5',
+    hideComments: true,
+    indent: true,
+    indentSpaces: 2
+  };
+  return gulp.src('hugo/published/dev/**/*.html')
+    .pipe(plugins.htmltidy(tidyOptions))
+    .pipe(gulp.dest('hugo/published/dev/'));
+});
 
-
-// Lint & Minify HTML templates
-
+//
+// Minify HTML htmlmin
+gulp.task('htmlmin', () => {
+  let htmlminOptions = {
+    collapseWhitespace: true,
+    conservativeCollapse: true,
+    preserveLineBreaks: true
+  };
+  return gulp.src('hugo/layouts/**/*.html')
+    .pipe(plugins.htmlmin(htmlminOptions))
+    .pipe(gulp.dest('hugo/layouts/'));
+});
 
 
 //
