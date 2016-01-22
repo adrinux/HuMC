@@ -21,6 +21,7 @@ You're reading it. For further info see docs for incorportated tools
 
 ### Gulp plugins used
 - [gulp-load-plugins](https://www.npmjs.com/package/gulp-load-plugins)
+- [gulp-concat](https://www.npmjs.com/package/gulp-concat)
 - [gulp-sass](https://www.npmjs.com/package/gulp-sass)
 - [gulp-sourcemaps](https://www.npmjs.com/package/gulp-sourcemaps)
 - [gulp-postcss](https://www.npmjs.com/package/gulp-postcss)
