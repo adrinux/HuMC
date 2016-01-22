@@ -3,51 +3,46 @@
 require('babel-polyfill');
 var gulp = require('gulp');
 var gulpLoadPlugins = require('gulp-load-plugins');
+var gulpFilter = require('gulp-filter');
 var del = require('del');
 var lazypipe = require('lazypipe');
+var mainBowerFiles = require('main-bower-files');
 var browserSync = require('browser-sync');
 var autoprefixer = require('autoprefixer');
 var colorguard = require('colorguard');
 var cssnano = require('cssnano');
 var reporter = require('postcss-reporter');
-var wiredep = require('wiredep').stream;
-
 
 // Auto load Gulp plugins
 const plugins = gulpLoadPlugins({
   rename: {
     'gulp-util': 'gulpUtil',
-    'gulp-inject': 'inject',
-    'gulp-useref': 'useref'
+    'gulp-inject': 'inject'
   }
 });
-
 
 // Simplify calls to browser-sync
 const sync = browserSync.create();
 
+
 //
 // Constants, mostly paths
-// TODO: Move these out into a seperate config.js
-const dirs = {
-  src: 'src/',
-  dest: 'hugo/static/'
-};
-
 const sassPaths = {
-  src: dirs.src + 'sass/main.scss',
-  dest: dirs.dest + 'styles/'
+  src: 'src/sass/main.scss',
+  dest: 'hugo/static/styles/'
 };
 
+// TODO: Move these out into a seperate config.js for per site settings
 const hugoPaths = {
   StageBaseUrl: 'http://stage.example.com',
   LiveBaseUrl: 'http://example.com',
   DevBaseUrl: 'http://localhost:3000'
 };
 
+
 //
 // CSS processing, linting
-gulp.task('styles', () => {
+gulp.task('sass', () => {
   let processors = [
     colorguard({threshold: ['3']}),
     autoprefixer({browsers: ['> 1%', 'last 2 versions', 'Firefox ESR']}),
@@ -61,7 +56,7 @@ gulp.task('styles', () => {
 });
 
 // CSS processing, linting, minification
-gulp.task('minstyles', () => {
+gulp.task('minsass', () => {
   let processors = [
     colorguard({threshold: ['3']}),
     autoprefixer({browsers: ['> 1%', 'last 2 versions', 'Firefox ESR']}),
@@ -82,7 +77,7 @@ gulp.task('minstyles', () => {
 //
 // Linting
 // .eslintrc.json can be used by your editor (see README.md)
-// eslint rules for js aimed at browser in config/
+// eslint rules for js aimed at browser are in config/
 let lintJs = lazypipe()
     .pipe(plugins.eslint, 'config/eslint.json')
     .pipe(plugins.eslint.format);
@@ -97,35 +92,35 @@ let minJs = lazypipe()
 
 // dev js tasks
 gulp.task('scripts', () => {
-  return gulp.src(dirs.src + 'scripts/*.js')
+  return gulp.src('src/scripts/*.js')
     .pipe(lintJs())
-    .pipe(gulp.dest(dirs.dest + 'scripts/'))
+    .pipe(gulp.dest('hugo/static/scripts/'))
     .pipe(sync.stream());
 });
 gulp.task('scriptsHead', () => {
-  return gulp.src(dirs.src + 'scripts_head/*.js')
+  return gulp.src('src/scripts_head/*.js')
     .pipe(lintJs())
-    .pipe(gulp.dest(dirs.dest + 'scripts_head/'))
+    .pipe(gulp.dest('hugo/static/scripts_head/'))
     .pipe(sync.stream());
 });
 
 // stage and live js tasks
 gulp.task('minscripts', () => {
-  return gulp.src(dirs.src + 'scripts/*.js')
+  return gulp.src('src/scripts/*.js')
     .pipe(lintJs())
     .pipe(minJs())
-    .pipe(gulp.dest(dirs.dest + 'scripts/'));
+    .pipe(gulp.dest('hugo/static/scripts/'));
 });
 gulp.task('minscriptsHead', () => {
-  return gulp.src(dirs.src + 'scripts_head/*.js')
+  return gulp.src('src/scripts_head/*.js')
     .pipe(lintJs())
     .pipe(minJs())
-    .pipe(gulp.dest(dirs.dest + 'scripts_head/'));
+    .pipe(gulp.dest('hugo/static/scripts_head/'));
 });
 
 
 //
-// modernizr, generate a custom build via the node module
+// TODO modernizr, generate a custom build via the node module
 // use config options passed via gulp to generate build rather than automatic
 // apps which scan js (reputedly tend to break things)
 // keep config in seperate config file
@@ -136,26 +131,19 @@ gulp.task('minscriptsHead', () => {
 
 
 //
-// Wiredep
-// Bower components injected
-gulp.task('wiredep', () => {
-  let wiredepOptions = {
-    directory: 'bower_components',
-  };
-  return gulp.src('hugo/layouts/index.html')
-    .pipe(wiredep(wiredepOptions))
-    .pipe(gulp.dest('hugo/layouts/'));
+// Bower components process
+gulp.task('bowrangle', () => {
+  let onlyjs = gulpFilter(['*.js'], {restore: true});
+  let onlycss = gulpFilter(['*.css'], {restore: true});
+
+  return gulp.src(mainBowerFiles())
+    .pipe(onlyjs)
+    .pipe(gulp.dest('src/scripts/'))
+    .pipe(onlyjs.restore)
+    .pipe(onlycss)
+    .pipe(gulp.dest('hugo/static/styles/'));
 });
 
-//
-// Useref
-gulp.task('useref', () => {
-  let userefOptions = {
-  };
-  return gulp.src('hugo/layouts/index.html')
-    .pipe(plugins.useref(userefOptions))
-    .pipe(gulp.dest('hugo/static/'));
-});
 
 //
 // Inject css and js
@@ -311,9 +299,9 @@ gulp.task('watchnsync', () => {
     }
   });
 
-  gulp.watch(dirs.src + 'sass/*.scss', gulp.series('styles', 'inject', 'hugoDev'));
-  gulp.watch(dirs.src + 'scripts/*.js', gulp.series('scripts', 'inject', 'hugoDev'));
-  gulp.watch(dirs.src + 'scripts_head/*.js', gulp.series('scriptsHead', 'inject', 'hugoDev'));
+  gulp.watch('src/sass/*.scss', gulp.series('styles', 'inject', 'hugoDev'));
+  gulp.watch('src/scripts/*.js', gulp.series('scripts', 'inject', 'hugoDev'));
+  gulp.watch('src/scripts_head/*.js', gulp.series('scriptsHead', 'inject', 'hugoDev'));
   gulp.watch('bower_components', gulp.series('wiredep', 'useref', 'hugoDev'));
   gulp.watch([
     'hugo/archetypes/*',
@@ -367,9 +355,7 @@ gulp.task('watchnsync', () => {
 gulp.task('default',
   gulp.series(
     gulp.parallel('clean:static', 'clean:dev'),
-    gulp.parallel('styles', 'scripts', 'scriptsHead'),
-    'wiredep',
-    'useref',
+    gulp.parallel('sass', 'scripts', 'scriptsHead'),
     'inject',
     'hugoDev',
     'watchnsync'
@@ -379,9 +365,7 @@ gulp.task('default',
 gulp.task('dev',
   gulp.series(
     gulp.parallel('clean:static', 'clean:dev'),
-    gulp.parallel('styles', 'scripts', 'scriptsHead'),
-    'wiredep',
-    'useref',
+    gulp.parallel('sass', 'scripts', 'scriptsHead'),
     'inject',
     'hugoDev'
   )
@@ -390,7 +374,7 @@ gulp.task('dev',
 gulp.task('stage',
   gulp.series(
     gulp.parallel('clean:static', 'clean:stage'),
-    gulp.parallel('minstyles','minscripts', 'minscriptsHead'),
+    gulp.parallel('minsass','minscripts', 'minscriptsHead'),
     'inject',
     'hugoStage'
   )
@@ -399,7 +383,7 @@ gulp.task('stage',
 gulp.task('live',
   gulp.series(
     gulp.parallel('clean:static', 'clean:live'),
-    gulp.parallel('minstyles','minscripts', 'minscriptsHead'),
+    gulp.parallel('minsass','minscripts', 'minscriptsHead'),
     'inject',
     'hugoLive'
   )
