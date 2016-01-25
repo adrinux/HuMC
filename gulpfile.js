@@ -122,15 +122,10 @@ gulp.task('minscriptsHead', () => {
 });
 
 
+// TODO
 //
-// TODO modernizr, generate a custom build via the node module NOT bower
-// use config options passed via gulp to generate build rather than automatic
-// apps which scan js (reputedly tend to break things)
-// keep config in seperate config file
-// make sure resulting modernizr.js is injected into head, either with its own
-// task or by extending scriptsHead, minscriptsHead
-// currently processing it into static/scripts_head will allow inject task to
-// include it automatically, but still need to correct order of linking
+// Modernizr
+// Read config and generate a custom build
 
 
 //
@@ -153,9 +148,11 @@ gulp.task('bowercss', () => {
     .pipe(gulp.dest('hugo/static/styles/'));
 });
 
+
+// TODO
+//
 // SASS
-// auto link bower based sass like susy into a main sass
-// needs gulp-inject and transform function
+// auto link bower based SASS into our main.scss
 // gulp.task('bowersass', () => {
 //   let onlySass = gulpFilter(['*.scss']);
 //   return gulp.src(mainBowerFiles())
