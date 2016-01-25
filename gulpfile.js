@@ -188,63 +188,12 @@ gulp.task('inject', () => {
 
 
 
-
-
-//
-// Image processing (with gm/im)
-// move this to an external file, may not be used for all projects
-
-// THIS NEEDS CONVERTED
-// Process Images with graphicsmagick or imagemagick
-// To use:
-// - uncomment section starting with gm below
-// - uncomment the task 'process' at the bottom of this file
-// - create folder for unprocessed images: "mkdir app/images_raw"
-// - install grunt-gm: "npm install grunt-gm --save-dev"
-// - run "grunt process" to process new images (add into a build or watch
-// task if you're doing this a lot)
-// You can configure subfolders etc if you need multiple processing steps
-// See https://github.com/h0ward/grunt-gm for Usage
-// The following tasks are just an example, fit to your needs.
-// gm: {
-//   crop: {
-//     options: {
-//       // uses graphicsmagick uness imagemagick is set as an option
-//       // default: false, check if dest file exists and size > 0
-//       skipExisting: true,
-//       // default: false
-//       stopOnError: false,
-//     },
-//     files: [{
-//       expand: true,
-//       cwd: '<%%= config.app %>/images_raw',
-//       src: ['**.{jpg,gif,png}'],
-//       dest: '<%%= config.app %>/images',
-//       filter: 'isFile',
-//       options: {
-//         // imageMagick: true,
-//         stopOnError: true
-//       },
-//       // image is passed as stream beteen tasks
-//       tasks: [
-//         { // scale
-//           resize: [500,250, "^"],
-//         },{ // crop
-//           gravity: ['Center'],
-//           extent: [250,125]
-//         }
-//       ]
-//     }],
-//   }
-// },
-
 //
 // Responsive Images
 // Generate diiferent sized images for srcset
 
 // Image optimisation
 // Image optimisation task using imageoptim and jpegmini *OSX only*
-// If you disable this then tweak the imagemin task above to process jpg,png
 // imagemin task deals with gif, imageoptim with jpg and png
 // Switch jpegMini to false if its not installed. You may need to launch
 // JPEGmini.app before this task runs.
