@@ -312,11 +312,11 @@ gulp.task('watchnsync', () => {
     }
   });
 
-  gulp.watch('src/sass/*.scss', gulp.series('sass', 'inject', 'hugoDev'));
+  gulp.watch('src/sass/*.scss', gulp.series('sass', 'inject', 'hugoDev', 'htmlDev'));
   gulp.watch('src/scripts/*.js', gulp.series('scripts', 'inject', 'hugoDev', 'htmlDev'));
   gulp.watch('src/scripts_head/*.js', gulp.series('scriptsHead', 'inject', 'hugoDev', 'htmlDev'));
   gulp.watch('bower_components', gulp.series('bowerjs', 'bowercss', 'inject', 'hugoDev', 'htmlDev'));
-  gulp.watch('src/layouts/layouts', gulp.series('bowerjs', 'bowercss', 'inject', 'hugoDev','htmlDev'));
+  gulp.watch('src/layouts/**/*.html', gulp.series('bowerjs', 'bowercss', 'inject', 'hugoDev','htmlDev'));
   gulp.watch([
     'hugo/archetypes/*',
     'hugo/content/',

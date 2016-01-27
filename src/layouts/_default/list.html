@@ -1,11 +1,11 @@
 <!doctype html>
     <head class="no-js" lang="{{ .Site.LanguageCode}}">
-        {{ partial "head-content.html" . }}
     </head>
     <body>
         <!--[if lt IE 8]>
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
+  {{ partial "header.html" . }}
 
         <h1>{{ .Title }}</h1>
 
@@ -15,6 +15,6 @@
             {{ end }}
         </ul>
 
-        {{ partial "body-scripts.html" . }}
+  {{ partial "footer.html" . }}
     </body>
 </html>
