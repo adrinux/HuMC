@@ -2,7 +2,15 @@
 A static web site starter kit using Gulp and Hugo static site generator
 
 ## How to use
+Eventually this project should be a Yeoman generator, in the meantime:
 
+```
+git clone
+npm install
+bower install
+# test run with
+gulp dev
+```
 
 ## Features
 
