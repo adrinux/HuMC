@@ -345,6 +345,29 @@ gulp.task('clean:layouts', () => {
     del('hugo/layouts/**/*.html')
   ]);
 });
+// Clean temporary image files created during processing
+gulp.task('clean:images', () => {
+  return Promise.all([
+    del('src/img_tmp/**/*')
+  ]);
+});
+
+
+// Clean everything at once
+gulp.task('clean:all', () => {
+  return Promise.all([
+    del('hugo/published/dev/'),
+    del('hugo/published/stage/'),
+    del('hugo/published/live/'),
+    del('hugo/static/scripts/*'),
+    del('hugo/static/scripts_head/*'),
+    del('hugo/static/styles/*'),
+    del('hugo/layouts/**/*.html'),
+    del('src/img_tmp/**/*')
+  ]);
+});
+
+
 
 //
 // Watch files and serve with Browsersync
@@ -417,7 +440,7 @@ gulp.task('watchnsync', () => {
 // 'gulp' is the main development task, essentially dev + watch + browsersync
 gulp.task('default',
   gulp.series(
-    gulp.parallel('clean:static', 'clean:dev', 'clean:layouts'),
+    gulp.parallel('clean:all'),
     gulp.parallel('bowerjs', 'bowercss'),
     gulp.parallel('sass', 'scripts', 'scriptsHead'),
     'html',
@@ -430,7 +453,7 @@ gulp.task('default',
 // 'gulp dev' a single run, hugo will generate pages for drafts and future posts
 gulp.task('dev',
   gulp.series(
-    gulp.parallel('clean:static', 'clean:dev', 'clean:layouts'),
+    gulp.parallel('clean:all'),
     gulp.parallel('bowerjs', 'bowercss'),
     gulp.parallel('sass', 'scripts', 'scriptsHead'),
     'html',
@@ -442,7 +465,7 @@ gulp.task('dev',
 // 'gulp stage' a single run, hugo will generate pages for drafts
 gulp.task('stage',
   gulp.series(
-    gulp.parallel('clean:static', 'clean:stage', 'clean:layouts'),
+    gulp.parallel('clean:all'),
     gulp.parallel('bowerjs', 'bowercss'),
     gulp.parallel('minsass','minscripts', 'minscriptsHead'),
     'html',
@@ -454,7 +477,7 @@ gulp.task('stage',
 // 'gulp live' a single run, production only
 gulp.task('live',
   gulp.series(
-    gulp.parallel('clean:static', 'clean:live', 'clean:layouts'),
+    gulp.parallel('clean:all'),
     gulp.parallel('bowerjs', 'bowercss'),
     gulp.parallel('minsass','minscripts', 'minscriptsHead'),
     'html',
