@@ -26,6 +26,7 @@ You're reading it. For further info see docs for incorportated tools
 - [lazypipe](https://www.npmjs.com/package/lazypipe)
 - [babel-core and related(see package.json)](https://github.com/babel/babel/tree/master/packages/babel-core)
 - [main-bower-files](https://www.npmjs.com/package/main-bower-files)
+- [browser-sync](https://www.npmjs.com/package/browser-sync)
 
 ### Gulp plugins used
 - [gulp-load-plugins](https://www.npmjs.com/package/gulp-load-plugins)
@@ -39,6 +40,10 @@ You're reading it. For further info see docs for incorportated tools
 - [gulp-util](https://www.npmjs.com/package/gulp-util)
 - [gulp-filter](https://www.npmjs.com/package/gulp-filter)
 - [gulp-htmlmin](https://www.npmjs.com/package/gulp-htmlmin)
+- [gulp-newer](https://www.npmjs.com/package/gulp-newer)
+- [gulp-sharp](https://www.npmjs.com/package/gulp-sharp)
+- [gulp-gm](https://www.npmjs.com/package/gulp-gm)
+- [gulp-imagemin](https://www.npmjs.com/package/gulp-imagemin)
 
 ### PostCSS plugins used
 - [Autoprefixer](https://www.npmjs.com/package/autoprefixer)

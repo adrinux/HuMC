@@ -55,6 +55,7 @@ const hugoPaths = {
 // gulp-gm needs a flag to use imagemagick, see its docs
 gulp.task('magic', () => {
   return gulp.src('src/img_raw/*')
+    .pipe(plugins.newer('src/img_tmp/'))
     .pipe(plugins.gm( function (gmfile) {
       return gmfile
         .resize(300,300)
@@ -80,6 +81,7 @@ gulp.task('sharp', () => {
   };
 
   return gulp.src('src/img_raw/*')
+    .pipe(plugins.newer('src/img_tmp/'))
     .pipe(plugins.sharp(sharpOptions))
     .pipe(plugins.rename({suffix: '-square600'}))
   .pipe(gulp.dest('src/img_tmp/'));
@@ -108,6 +110,22 @@ gulp.task('sharp', () => {
 
 
 //
+// Copy and Optimize images
+gulp.task('imgMin', () => {
+
+  let imageminOptions = {
+    progressive: false,
+    svgoPlugins: [{removeViewBox: false}]
+  };
+
+  return gulp.src('src/img_tmp/**/*')
+    .pipe(plugins.newer('hugo/static/images/'))
+    .pipe(plugins.imagemin(imageminOptions))
+  .pipe(gulp.dest('hugo/static/images/'));
+});
+
+
+//
 // CSS processing, linting
 gulp.task('sass', () => {
   let processors = [
@@ -115,7 +133,7 @@ gulp.task('sass', () => {
     autoprefixer({browsers: ['> 1%', 'last 2 versions', 'Firefox ESR']}),
     reporter()
   ];
-  return gulp.src(sassPaths.src)
+  return gulp.src(sassPaths.src, { since: gulp.lastRun('sass') })
     .pipe(plugins.sass.sync().on('error', plugins.sass.logError))
     .pipe(plugins.postcss(processors))
     .pipe(gulp.dest(sassPaths.dest))
@@ -130,7 +148,7 @@ gulp.task('minsass', () => {
     cssnano(),
     reporter()
   ];
-  return gulp.src(sassPaths.src)
+  return gulp.src(sassPaths.src, { since: gulp.lastRun('minsass') })
     .pipe(plugins.sourcemaps.init())
       .pipe(plugins.sass.sync().on('error', plugins.sass.logError))
       .pipe(plugins.postcss(processors))
@@ -159,13 +177,13 @@ let minJs = lazypipe()
 
 // dev js tasks
 gulp.task('scripts', () => {
-  return gulp.src('src/scripts/*.js')
+  return gulp.src('src/scripts/*.js', { since: gulp.lastRun('scripts') })
     .pipe(lintJs())
     .pipe(gulp.dest('hugo/static/scripts/'))
     .pipe(sync.stream());
 });
 gulp.task('scriptsHead', () => {
-  return gulp.src('src/scripts_head/*.js')
+  return gulp.src('src/scripts_head/*.js', { since: gulp.lastRun('scriptsHead') })
     .pipe(lintJs())
     .pipe(gulp.dest('hugo/static/scripts_head/'))
     .pipe(sync.stream());
@@ -173,13 +191,13 @@ gulp.task('scriptsHead', () => {
 
 // stage and live js tasks
 gulp.task('minscripts', () => {
-  return gulp.src('src/scripts/*.js')
+  return gulp.src('src/scripts/*.js', { since: gulp.lastRun('minscripts') })
     .pipe(lintJs())
     .pipe(minJs())
     .pipe(gulp.dest('hugo/static/scripts/'));
 });
 gulp.task('minscriptsHead', () => {
-  return gulp.src('src/scripts_head/*.js')
+  return gulp.src('src/scripts_head/*.js', { since: gulp.lastRun('minscriptsHead') })
     .pipe(lintJs())
     .pipe(minJs())
     .pipe(gulp.dest('hugo/static/scripts_head/'));
