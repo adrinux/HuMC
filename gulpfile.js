@@ -366,7 +366,8 @@ gulp.task('clean:layouts', () => {
 // Clean temporary image files created during processing
 gulp.task('clean:images', () => {
   return Promise.all([
-    del('src/img_tmp/**/*')
+    del('src/img_tmp/**/*'),
+    del('hugo/static/images/*')
   ]);
 });
 
@@ -381,7 +382,8 @@ gulp.task('clean:all', () => {
     del('hugo/static/scripts_head/*'),
     del('hugo/static/styles/*'),
     del('hugo/layouts/**/*.html'),
-    del('src/img_tmp/**/*')
+    del('src/img_tmp/**/*'),
+    del('hugo/static/images/*')
   ]);
 });
 
