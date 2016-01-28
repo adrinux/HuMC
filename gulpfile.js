@@ -24,6 +24,13 @@ const plugins = gulpLoadPlugins({
   }
 });
 
+
+// Load tasks from files in gulp-tasks
+function getTask(task) {
+  return require('./gulp-tasks/' + task)(gulp, plugins);
+}
+
+
 // Simplify calls to browser-sync
 const sync = browserSync.create();
 
