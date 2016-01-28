@@ -110,7 +110,7 @@ gulp.task('sharp', () => {
 
 
 //
-// Copy and Optimize images
+// Optimize and copy images to final destination
 gulp.task('imgMin', () => {
 
   let imageminOptions = {
