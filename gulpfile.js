@@ -20,21 +20,17 @@ const plugins = gulpLoadPlugins({
     'gulp-inject': 'inject',
     'gulp-concat': 'concat',
     'gulp-htmlmin': 'htmlmin',
-    'gulp-htmltidy': 'htmltidy'
+    'gulp-htmltidy': 'htmltidy',
+    'gulp-sharp': 'sharp',
+    'gulp-gm': 'gm'
   }
 });
-
-
-// Load tasks from files in gulp-tasks
-function getTask(task) {
-  return require('./gulp-tasks/' + task)(gulp, plugins);
-}
-
 
 // Simplify calls to browser-sync
 const sync = browserSync.create();
 
 
+//-----------------------------------------------------------
 //
 // Constants, mostly paths
 const sassPaths = {
@@ -48,6 +44,66 @@ const hugoPaths = {
   LiveBaseUrl: 'http://example.com',
   DevBaseUrl: 'http://localhost:3000'
 };
+
+//-----------------------------------------------------------
+
+//
+// Image processing with Graphicsmagick or Imagemagick
+// install either of those then gulp-gm
+// for gm see: https://www.npmjs.com/package/gulp-gm
+// then: npm install gulp-gm --save-dev
+// gulp-gm needs a flag to use imagemagick, see its docs
+gulp.task('magic', () => {
+  return gulp.src('src/img_raw/*.png')
+    .pipe(plugins.gm( function (gmfile) {
+      return gmfile
+        .resize(300,300)
+        .paint(10);
+    }))
+  .pipe(plugins.rename({extname: '-painted.png'}))
+  .pipe(gulp.dest('src/img_processed/'));
+});
+
+
+// Image processing with Sharp (vips)
+// install external dependency vips then gulp-sharp
+// for vips links see: https://www.npmjs.com/package/gulp-sharp
+// then: npm install gulp-sharp --save-dev
+gulp.task('sharp', () => {
+
+  let sharpOptions = {
+    resize : [600, 600],
+    max : false,
+    withoutEnlargement: true,
+    quality : 80,
+    progressive : false
+  };
+
+  return gulp.src('src/img_raw/*.*')
+    .pipe(plugins.sharp(sharpOptions))
+  .pipe(gulp.dest('src/img_processed/'));
+});
+
+
+//
+// Responsive Images
+// Generate diiferent sized images for srcset
+
+// Image optimisation
+// Image optimisation task using imageoptim and jpegmini *OSX only*
+// imagemin task deals with gif, imageoptim with jpg and png
+// Switch jpegMini to false if its not installed. You may need to launch
+// JPEGmini.app before this task runs.
+// imageOptim: {
+//   optimise: {
+//     options: {
+//       jpegMini: true,
+//       imageAlpha: true,
+//       quitAfter: false
+//     },
+//     src: ['app/images/*.{jpg,jpeg,png}']
+//   }
+// },
 
 
 //
@@ -190,27 +246,6 @@ gulp.task('inject', () => {
     .pipe(gulp.dest('hugo/layouts/'));
 });
 
-
-
-//
-// Responsive Images
-// Generate diiferent sized images for srcset
-
-// Image optimisation
-// Image optimisation task using imageoptim and jpegmini *OSX only*
-// imagemin task deals with gif, imageoptim with jpg and png
-// Switch jpegMini to false if its not installed. You may need to launch
-// JPEGmini.app before this task runs.
-// imageOptim: {
-//   optimise: {
-//     options: {
-//       jpegMini: true,
-//       imageAlpha: true,
-//       quitAfter: false
-//     },
-//     src: ['app/images/*.{jpg,jpeg,png}']
-//   }
-// },
 
 //
 // Hugo
