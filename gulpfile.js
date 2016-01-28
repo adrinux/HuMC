@@ -54,14 +54,14 @@ const hugoPaths = {
 // then: npm install gulp-gm --save-dev
 // gulp-gm needs a flag to use imagemagick, see its docs
 gulp.task('magic', () => {
-  return gulp.src('src/img_raw/*.png')
+  return gulp.src('src/img_raw/*.*')
     .pipe(plugins.gm( function (gmfile) {
       return gmfile
         .resize(300,300)
         .paint(10);
     }))
-  .pipe(plugins.rename({extname: '-painted.png'}))
-  .pipe(gulp.dest('src/img_processed/'));
+  .pipe(plugins.rename({suffix: '-painted'}))
+  .pipe(gulp.dest('src/img_tmp/'));
 });
 
 
@@ -81,7 +81,8 @@ gulp.task('sharp', () => {
 
   return gulp.src('src/img_raw/*.*')
     .pipe(plugins.sharp(sharpOptions))
-  .pipe(gulp.dest('src/img_processed/'));
+    .pipe(plugins.rename({suffix: '-square600'}))
+  .pipe(gulp.dest('src/img_tmp/'));
 });
 
 
