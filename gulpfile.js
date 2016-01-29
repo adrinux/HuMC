@@ -22,7 +22,8 @@ const plugins = gulpLoadPlugins({
     'gulp-htmlmin': 'htmlmin',
     'gulp-htmltidy': 'htmltidy',
     'gulp-sharp': 'sharp',
-    'gulp-gm': 'gm'
+    'gulp-gm': 'gm',
+    'gulp-imageoptim': 'imageOptim'
   }
 });
 
@@ -111,6 +112,7 @@ gulp.task('sharp', () => {
 
 //
 // Optimize and copy images to final destination
+// Might want to add filter here, no need to send svg to imageOptim for example
 gulp.task('imgMin', () => {
 
   let imageminOptions = {
@@ -118,9 +120,15 @@ gulp.task('imgMin', () => {
     svgoPlugins: [{removeViewBox: false}]
   };
 
+  let imageoptimOptions = {
+    status: true,
+    batchSize: 100
+  };
+
   return gulp.src('src/img_tmp/**/*')
     .pipe(plugins.newer('hugo/static/images/'))
     .pipe(plugins.imagemin(imageminOptions))
+    .pipe(plugins.imageOptim.optimize(imageoptimOptions))
   .pipe(gulp.dest('hugo/static/images/'));
 });
 
