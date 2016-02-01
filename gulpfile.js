@@ -92,7 +92,17 @@ gulp.task('sharp', () => {
 //
 // Responsive Images
 // Generate diiferent sized images for srcset
+gulp.task('responsive', () => {
 
+  let responsiveOptions = {
+
+  };
+
+  return gulp.src('src/img_tmp/**/*')
+    .pipe(plugins.newer('src/img_tmp/responsive/'))
+    .pipe(plugins.responsive(responsiveOptions))
+  .pipe(gulp.dest('src/img_tmp/responsive/'));
+});
 
 
 //

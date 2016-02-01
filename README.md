@@ -21,14 +21,14 @@ You're reading it. For further info see docs for incorportated tools
 - [Gulp](https://github.com/gulpjs/gulp/tree/master/docs)
 - [Hugo](https://gohugo.io/overview/introduction/)
 
-### npm modules used
+### npm modules included
 - [del](https://www.npmjs.com/package/del)
 - [lazypipe](https://www.npmjs.com/package/lazypipe)
 - [babel-core and related(see package.json)](https://github.com/babel/babel/tree/master/packages/babel-core)
 - [main-bower-files](https://www.npmjs.com/package/main-bower-files)
 - [browser-sync](https://www.npmjs.com/package/browser-sync)
 
-### Gulp plugins used
+### Gulp plugins included
 - [gulp-load-plugins](https://www.npmjs.com/package/gulp-load-plugins)
 - [gulp-concat](https://www.npmjs.com/package/gulp-concat)
 - [gulp-sass](https://www.npmjs.com/package/gulp-sass)
@@ -44,8 +44,10 @@ You're reading it. For further info see docs for incorportated tools
 - [gulp-sharp](https://www.npmjs.com/package/gulp-sharp)
 - [gulp-gm](https://www.npmjs.com/package/gulp-gm)
 - [gulp-imagemin](https://www.npmjs.com/package/gulp-imagemin)
+- [gulp-imageoptim](https://www.npmjs.com/package/gulp-imageoptim)
+- [gulp-responsive](https://www.npmjs.com/package/gulp-responsive)
 
-### PostCSS plugins used
+### PostCSS plugins included
 - [Autoprefixer](https://www.npmjs.com/package/autoprefixer)
 - [Colorguard](https://www.npmjs.com/package/colorguard)
 - [PostCSS Reporter](https://www.npmjs.com/package/postcss-reporter)
