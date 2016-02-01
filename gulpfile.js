@@ -132,6 +132,17 @@ gulp.task('imgMin', () => {
   .pipe(gulp.dest('hugo/static/images/'));
 });
 
+//
+// Composite image processing task
+// Calls above automated editing, responsive derivative generation and
+// optimisation tasks
+gulp.task('images',
+  gulp.series(
+    gulp.parallel('magic', 'sharp'),
+    'imgMin'
+  )
+);
+
 
 //
 // CSS processing, linting
@@ -469,7 +480,7 @@ gulp.task('watchnsync', () => {
 gulp.task('default',
   gulp.series(
     gulp.parallel('clean:all'),
-    gulp.parallel('bowerjs', 'bowercss'),
+    gulp.parallel('bowerjs', 'bowercss', 'images'),
     gulp.parallel('sass', 'scripts', 'scriptsHead'),
     'html',
     'inject',
@@ -482,7 +493,7 @@ gulp.task('default',
 gulp.task('dev',
   gulp.series(
     gulp.parallel('clean:all'),
-    gulp.parallel('bowerjs', 'bowercss'),
+    gulp.parallel('bowerjs', 'bowercss', 'images'),
     gulp.parallel('sass', 'scripts', 'scriptsHead'),
     'html',
     'inject',
@@ -494,7 +505,7 @@ gulp.task('dev',
 gulp.task('stage',
   gulp.series(
     gulp.parallel('clean:all'),
-    gulp.parallel('bowerjs', 'bowercss'),
+    gulp.parallel('bowerjs', 'bowercss', 'images'),
     gulp.parallel('minsass','minscripts', 'minscriptsHead'),
     'html',
     'inject',
@@ -506,7 +517,7 @@ gulp.task('stage',
 gulp.task('live',
   gulp.series(
     gulp.parallel('clean:all'),
-    gulp.parallel('bowerjs', 'bowercss'),
+    gulp.parallel('bowerjs', 'bowercss', 'images'),
     gulp.parallel('minsass','minscripts', 'minscriptsHead'),
     'html',
     'inject',
