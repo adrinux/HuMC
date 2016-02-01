@@ -93,21 +93,6 @@ gulp.task('sharp', () => {
 // Responsive Images
 // Generate diiferent sized images for srcset
 
-// Image optimisation
-// Image optimisation task using imageoptim and jpegmini *OSX only*
-// imagemin task deals with gif, imageoptim with jpg and png
-// Switch jpegMini to false if its not installed. You may need to launch
-// JPEGmini.app before this task runs.
-// imageOptim: {
-//   optimise: {
-//     options: {
-//       jpegMini: true,
-//       imageAlpha: true,
-//       quitAfter: false
-//     },
-//     src: ['app/images/*.{jpg,jpeg,png}']
-//   }
-// },
 
 
 //
