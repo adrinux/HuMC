@@ -400,9 +400,7 @@ gulp.task('clean:all', () => {
     del('hugo/static/scripts/*'),
     del('hugo/static/scripts_head/*'),
     del('hugo/static/styles/*'),
-    del('hugo/layouts/**/*.html'),
-    del('src/img_tmp/**/*'),
-    del('hugo/static/images/*')
+    del('hugo/layouts/**/*.html')
   ]);
 });
 
