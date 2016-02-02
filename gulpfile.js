@@ -459,12 +459,35 @@ gulp.task('watchnsync', () => {
 // Deploy
 // Update stage and production sites
 
+//
+// Deploy
+// Update remote stage and production sites
 let stageRsyncOptions = {
-
+  root: 'hugo/published/stage',
+  username: 'you',
+  hostname: 'stage.example.com',
+  destination: '/var/www/sitename-stage',
+  times: true,
+  recursive: true,
+  compress: true,
+  clean: true,
+  exclude: ['.git*', 'cache', 'logs', '.DS_Store'],
+  progress: true,
+  incremental: true
 };
 
 let liveRsyncOptions = {
-
+  root: 'hugo/published/live',
+  username: 'you',
+  hostname: 'example.com',
+  destination: '/var/www/sitename',
+  times: true,
+  recursive: true,
+  compress: true,
+  clean: true,
+  exclude: ['.git*', 'cache', 'logs', '.DS_Store'],
+  progress: true,
+  incremental: true
 };
 
 gulp.task('upstage', () => {
@@ -473,7 +496,7 @@ gulp.task('upstage', () => {
 });
 
 gulp.task('golive', () => {
-  gulp.src('hugo/published/stage')
+  gulp.src('hugo/published/live')
     .pipe(plugins.rsync(liveRsyncOptions));
 });
 
