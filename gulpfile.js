@@ -59,7 +59,7 @@ gulp.task('magic', () => {
     .pipe(plugins.newer('src/img_tmp/'))
     .pipe(plugins.gm( function (gmfile) {
       return gmfile
-        .resize(300,300)
+        //.resize(300,300)
         .paint(10);
     }))
   .pipe(plugins.rename({suffix: '-painted'}))
@@ -74,17 +74,17 @@ gulp.task('magic', () => {
 gulp.task('sharp', () => {
 
   let sharpOptions = {
-    resize : [600, 600],
+    resize : [1280, 1140],
     max : false,
     withoutEnlargement: true,
-    quality : 80,
+    quality : 86,
     progressive : false
   };
 
   return gulp.src('src/img_raw/*')
     .pipe(plugins.newer('src/img_tmp/'))
     .pipe(plugins.sharp(sharpOptions))
-    .pipe(plugins.rename({suffix: '-square600'}))
+    //.pipe(plugins.rename({suffix: '-sharp'}))
   .pipe(gulp.dest('src/img_tmp/'));
 });
 
@@ -95,12 +95,36 @@ gulp.task('sharp', () => {
 gulp.task('responsive', () => {
 
   let responsiveOptions = {
+    '*': [{
+      width: 320,
+      rename: { suffix: '-mini' }
+    }, {
+      width: 640,
+      rename: { suffix: '-small' }
+    }, {
+      width: 780,
+      rename: { suffix: '-medium' }
+    }, {
+      width: 1140,
+      rename: { suffix: '-large' }
+    }, {
+      width: 1280,
+      rename: { suffix: '-xlarge' }
+    }, {
+      width: 320 * 2,
+      rename: { suffix: '@2x' }
+    }]};
 
+  let responsiveGlobals = {
+    quality: 86,
+    progressive: false,
+    withMetadata: false,
+    withoutEnlargement: true
   };
 
-  return gulp.src('src/img_tmp/**/*')
+  return gulp.src('src/img_tmp/**/*.{jpg,png}')
     .pipe(plugins.newer('src/img_tmp/responsive/'))
-    .pipe(plugins.responsive(responsiveOptions))
+    .pipe(plugins.responsive(responsiveOptions, responsiveGlobals))
   .pipe(gulp.dest('src/img_tmp/responsive/'));
 });
 
@@ -134,6 +158,7 @@ gulp.task('imgMin', () => {
 gulp.task('images',
   gulp.series(
     gulp.parallel('magic', 'sharp'),
+    'responsive',
     'imgMin'
   )
 );
