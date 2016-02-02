@@ -287,7 +287,7 @@ gulp.task('bowercss', () => {
 // Copy HTML templates from src/layouts to hugo/layouts
 // We cant lint and minify here because of hugo specific code
 gulp.task('html', () => {
-  return gulp.src('src/layouts/**/*.html')
+  return gulp.src('src/layouts/**/*.html', { since: gulp.lastRun('html') })
     .pipe(gulp.dest('hugo/layouts/'));
 });
 
@@ -356,7 +356,7 @@ let htmlminOptions = {
 };
 
 gulp.task('htmlDev', () => {
-  return gulp.src('hugo/published/dev/**/*.html')
+  return gulp.src('hugo/published/dev/**/*.html', { since: gulp.lastRun('sass') })
     .pipe(plugins.htmltidy(tidyOptions))
     .pipe(gulp.dest('hugo/published/dev/'));
 });
@@ -402,6 +402,7 @@ gulp.task('clean:layouts', () => {
     del('hugo/layouts/**/*.html')
   ]);
 });
+
 // Clean temporary image files created during processing
 gulp.task('clean:images', () => {
   return Promise.all([
@@ -418,7 +419,7 @@ gulp.task('clean:responsive', () => {
 });
 
 
-// Clean everything at once
+// Clean everything at once (except images)
 gulp.task('clean:all', () => {
   return Promise.all([
     del('hugo/published/dev/'),
@@ -456,14 +457,28 @@ gulp.task('watchnsync', () => {
 
 //
 // Deploy
-// NEES CONVERSION
 // Update stage and production sites
+
+let stageRsyncOptions = {
+
+};
+
+let liveRsyncOptions = {
+
+};
+
+gulp.task('upstage', () => {
+  gulp.src('hugo/published/stage')
+    .pipe(plugins.rsync(stageRsyncOptions));
+});
+
+gulp.task('golive', () => {
+  gulp.src('hugo/published/stage')
+    .pipe(plugins.rsync(liveRsyncOptions));
+});
+
 // deleteAll: Deletes objects in dest that aren't present in src or are
 // specifically excluded. Prevents orphan files server side.
-// Uncomment this section, configure dest/host.
-// Uncomment the upstage and upprod task at the bottom of this gruntfile
-// Make sure you can rsync = require() the CLI before running the 'grunt upstage'
-// or 'grunt upprod' tasks.
 // rsync: {
 //   options: {
 //     // -r recursive
