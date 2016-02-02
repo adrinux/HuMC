@@ -409,6 +409,13 @@ gulp.task('clean:images', () => {
     del('hugo/static/images/*')
   ]);
 });
+// Clean only responsive image derivatives
+gulp.task('clean:responsive', () => {
+  return Promise.all([
+    del('src/img_tmp/responsive/*'),
+    del('hugo/static/images/responsive/*')
+  ]);
+});
 
 
 // Clean everything at once
