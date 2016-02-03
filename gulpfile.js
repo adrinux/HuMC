@@ -96,7 +96,7 @@ gulp.task('sharp', () => {
 gulp.task('responsive', () => {
 
   let responsiveOptions = {
-    '*': [{
+    '*.*': [{
       width: 320,
       rename: { suffix: '-mini' }
     }, {
@@ -124,9 +124,9 @@ gulp.task('responsive', () => {
   };
 
   return gulp.src('src/img_tmp/**/*.{jpg,png}')
-    .pipe(plugins.newer('src/img_tmp/responsive/'))
+    .pipe(plugins.newer('src/img_responsive/'))
     .pipe(plugins.responsive(responsiveOptions, responsiveGlobals))
-  .pipe(gulp.dest('src/img_tmp/responsive/'));
+  .pipe(gulp.dest('src/img_responsive/'));
 });
 
 
@@ -145,7 +145,7 @@ gulp.task('imgMin', () => {
     batchSize: 100
   };
 
-  return gulp.src('src/img_tmp/**/*')
+  return gulp.src('src/img_tmp/**/*', 'src/img_responsive/**/*')
     .pipe(plugins.newer('hugo/static/images/'))
     .pipe(plugins.imagemin(imageminOptions))
     .pipe(plugins.imageOptim.optimize(imageoptimOptions))
