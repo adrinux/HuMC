@@ -8,6 +8,7 @@ var del = require('del');
 var lazypipe = require('lazypipe');
 var mainBowerFiles = require('main-bower-files');
 var browserSync = require('browser-sync');
+var rsync = require('rsyncwrapper');
 var autoprefixer = require('autoprefixer');
 var colorguard = require('colorguard');
 var cssnano = require('cssnano');
@@ -457,79 +458,50 @@ gulp.task('watchnsync', () => {
 
 //
 // Deploy
-// Update stage and production sites
 
-//
-// Deploy
-// Update remote stage and production sites
-let stageRsyncOptions = {
-  root: 'hugo/published/stage',
-  username: 'you',
-  hostname: 'stage.example.com',
-  destination: '/var/www/sitename-stage',
-  times: true,
-  recursive: true,
-  compress: true,
-  clean: true,
-  exclude: ['.git*', 'cache', 'logs', '.DS_Store'],
-  progress: true,
-  incremental: true
-};
+// Rsync options
+// -r recursive
+// -t preserve modification times
+// -o preserve owner
+// -v verbose
+// -z compress during transfer
+// --chmod=ugo=rwX use destination default permissions
 
-let liveRsyncOptions = {
-  root: 'hugo/published/live',
-  username: 'you',
-  hostname: 'example.com',
-  destination: '/var/www/sitename',
-  times: true,
-  recursive: true,
-  compress: true,
-  clean: true,
-  exclude: ['.git*', 'cache', 'logs', '.DS_Store'],
-  progress: true,
-  incremental: true
-};
-
-gulp.task('upstage', () => {
-  gulp.src('hugo/published/stage')
-    .pipe(plugins.rsync(stageRsyncOptions));
-});
-
-gulp.task('golive', () => {
-  gulp.src('hugo/published/live')
-    .pipe(plugins.rsync(liveRsyncOptions));
-});
-
-// deleteAll: Deletes objects in dest that aren't present in src or are
+// --delete with --delete-excluded: Deletes objects in dest that aren't present in src or are
 // specifically excluded. Prevents orphan files server side.
-// rsync: {
-//   options: {
-//     // -r recursive
-//     // -t preserve modification times
-//     // -o preserve owner
-//     // -v verbose
-//     // -z compress during transfer
-//     // --chmod=ugo=rwX use destination default permissions
-//     args: ['-rtozv', '--chmod=ugo=rwX', '--delete'],
-//     exclude: ['.git*', 'cache', 'logs', '.DS_Store'],
-//   },
-//   stage: {
-//     options: {
-//       src: 'dist/',
-//       dest: '/var/www/sitename-stage',
-//       host: 'you@stage.example.com',
-//       deleteAll: true
-//     },
-//   },
-//   production: {
-//     options: {
-//       src: 'dist/',
-//       dest: '/var/www/sitename',
-//       host: 'you@example.com',
-//       deleteAll: true
-//     },
-//   }
-// },
+
+// src folder should have trailing slash
+// dest folder shouldn't when syncing entire folders
+
+// Update remote staging site
+let stageRsyncOptions = {
+  ssh: true,
+  src: 'hugo/published/stage/',
+  dest: 'you@stage.example.com:/var/www/sitename-stage',
+  args: ['-rtozv', '--chmod=ugo=rwX', '--delete', '--delete-excluded'],
+  exclude: ['.git*', 'cache', 'logs', '.DS_Store']
+};
+gulp.task('upstage', () => {
+  rsync(stageRsyncOptions, function(error, stdout, stderr, cmd) {
+    plugins.gulpUtil.log('Running: ' + cmd);
+    plugins.gulpUtil.log(stdout);
+  });
+});
+
+// Update remote live site
+let liveRsyncOptions = {
+  ssh: true,
+  src: 'hugo/published/live/',
+  dest: 'you@example.com:/var/www/sitename',
+  args: ['-rtozv', '--chmod=ugo=rwX', '--delete', '--delete-excluded'],
+  exclude: ['.git*', 'cache', 'logs', '.DS_Store']
+};
+gulp.task('golive', () => {
+  rsync(liveRsyncOptions, function(error, stdout, stderr, cmd) {
+    plugins.gulpUtil.log('Running: ' + cmd);
+    plugins.gulpUtil.log(stdout);
+  });
+});
 
 
 //
