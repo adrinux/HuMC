@@ -423,9 +423,6 @@ gulp.task('clean:responsive', () => {
 // Clean everything at once (except images)
 gulp.task('clean:all', () => {
   return Promise.all([
-    del('hugo/published/dev/'),
-    del('hugo/published/stage/'),
-    del('hugo/published/live/'),
     del('hugo/static/scripts/*'),
     del('hugo/static/scripts_head/*'),
     del('hugo/static/styles/*'),
@@ -476,31 +473,35 @@ gulp.task('watchnsync', () => {
 // Update remote staging site
 let stageRsyncOptions = {
   ssh: true,
-  src: 'hugo/published/stage/',
-  dest: 'you@stage.example.com:/var/www/sitename-stage',
+  src: './hugo/published/stage/',
+  dest: 'you@example.com:/var/www/sitename-stage',
   args: ['-rtozv', '--chmod=ugo=rwX', '--delete', '--delete-excluded'],
   exclude: ['.git*', 'cache', 'logs', '.DS_Store']
 };
 gulp.task('upstage', () => {
-  rsync(stageRsyncOptions, function(error, stdout, stderr, cmd) {
-    plugins.gulpUtil.log('Running: ' + cmd);
-    plugins.gulpUtil.log(stdout);
-  });
+  return Promise.all([
+    rsync(stageRsyncOptions, function(error, stdout, stderr, cmd) {
+      plugins.gulpUtil.log('Running: ' + cmd);
+      plugins.gulpUtil.log(stdout);
+    })
+  ]);
 });
 
 // Update remote live site
 let liveRsyncOptions = {
   ssh: true,
-  src: 'hugo/published/live/',
+  src: './hugo/published/live/',
   dest: 'you@example.com:/var/www/sitename',
   args: ['-rtozv', '--chmod=ugo=rwX', '--delete', '--delete-excluded'],
   exclude: ['.git*', 'cache', 'logs', '.DS_Store']
 };
 gulp.task('golive', () => {
-  rsync(liveRsyncOptions, function(error, stdout, stderr, cmd) {
-    plugins.gulpUtil.log('Running: ' + cmd);
-    plugins.gulpUtil.log(stdout);
-  });
+  return Promise.all([
+    rsync(liveRsyncOptions, function(error, stdout, stderr, cmd) {
+      plugins.gulpUtil.log('Running: ' + cmd);
+      plugins.gulpUtil.log(stdout);
+    })
+  ]);
 });
 
 
@@ -514,7 +515,7 @@ gulp.task('golive', () => {
 // 'gulp' is the main development task, essentially dev + watch + browsersync
 gulp.task('default',
   gulp.series(
-    gulp.parallel('clean:all'),
+    gulp.parallel('clean:all', 'clean:dev'),
     gulp.parallel('bowerjs', 'bowercss', 'images'),
     gulp.parallel('sass', 'scripts', 'scriptsHead'),
     'html',
@@ -527,7 +528,7 @@ gulp.task('default',
 // 'gulp dev' a single run, hugo will generate pages for drafts and future posts
 gulp.task('dev',
   gulp.series(
-    gulp.parallel('clean:all'),
+    gulp.parallel('clean:all', 'clean:dev'),
     gulp.parallel('bowerjs', 'bowercss', 'images'),
     gulp.parallel('sass', 'scripts', 'scriptsHead'),
     'html',
@@ -539,7 +540,7 @@ gulp.task('dev',
 // 'gulp stage' a single run, hugo will generate pages for drafts
 gulp.task('stage',
   gulp.series(
-    gulp.parallel('clean:all'),
+    gulp.parallel('clean:all', 'clean:stage'),
     gulp.parallel('bowerjs', 'bowercss', 'images'),
     gulp.parallel('minsass','minscripts', 'minscriptsHead'),
     'html',
@@ -551,7 +552,7 @@ gulp.task('stage',
 // 'gulp live' a single run, production only
 gulp.task('live',
   gulp.series(
-    gulp.parallel('clean:all'),
+    gulp.parallel('clean:all', 'clean:live'),
     gulp.parallel('bowerjs', 'bowercss', 'images'),
     gulp.parallel('minsass','minscripts', 'minscriptsHead'),
     'html',
