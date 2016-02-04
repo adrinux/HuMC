@@ -121,6 +121,43 @@ module.exports = {
     collapseWhitespace: true,
     conservativeCollapse: true,
     preserveLineBreaks: true
+  },
+
+
+  //
+  // Rsync Deploy via rsyncwrapper
+
+  // Rsync option explanations
+  // -r recursive
+  // -t preserve modification times
+  // -o preserve owner
+  // -v verbose
+  // -z compress during transfer
+  // --chmod=ugo=rwX use destination default permissions
+
+  // --delete with --delete-excluded
+  //   Deletes objects in dest that aren't present in src or are specifically
+  //   excluded. Prevents orphan files server side.
+
+  // src folder should have trailing slash
+  // dest folder shouldn't have trailing slash when syncing entire folders
+
+  // Stage
+  stageRsyncOptions: {
+    ssh: true,
+    src: './hugo/published/stage/',
+    dest: 'you@example.com:/var/www/sitename-stage',
+    args: ['-rtozv', '--chmod=ugo=rwX', '--delete', '--delete-excluded'],
+    exclude: ['.git*', 'cache', 'logs', '.DS_Store']
+  },
+
+  // Live
+  liveRsyncOptions: {
+    ssh: true,
+    src: './hugo/published/live/',
+    dest: 'you@example.com:/var/www/sitename',
+    args: ['-rtozv', '--chmod=ugo=rwX', '--delete', '--delete-excluded'],
+    exclude: ['.git*', 'cache', 'logs', '.DS_Store']
   }
 
 };

@@ -370,48 +370,20 @@ gulp.task('watchnsync', () => {
 //
 // Deploy
 
-// Rsync options
-// -r recursive
-// -t preserve modification times
-// -o preserve owner
-// -v verbose
-// -z compress during transfer
-// --chmod=ugo=rwX use destination default permissions
-
-// --delete with --delete-excluded: Deletes objects in dest that aren't present in src or are
-// specifically excluded. Prevents orphan files server side.
-
-// src folder should have trailing slash
-// dest folder shouldn't when syncing entire folders
-
-// Update remote staging site
-let stageRsyncOptions = {
-  ssh: true,
-  src: './hugo/published/stage/',
-  dest: 'you@example.com:/var/www/sitename-stage',
-  args: ['-rtozv', '--chmod=ugo=rwX', '--delete', '--delete-excluded'],
-  exclude: ['.git*', 'cache', 'logs', '.DS_Store']
-};
+// Deploy to staging
 gulp.task('upstage', () => {
   return Promise.all([
-    rsync(stageRsyncOptions, function(error, stdout, stderr, cmd) {
+    rsync(config.stageRsyncOptions, function(error, stdout, stderr, cmd) {
       plugins.gulpUtil.log('Running: ' + cmd);
       plugins.gulpUtil.log(stdout);
     })
   ]);
 });
 
-// Update remote live site
-let liveRsyncOptions = {
-  ssh: true,
-  src: './hugo/published/live/',
-  dest: 'you@example.com:/var/www/sitename',
-  args: ['-rtozv', '--chmod=ugo=rwX', '--delete', '--delete-excluded'],
-  exclude: ['.git*', 'cache', 'logs', '.DS_Store']
-};
+// Deploy to live
 gulp.task('golive', () => {
   return Promise.all([
-    rsync(liveRsyncOptions, function(error, stdout, stderr, cmd) {
+    rsync(config.liveRsyncOptions, function(error, stdout, stderr, cmd) {
       plugins.gulpUtil.log('Running: ' + cmd);
       plugins.gulpUtil.log(stdout);
     })
@@ -422,7 +394,7 @@ gulp.task('golive', () => {
 //
 // Testing
 // Jasmine, Mocha...
-// what to test?
+// TODO: what to test?
 
 
 //
