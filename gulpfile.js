@@ -9,10 +9,7 @@ var lazypipe = require('lazypipe');
 var mainBowerFiles = require('main-bower-files');
 var browserSync = require('browser-sync');
 var rsync = require('rsyncwrapper');
-var autoprefixer = require('autoprefixer');
-var colorguard = require('colorguard');
-var cssnano = require('cssnano');
-var reporter = require('postcss-reporter');
+
 
 // Auto load Gulp plugins
 const plugins = gulpLoadPlugins({
@@ -32,22 +29,10 @@ const plugins = gulpLoadPlugins({
 const sync = browserSync.create();
 
 
-//-----------------------------------------------------------
 //
-// Constants, mostly paths
-const sassPaths = {
-  src: 'src/sass/main.scss',
-  dest: 'hugo/static/styles/'
-};
+// Import task configuration
+var config = require('./config/config.js');
 
-// TODO: Move these out into a seperate config.js for per site settings
-const hugoPaths = {
-  StageBaseUrl: 'http://stage.example.com',
-  LiveBaseUrl: 'http://example.com',
-  DevBaseUrl: 'http://localhost:3000'
-};
-
-//-----------------------------------------------------------
 
 //
 // Image processing with Graphicsmagick or Imagemagick
@@ -60,7 +45,7 @@ gulp.task('magic', () => {
     .pipe(plugins.newer('src/img_tmp/'))
     .pipe(plugins.gm( function (gmfile) {
       return gmfile
-        //.resize(300,300)
+        .resize(300,300)
         .paint(10);
     }))
   .pipe(plugins.rename({suffix: '-painted'}))
@@ -73,19 +58,10 @@ gulp.task('magic', () => {
 // for vips links see: https://www.npmjs.com/package/gulp-sharp
 // then: npm install gulp-sharp --save-dev
 gulp.task('sharp', () => {
-
-  let sharpOptions = {
-    resize : [1280, 1140],
-    max : false,
-    withoutEnlargement: true,
-    quality : 86,
-    progressive : false
-  };
-
   return gulp.src('src/img_raw/*')
     .pipe(plugins.newer('src/img_tmp/'))
-    .pipe(plugins.sharp(sharpOptions))
-    //.pipe(plugins.rename({suffix: '-sharp'}))
+    .pipe(plugins.sharp(config.sharpOptions))
+    //.pipe(plugins.rename((config.sharpRename)))
   .pipe(gulp.dest('src/img_tmp/'));
 });
 
@@ -94,38 +70,9 @@ gulp.task('sharp', () => {
 // Responsive Images
 // Generate diiferent sized images for srcset
 gulp.task('responsive', () => {
-
-  let responsiveOptions = {
-    '*.*': [{
-      width: 320,
-      rename: { suffix: '-mini' }
-    }, {
-      width: 640,
-      rename: { suffix: '-small' }
-    }, {
-      width: 780,
-      rename: { suffix: '-medium' }
-    }, {
-      width: 1140,
-      rename: { suffix: '-large' }
-    }, {
-      width: 1280,
-      rename: { suffix: '-xlarge' }
-    }, {
-      width: 320 * 2,
-      rename: { suffix: '@2x' }
-    }]};
-
-  let responsiveGlobals = {
-    quality: 86,
-    progressive: false,
-    withMetadata: false,
-    withoutEnlargement: true
-  };
-
   return gulp.src('src/img_tmp/**/*.{jpg,png}')
     .pipe(plugins.newer('src/img_responsive/'))
-    .pipe(plugins.responsive(responsiveOptions, responsiveGlobals))
+    .pipe(plugins.responsive(config.responsiveOptions, config.responsiveGlobals))
   .pipe(gulp.dest('src/img_responsive/'));
 });
 
@@ -134,21 +81,10 @@ gulp.task('responsive', () => {
 // Optimize and copy images to final destination
 // Might want to add filter here, no need to send svg to imageOptim for example
 gulp.task('imgMin', () => {
-
-  let imageminOptions = {
-    progressive: false,
-    svgoPlugins: [{removeViewBox: false}]
-  };
-
-  let imageoptimOptions = {
-    status: true,
-    batchSize: 100
-  };
-
   return gulp.src('src/img_tmp/**/*', 'src/img_responsive/**/*')
     .pipe(plugins.newer('hugo/static/images/'))
-    .pipe(plugins.imagemin(imageminOptions))
-    .pipe(plugins.imageOptim.optimize(imageoptimOptions))
+    .pipe(plugins.imagemin(config.imageminOptions))
+    .pipe(plugins.imageOptim.optimize(config.imageoptimOptions))
   .pipe(gulp.dest('hugo/static/images/'));
 });
 
@@ -158,7 +94,7 @@ gulp.task('imgMin', () => {
 // optimisation tasks
 gulp.task('images',
   gulp.series(
-    gulp.parallel('magic', 'sharp'),
+    'sharp',
     'responsive',
     'imgMin'
   )
@@ -168,33 +104,22 @@ gulp.task('images',
 //
 // CSS processing, linting
 gulp.task('sass', () => {
-  let processors = [
-    colorguard({threshold: ['3']}),
-    autoprefixer({browsers: ['> 1%', 'last 2 versions', 'Firefox ESR']}),
-    reporter()
-  ];
-  return gulp.src(sassPaths.src, { since: gulp.lastRun('sass') })
+  return gulp.src(config.sassPaths.src, { since: gulp.lastRun('sass') })
     .pipe(plugins.sass.sync().on('error', plugins.sass.logError))
-    .pipe(plugins.postcss(processors))
-    .pipe(gulp.dest(sassPaths.dest))
+    .pipe(plugins.postcss(config.processors))
+    .pipe(gulp.dest(config.sassPaths.dest))
     .pipe(sync.stream());
 });
 
 // CSS processing, linting, minification
 gulp.task('minsass', () => {
-  let processors = [
-    colorguard({threshold: ['3']}),
-    autoprefixer({browsers: ['> 1%', 'last 2 versions', 'Firefox ESR']}),
-    cssnano(),
-    reporter()
-  ];
-  return gulp.src(sassPaths.src, { since: gulp.lastRun('minsass') })
+  return gulp.src(config.sassPaths.src, { since: gulp.lastRun('minsass') })
     .pipe(plugins.sourcemaps.init())
       .pipe(plugins.sass.sync().on('error', plugins.sass.logError))
-      .pipe(plugins.postcss(processors))
+      .pipe(plugins.postcss(config.minProcessors))
       .pipe(plugins.rename({extname: '.min.css'}))
     .pipe(plugins.sourcemaps.write('.'))
-    .pipe(gulp.dest(sassPaths.dest));
+    .pipe(gulp.dest(config.sassPaths.dest));
 });
 
 //
@@ -314,13 +239,13 @@ function hugo (status) {
   let exec = require('child_process').execSync;
   let cmd = 'hugo --config=hugo/config.toml -s hugo/';
   if (status === 'stage') {
-    cmd += ' -D -d published/stage/ --baseURL="' + hugoPaths.StageBaseUrl + '"';
+    cmd += ' -D -d published/stage/ --baseURL="' + config.hugoBaseUrl.stage + '"';
     plugins.gulpUtil.log('hugo command: \n' + cmd);
   } else if (status === 'live') {
-    cmd += ' -d published/live/ --baseURL="' + hugoPaths.LiveBaseUrl + '"';
+    cmd += ' -d published/live/ --baseURL="' + config.hugoBaseUrl.live + '"';
     plugins.gulpUtil.log('hugo command: \n' + cmd);
   } else {
-    cmd += ' -DF -d published/dev/ --baseURL="' + hugoPaths.DevBaseUrl + '"';
+    cmd += ' -DF -d published/dev/ --baseURL="' + config.hugoBaseUrl.dev + '"';
     plugins.gulpUtil.log('hugo command: \n' + cmd);
   }
 
@@ -343,36 +268,23 @@ gulp.task('hugoLive', () => {
 
 //
 // HTML linting & minification
-let tidyOptions = {
-  doctype: 'html5',
-  hideComments: true,
-  indent: true,
-  indentSpaces: 2
-};
-
-let htmlminOptions = {
-  collapseWhitespace: true,
-  conservativeCollapse: true,
-  preserveLineBreaks: true
-};
-
 gulp.task('htmlDev', () => {
   return gulp.src('hugo/published/dev/**/*.html', { since: gulp.lastRun('sass') })
-    .pipe(plugins.htmltidy(tidyOptions))
+    .pipe(plugins.htmltidy(config.htmltidyOptions))
     .pipe(gulp.dest('hugo/published/dev/'));
 });
 
 gulp.task('htmlStage', () => {
   return gulp.src('hugo/published/stage/**/*.html')
-    .pipe(plugins.htmltidy(tidyOptions))
-    .pipe(plugins.htmlmin(htmlminOptions))
+    .pipe(plugins.htmltidy(config.htmltidyOptions))
+    .pipe(plugins.htmlmin(config.htmlminOptions))
     .pipe(gulp.dest('hugo/published/stage/'));
 });
 
 gulp.task('htmlLive', () => {
   return gulp.src('hugo/published/live/**/*.html')
-    .pipe(plugins.htmltidy(tidyOptions))
-    .pipe(plugins.htmlmin(htmlminOptions))
+    .pipe(plugins.htmltidy(config.htmltidyOptions))
+    .pipe(plugins.htmlmin(config.htmlminOptions))
     .pipe(gulp.dest('hugo/published/live/'));
 });
 
