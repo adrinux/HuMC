@@ -34,25 +34,6 @@ const sync = browserSync.create();
 var config = require('./config/config.js');
 
 
-//
-// Image processing with Graphicsmagick or Imagemagick
-// install either of those then gulp-gm
-// for gm see: https://www.npmjs.com/package/gulp-gm
-// then: npm install gulp-gm --save-dev
-// gulp-gm needs a flag to use imagemagick, see its docs
-gulp.task('magic', () => {
-  return gulp.src('src/img_raw/*')
-    .pipe(plugins.newer('src/img_tmp/'))
-    .pipe(plugins.gm( function (gmfile) {
-      return gmfile
-        .resize(300,300)
-        .paint(10);
-    }))
-  .pipe(plugins.rename({suffix: '-painted'}))
-  .pipe(gulp.dest('src/img_tmp/'));
-});
-
-
 // Image processing with Sharp (vips)
 // install external dependency vips then gulp-sharp
 // for vips links see: https://www.npmjs.com/package/gulp-sharp
