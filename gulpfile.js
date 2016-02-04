@@ -408,13 +408,15 @@ gulp.task('clean:layouts', () => {
 gulp.task('clean:images', () => {
   return Promise.all([
     del('src/img_tmp/**/*'),
-    del('hugo/static/images/*')
+    del('hugo/static/images/*'),
+    del('src/img_responsive/*'),
+    del('hugo/static/images/responsive/*')
   ]);
 });
 // Clean only responsive image derivatives
 gulp.task('clean:responsive', () => {
   return Promise.all([
-    del('src/img_tmp/responsive/*'),
+    del('src/img_responsive/*'),
     del('hugo/static/images/responsive/*')
   ]);
 });
