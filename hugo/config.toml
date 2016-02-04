@@ -1,3 +1,3 @@
-#baseurl is defined when calling hugo from gulpfile.babel.js
+#baseurl is defined when calling hugo from gulpfile.js
 languageCode = "en-us"
 title = "My New Hugo Site"
