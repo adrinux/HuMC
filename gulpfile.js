@@ -202,13 +202,18 @@ gulp.task('html', () => {
 //
 // Inject css and js
 // Inject minified assets in only in stage/live
-gulp.task('inject', () => {
-  return gulp.src('hugo/layouts/index.html')
+gulp.task('inject:head', () => {
+  return gulp.src('hugo/layouts/partials/head-meta.html')
     .pipe(plugins.inject(gulp.src('hugo/static/scripts_head/*.js', {read: false}), {selfClosingTag: true, ignorePath: 'hugo/static/', name: 'head'}))
+    .pipe(plugins.inject(gulp.src('hugo/static/styles/*.css', {read: false}), {ignorePath: 'hugo/static/'}))
+    .pipe(gulp.dest('hugo/layouts/partials/'));
+});
+
+gulp.task('inject:footer', () => {
+  return gulp.src('hugo/layouts/partials/footer-scripts.html')
     .pipe(plugins.inject(gulp.src('hugo/static/scripts/bower-concat.min.js', {read: false}), {ignorePath: 'hugo/static/'}))
     .pipe(plugins.inject(gulp.src(['hugo/static/scripts/*.js', '!hugo/static/scripts/bower-concat.min.js'], {read: false}), {ignorePath: 'hugo/static/'}))
-    .pipe(plugins.inject(gulp.src('hugo/static/styles/*.css', {read: false}), {ignorePath: 'hugo/static/'}))
-    .pipe(gulp.dest('hugo/layouts/'));
+    .pipe(gulp.dest('hugo/layouts/partials/'));
 });
 
 
@@ -336,11 +341,11 @@ gulp.task('watchnsync', () => {
     }
   });
 
-  gulp.watch('src/sass/*.scss', gulp.series('sass', 'inject', 'hugoDev', 'htmlDev'));
-  gulp.watch('src/scripts/*.js', gulp.series('scripts', 'inject', 'hugoDev', 'htmlDev'));
-  gulp.watch('src/scripts_head/*.js', gulp.series('scriptsHead', 'inject', 'hugoDev', 'htmlDev'));
-  gulp.watch('bower_components', gulp.series('bowerjs', 'bowercss', 'inject', 'hugoDev', 'htmlDev'));
-  gulp.watch('src/layouts/**/*.html', gulp.series('bowerjs', 'bowercss', 'inject', 'hugoDev','htmlDev'));
+  gulp.watch('src/sass/*.scss', gulp.series('sass', 'inject:head', 'hugoDev', 'htmlDev'));
+  gulp.watch('src/scripts/*.js', gulp.series('scripts', 'inject:footer', 'hugoDev', 'htmlDev'));
+  gulp.watch('src/scripts_head/*.js', gulp.series('scriptsHead', 'inject:head', 'hugoDev', 'htmlDev'));
+  gulp.watch('bower_components', gulp.series('bowerjs', 'bowercss', 'inject:footer', 'hugoDev', 'htmlDev'));
+  gulp.watch('src/layouts/**/*.html', gulp.series('bowerjs', 'bowercss', 'inject:head', 'inject:footer', 'hugoDev','htmlDev'));
   gulp.watch([
     'hugo/archetypes/*',
     'hugo/content/',
@@ -386,7 +391,7 @@ gulp.task('default',
     gulp.parallel('bowerjs', 'bowercss', 'images'),
     gulp.parallel('sass', 'scripts', 'scriptsHead'),
     'html',
-    'inject',
+    gulp.parallel('inject:head', 'inject:footer'),
     'hugoDev',
     'htmlDev',
     'watchnsync'
@@ -399,7 +404,7 @@ gulp.task('dev',
     gulp.parallel('bowerjs', 'bowercss', 'images'),
     gulp.parallel('sass', 'scripts', 'scriptsHead'),
     'html',
-    'inject',
+    gulp.parallel('inject:head', 'inject:footer'),
     'hugoDev',
     'htmlDev'
   )
@@ -411,7 +416,7 @@ gulp.task('stage',
     gulp.parallel('bowerjs', 'bowercss', 'images'),
     gulp.parallel('minsass','minscripts', 'minscriptsHead'),
     'html',
-    'inject',
+    gulp.parallel('inject:head', 'inject:footer'),
     'hugoStage',
     'htmlStage'
   )
@@ -423,7 +428,7 @@ gulp.task('live',
     gulp.parallel('bowerjs', 'bowercss', 'images'),
     gulp.parallel('minsass','minscripts', 'minscriptsHead'),
     'html',
-    'inject',
+    gulp.parallel('inject:head', 'inject:footer'),
     'hugoLive',
     'htmlLive'
   )

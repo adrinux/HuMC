@@ -1,22 +1,28 @@
 <!doctype html>
-    <head class="no-js" lang="{{ .Site.LanguageCode}}">
-    </head>
-    <body>
-        <!--[if lt IE 8]>
-            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-        <![endif]-->
-    {{ partial "header.html" . }}
+ <html class="no-js" lang="{{ .Site.LanguageCode}}">
+  <head>
+    {{ partial "head-meta.html" . }}
+  </head>
+  <body>
+    <!--[if lt IE 8]>
+        <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
 
-        <h1>{{ .Title }}</h1>
+  {{ partial "header.html" . }}
 
-        {{ if .Params.rendertoc }}
-        {{ .TableOfContents }}
-        {{ end }}
+    <h1>{{ .Title }}</h1>
 
-        <article>
-            {{ .Content }}
-        </article>
+    {{ if .Params.rendertoc }}
+    {{ .TableOfContents }}
+    {{ end }}
 
-    {{ partial "footer.html" . }}
-    </body>
+    <article>
+      {{ .Content }}
+    </article>
+
+  {{ partial "footer.html" . }}
+
+  {{ partial "footer-scripts.html" . }}
+
+  </body>
 </html>
