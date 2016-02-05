@@ -12,7 +12,7 @@ img_responsive
 published
 public
 static
-layouts
+hugo/layouts
 
 # OSX
 .DS_Store
