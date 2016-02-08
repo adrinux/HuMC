@@ -7,6 +7,7 @@ var gulpFilter = require('gulp-filter');
 var del = require('del');
 var lazypipe = require('lazypipe');
 var mainBowerFiles = require('main-bower-files');
+var modernizr = require('modernizr');
 var browserSync = require('browser-sync');
 var rsync = require('rsyncwrapper');
 
@@ -103,6 +104,7 @@ gulp.task('minsass', () => {
     .pipe(gulp.dest(config.sassPaths.dest));
 });
 
+
 //
 // Javascript processing
 //
@@ -149,11 +151,19 @@ gulp.task('minscriptsHead', () => {
     .pipe(gulp.dest('hugo/static/scripts_head/'));
 });
 
-
-// TODO
-//
 // Modernizr
-// Read config and generate a custom build
+// Read custom config and generate a custom build
+function customBuild () {
+  let exec = require('child_process').exec;
+  let cmd = './node_modules/.bin/modernizr ';
+      cmd += '-c ./config/modernizr-config.json ';
+      cmd += '-d ./hugo/static/scripts_head/modernizr.custom.js'
+  exec(cmd, {encoding: 'utf-8'});
+}
+
+gulp.task('custoModernizr', () => {
+  return Promise.all([ customBuild() ]);
+});
 
 
 //
@@ -331,7 +341,6 @@ gulp.task('clean:all', () => {
 });
 
 
-
 //
 // Watch files and serve with Browsersync
 gulp.task('watchnsync', () => {
@@ -342,6 +351,7 @@ gulp.task('watchnsync', () => {
   });
 
   gulp.watch('src/sass/*.scss', gulp.series('sass', 'inject:head', 'hugoDev', 'htmlDev'));
+  gulp.watch('config/modernizr-config.json', gulp.series('custoModernizr', 'inject:head', 'hugoDev', 'htmlDev'));
   gulp.watch('src/scripts/*.js', gulp.series('scripts', 'inject:footer', 'hugoDev', 'htmlDev'));
   gulp.watch('src/scripts_head/*.js', gulp.series('scriptsHead', 'inject:head', 'hugoDev', 'htmlDev'));
   gulp.watch('bower_components', gulp.series('bowerjs', 'bowercss', 'inject:footer', 'hugoDev', 'htmlDev'));
@@ -388,7 +398,7 @@ gulp.task('golive', () => {
 gulp.task('default',
   gulp.series(
     gulp.parallel('clean:all', 'clean:dev'),
-    gulp.parallel('bowerjs', 'bowercss', 'images'),
+    gulp.parallel('custoModernizr', 'bowerjs', 'bowercss', 'images'),
     gulp.parallel('sass', 'scripts', 'scriptsHead'),
     'html',
     gulp.parallel('inject:head', 'inject:footer'),
@@ -401,7 +411,7 @@ gulp.task('default',
 gulp.task('dev',
   gulp.series(
     gulp.parallel('clean:all', 'clean:dev'),
-    gulp.parallel('bowerjs', 'bowercss', 'images'),
+    gulp.parallel('custoModernizr', 'bowerjs', 'bowercss', 'images'),
     gulp.parallel('sass', 'scripts', 'scriptsHead'),
     'html',
     gulp.parallel('inject:head', 'inject:footer'),
@@ -413,7 +423,7 @@ gulp.task('dev',
 gulp.task('stage',
   gulp.series(
     gulp.parallel('clean:all', 'clean:stage'),
-    gulp.parallel('bowerjs', 'bowercss', 'images'),
+    gulp.parallel('custoModernizr', 'bowerjs', 'bowercss', 'images'),
     gulp.parallel('minsass','minscripts', 'minscriptsHead'),
     'html',
     gulp.parallel('inject:head', 'inject:footer'),
@@ -425,7 +435,7 @@ gulp.task('stage',
 gulp.task('live',
   gulp.series(
     gulp.parallel('clean:all', 'clean:live'),
-    gulp.parallel('bowerjs', 'bowercss', 'images'),
+    gulp.parallel('custoModernizr', 'bowerjs', 'bowercss', 'images'),
     gulp.parallel('minsass','minscripts', 'minscriptsHead'),
     'html',
     gulp.parallel('inject:head', 'inject:footer'),

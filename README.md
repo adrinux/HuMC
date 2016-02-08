@@ -25,6 +25,7 @@ You're reading it. For further info see docs for incorportated tools
 - [del](https://www.npmjs.com/package/del)
 - [lazypipe](https://www.npmjs.com/package/lazypipe)
 - [babel-core and related(see package.json)](https://github.com/babel/babel/tree/master/packages/babel-core)
+- [modernizr](https://www.npmjs.com/package/modernizr)
 - [main-bower-files](https://www.npmjs.com/package/main-bower-files)
 - [browser-sync](https://www.npmjs.com/package/browser-sync)
 - [rsyncwrapper](https://www.npmjs.com/package/rsyncwrapper)
@@ -53,6 +54,8 @@ You're reading it. For further info see docs for incorportated tools
 - [Colorguard](https://www.npmjs.com/package/colorguard)
 - [PostCSS Reporter](https://www.npmjs.com/package/postcss-reporter)
 
+## Customising the Modernizr build
+The Modernizr npm module is installed locally when you run npm install. The configuration file is located in 'config/modernizr-config.json' and by default only contains the HTML5shiv and HTML5printshiv. To add detectors either hand edit this file or configure and copy/paste (or download) a new modernizr-config.json at [Modernizr.com](https://modernizr.com/download).
 
 ## Editor setup
 ### Linting
