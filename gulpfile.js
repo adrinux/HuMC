@@ -140,13 +140,11 @@ gulp.task('scriptsHead', () => {
 // stage and live js tasks
 gulp.task('minscripts', () => {
   return gulp.src('src/scripts/*.js', { since: gulp.lastRun('minscripts') })
-    .pipe(lintJs())
     .pipe(minJs())
     .pipe(gulp.dest('hugo/static/scripts/'));
 });
 gulp.task('minscriptsHead', () => {
   return gulp.src('src/scripts_head/*.js', { since: gulp.lastRun('minscriptsHead') })
-    .pipe(lintJs())
     .pipe(minJs())
     .pipe(gulp.dest('hugo/static/scripts_head/'));
 });
