@@ -64,7 +64,8 @@ module.exports = {
     quality: 86,
     progressive: false,
     withMetadata: false,
-    withoutEnlargement: true
+    withoutEnlargement: true,
+    errorOnUnusedConfig: false
   },
 
   // Image optimisation

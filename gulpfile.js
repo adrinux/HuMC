@@ -29,7 +29,6 @@ const plugins = gulpLoadPlugins({
 // Simplify calls to browser-sync
 const sync = browserSync.create();
 
-
 //
 // Import task configuration
 var config = require('./config/config.js');
@@ -40,8 +39,9 @@ var config = require('./config/config.js');
 // for vips links see: https://www.npmjs.com/package/gulp-sharp
 // then: npm install gulp-sharp --save-dev
 gulp.task('sharp', () => {
+  let sharpCache = require('gulp-cache-money')({ cacheFile: __dirname + '/.cache-sharp' });
   return gulp.src('src/img_raw/*')
-    .pipe(plugins.newer('src/img_tmp/'))
+    .pipe(sharpCache({cascade: false}))
     .pipe(plugins.sharp(config.sharpOptions))
     //.pipe(plugins.rename((config.sharpRename)))
   .pipe(gulp.dest('src/img_tmp/'));
@@ -52,8 +52,9 @@ gulp.task('sharp', () => {
 // Responsive Images
 // Generate diiferent sized images for srcset
 gulp.task('responsive', () => {
+  let responsiveCache = require('gulp-cache-money')({ cacheFile: __dirname + '/.cache-responsive' });
   return gulp.src('src/img_tmp/**/*.{jpg,png}')
-    .pipe(plugins.newer('src/img_responsive/'))
+    .pipe(responsiveCache({cascade: false}))
     .pipe(plugins.responsive(config.responsiveOptions, config.responsiveGlobals))
   .pipe(gulp.dest('src/img_responsive/'));
 });
@@ -63,8 +64,9 @@ gulp.task('responsive', () => {
 // Optimize and copy images to final destination
 // Might want to add filter here, no need to send svg to imageOptim for example
 gulp.task('imgMin', () => {
+  let imgminCache = require('gulp-cache-money')({ cacheFile: __dirname + '/.cache-imgmin' });
   return gulp.src('src/img_tmp/**/*', 'src/img_responsive/**/*')
-    .pipe(plugins.newer('hugo/static/images/'))
+    .pipe(imgminCache({cascade: false}))
     .pipe(plugins.imagemin(config.imageminOptions))
     .pipe(plugins.imageOptim.optimize(config.imageoptimOptions))
   .pipe(gulp.dest('hugo/static/images/'));
@@ -284,6 +286,12 @@ gulp.task('htmlLive', () => {
 
 
 //
+// Testing
+// Jasmine, Mocha...
+// TODO: what to test?
+
+
+//
 // Cleaning
 // Specific cleaning tasks for dev/stage/live of hugo/published.
 gulp.task('clean:dev', () => {
@@ -348,6 +356,7 @@ gulp.task('watchnsync', () => {
     }
   });
 
+  gulp.watch('src/img_tmp', gulp.series('responsive', 'imgMin', 'hugoDev', 'htmlDev'));
   gulp.watch('src/sass/*.scss', gulp.series('sass', 'inject:head', 'hugoDev', 'htmlDev'));
   gulp.watch('config/modernizr-config.json', gulp.series('custoModernizr', 'inject:head', 'hugoDev', 'htmlDev'));
   gulp.watch('src/scripts/*.js', gulp.series('scripts', 'inject:footer', 'hugoDev', 'htmlDev'));
@@ -383,12 +392,6 @@ gulp.task('golive', () => {
     })
   ]);
 });
-
-
-//
-// Testing
-// Jasmine, Mocha...
-// TODO: what to test?
 
 
 //
