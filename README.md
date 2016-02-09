@@ -42,12 +42,12 @@ You're reading it. For further info see docs for incorportated tools
 - [gulp-util](https://www.npmjs.com/package/gulp-util)
 - [gulp-filter](https://www.npmjs.com/package/gulp-filter)
 - [gulp-htmlmin](https://www.npmjs.com/package/gulp-htmlmin)
-- [gulp-newer](https://www.npmjs.com/package/gulp-newer)
 - [gulp-sharp](https://www.npmjs.com/package/gulp-sharp)
 - [gulp-gm](https://www.npmjs.com/package/gulp-gm)
 - [gulp-imagemin](https://www.npmjs.com/package/gulp-imagemin)
 - [gulp-imageoptim](https://www.npmjs.com/package/gulp-imageoptim)
 - [gulp-responsive](https://www.npmjs.com/package/gulp-responsive)
+- [gulp-cache-money](https://www.npmjs.com/package/gulp-cache-money)
 
 ### PostCSS plugins included
 - [Autoprefixer](https://www.npmjs.com/package/autoprefixer)

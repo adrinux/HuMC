@@ -48,7 +48,6 @@
     "gulp-imageoptim": "^0.3.6",
     "gulp-inject": "^3.0.0",
     "gulp-load-plugins": "^1.2.0",
-    "gulp-newer": "^1.1.0",
     "gulp-postcss": "^6.0.1",
     "gulp-rename": "^1.2.2",
     "gulp-responsive": "^2.0.0",
