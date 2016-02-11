@@ -293,58 +293,48 @@ gulp.task('htmlLive', () => {
 
 //
 // Cleaning
-// Specific cleaning tasks for dev/stage/live of hugo/published.
-gulp.task('clean:dev', () => {
-  return Promise.all([ del('hugo/published/dev/') ]);
-});
-gulp.task('clean:stage', () => {
-  return Promise.all([ del('hugo/published/stage/') ]);
-});
-gulp.task('clean:live', () => {
-  return Promise.all([ del('hugo/published/live/') ]);
-});
-// Clean any assets we output into hugo/static
-gulp.task('clean:static', () => {
-  return Promise.all([
-    del('hugo/static/scripts/*'),
-    del('hugo/static/scripts_head/*'),
-    del('hugo/static/styles/*')
-  ]);
-});
+// Specific cleaning functions for dev/stage/live of hugo/published.
+function cleanDev (done) {
+  return del(['hugo/published/dev/'], done);
+}
+function cleanStage (done) {
+  return del(['hugo/published/stage/'], done);
+}
+function cleanLive (done) {
+  return del(['hugo/published/live/'], done);
+}
+
+// Clean any assets we output into hugo/static (except images)
+function cleanStatic (done) {
+  return del([
+    'hugo/static/scripts/*',
+    'hugo/static/scripts_head/*',
+    'hugo/static/styles/*'
+    ], done);
+}
+
 // Clean any assets we output into hugo/layouts
-gulp.task('clean:layouts', () => {
-  return Promise.all([
-    del('hugo/layouts/**/*.html')
-  ]);
-});
+function cleanLayouts (done) {
+  return del(['hugo/layouts/**/*.html'], done);
+}
 
 // Clean temporary image files created during processing
-gulp.task('clean:images', () => {
-  return Promise.all([
-    del('src/img_tmp/**/*'),
-    del('hugo/static/images/*'),
-    del('src/img_responsive/*'),
-    del('hugo/static/images/responsive/*')
-  ]);
-});
+function cleanImages (done) {
+  return del([
+    'src/img_tmp/**/*',
+    'hugo/static/images/*',
+    'src/img_responsive/*',
+    'hugo/static/images/responsive/*'
+    ], done);
+}
+
 // Clean only responsive image derivatives
-gulp.task('clean:responsive', () => {
-  return Promise.all([
-    del('src/img_responsive/*'),
-    del('hugo/static/images/responsive/*')
-  ]);
-});
-
-
-// Clean everything at once (except images)
-gulp.task('clean:all', () => {
-  return Promise.all([
-    del('hugo/static/scripts/*'),
-    del('hugo/static/scripts_head/*'),
-    del('hugo/static/styles/*'),
-    del('hugo/layouts/**/*.html')
-  ]);
-});
+function cleanResponsive (done) {
+  return del([
+    'src/img_responsive/*',
+    'hugo/static/images/responsive/*'
+    ], done);
+}
 
 
 //
@@ -398,7 +388,7 @@ gulp.task('golive', () => {
 // 'gulp' is the main development task, essentially dev + watch + browsersync
 gulp.task('default',
   gulp.series(
-    gulp.parallel('clean:all', 'clean:dev'),
+    gulp.parallel(cleanStatic, cleanLayouts, cleanDev),
     gulp.parallel('custoModernizr', 'bowerjs', 'bowercss', 'images'),
     gulp.parallel('sass', 'scripts', 'scriptsHead'),
     'html',
@@ -411,7 +401,7 @@ gulp.task('default',
 // 'gulp dev' a single run, hugo will generate pages for drafts and future posts
 gulp.task('dev',
   gulp.series(
-    gulp.parallel('clean:all', 'clean:dev'),
+    gulp.parallel(cleanStatic, cleanLayouts, cleanDev),
     gulp.parallel('custoModernizr', 'bowerjs', 'bowercss', 'images'),
     gulp.parallel('sass', 'scripts', 'scriptsHead'),
     'html',
@@ -423,7 +413,7 @@ gulp.task('dev',
 // 'gulp stage' a single run, hugo will generate pages for drafts
 gulp.task('stage',
   gulp.series(
-    gulp.parallel('clean:all', 'clean:stage'),
+    gulp.parallel(cleanStatic, cleanLayouts, cleanStage),
     gulp.parallel('custoModernizr', 'bowerjs', 'bowercss', 'images'),
     gulp.parallel('minsass','minscripts', 'minscriptsHead'),
     'html',
@@ -435,7 +425,7 @@ gulp.task('stage',
 // 'gulp live' a single run, production only
 gulp.task('live',
   gulp.series(
-    gulp.parallel('clean:all', 'clean:live'),
+    gulp.parallel(cleanStatic, cleanLayouts, cleanLive),
     gulp.parallel('custoModernizr', 'bowerjs', 'bowercss', 'images'),
     gulp.parallel('minsass','minscripts', 'minscriptsHead'),
     'html',
@@ -444,3 +434,8 @@ gulp.task('live',
     'htmlLive'
   )
 );
+
+// Clean all images
+gulp.task('clean:images', cleanImages);
+// Clean all responsive image sizes
+gulp.task('clean:responsive', cleanResponsive);
