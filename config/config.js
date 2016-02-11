@@ -65,6 +65,7 @@ module.exports = {
     progressive: false,
     withMetadata: false,
     withoutEnlargement: true,
+    errorOnEnglargement: false,
     errorOnUnusedConfig: false
   },
 

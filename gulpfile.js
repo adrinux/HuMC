@@ -34,31 +34,45 @@ const sync = browserSync.create();
 var config = require('./config/config.js');
 
 
+//
+// Image processing
+
+// Image processing via gulp-gm
+function magic() {
+  let magicCache = require('gulp-cache-money')({ cacheFile: __dirname + '/.cache-magic' });
+  return gulp.src('src/img_raw/*.{jpg,png}')
+    .pipe(magicCache({cascade: false}))
+    .pipe(plugins.gm( function (gmfile) {
+      return gmfile
+        .paint(10);
+    }))
+    .pipe(plugins.rename({suffix: '-painted'}))
+    .pipe(gulp.dest('src/img_tmp/'));
+}
+
 // Image processing with Sharp (vips)
 // install external dependency vips then gulp-sharp
 // for vips links see: https://www.npmjs.com/package/gulp-sharp
 // then: npm install gulp-sharp --save-dev
 gulp.task('sharp', () => {
   let sharpCache = require('gulp-cache-money')({ cacheFile: __dirname + '/.cache-sharp' });
-  return gulp.src('src/img_raw/*')
+  return gulp.src('src/img_raw/*.{jpg,png}')
     .pipe(sharpCache({cascade: false}))
     .pipe(plugins.sharp(config.sharpOptions))
     //.pipe(plugins.rename((config.sharpRename)))
   .pipe(gulp.dest('src/img_tmp/'));
 });
 
-
 //
 // Responsive Images
 // Generate diiferent sized images for srcset
 gulp.task('responsive', () => {
   let responsiveCache = require('gulp-cache-money')({ cacheFile: __dirname + '/.cache-responsive' });
-  return gulp.src('src/img_tmp/**/*.{jpg,png}')
+  return gulp.src('src/img_tmp/*.{jpg,png}')
     .pipe(responsiveCache({cascade: false}))
     .pipe(plugins.responsive(config.responsiveOptions, config.responsiveGlobals))
   .pipe(gulp.dest('src/img_responsive/'));
 });
-
 
 //
 // Optimize and copy images to final destination
@@ -78,6 +92,7 @@ gulp.task('imgMin', () => {
 // optimisation tasks
 gulp.task('images',
   gulp.series(
+    magic,
     'sharp',
     'responsive',
     'imgMin'
@@ -324,7 +339,11 @@ function cleanImages (done) {
     'src/img_tmp/**/*',
     'hugo/static/images/*',
     'src/img_responsive/*',
-    'hugo/static/images/responsive/*'
+    'hugo/static/images/responsive/*',
+    '.cache-magic',
+    '.cache-sharp',
+    '.cache-responsive',
+    '.cache-imgmin'
     ], done);
 }
 
@@ -332,7 +351,9 @@ function cleanImages (done) {
 function cleanResponsive (done) {
   return del([
     'src/img_responsive/*',
-    'hugo/static/images/responsive/*'
+    'hugo/static/images/responsive/*',
+    '.cache-responsive',
+    '.cache-imgmin'
     ], done);
 }
 
@@ -359,6 +380,7 @@ gulp.task('watchnsync', () => {
     'hugo/data/'
   ], gulp.series('hugoDev')).on('change', sync.reload);
 });
+
 
 //
 // Deploy
@@ -436,6 +458,6 @@ gulp.task('live',
 );
 
 // Clean all images
-gulp.task('clean:images', cleanImages);
-// Clean all responsive image sizes
+gulp.task('reprocess', gulp.series(cleanImages, gulp.parallel(magic,'images')));
+// Clean all responsive image sizes (use after modifying responsive config)
 gulp.task('clean:responsive', cleanResponsive);
