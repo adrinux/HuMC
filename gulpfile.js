@@ -7,7 +7,6 @@ var gulpFilter = require('gulp-filter');
 var del = require('del');
 var lazypipe = require('lazypipe');
 var mainBowerFiles = require('main-bower-files');
-var modernizr = require('modernizr');
 var browserSync = require('browser-sync');
 var rsync = require('rsyncwrapper');
 
@@ -171,8 +170,8 @@ gulp.task('minscriptsHead', () => {
 function customBuild () {
   let exec = require('child_process').exec;
   let cmd = './node_modules/.bin/modernizr ';
-      cmd += '-c ./config/modernizr-config.json ';
-      cmd += '-d ./hugo/static/scripts_head/modernizr.custom.js'
+  cmd += '-c ./config/modernizr-config.json ';
+  cmd += '-d ./hugo/static/scripts_head/modernizr.custom.js';
   exec(cmd, {encoding: 'utf-8'});
 }
 
@@ -325,7 +324,7 @@ function cleanStatic (done) {
     'hugo/static/scripts/*',
     'hugo/static/scripts_head/*',
     'hugo/static/styles/*'
-    ], done);
+  ], done);
 }
 
 // Clean any assets we output into hugo/layouts
@@ -344,7 +343,7 @@ function cleanImages (done) {
     '.cache-sharp',
     '.cache-responsive',
     '.cache-imgmin'
-    ], done);
+  ], done);
 }
 
 // Clean only responsive image derivatives
@@ -354,7 +353,7 @@ function cleanResponsive (done) {
     'hugo/static/images/responsive/*',
     '.cache-responsive',
     '.cache-imgmin'
-    ], done);
+  ], done);
 }
 
 
