@@ -20,20 +20,12 @@ module.exports = {
 
   //
   // Image processing
-  // Using sharp to do simple edits
-  sharpOptions: {
-    resize : [1280, 1140],
-    max : false,
-    withoutEnlargement: true,
-    quality : 86,
-    progressive : false
-  },
 
-  // Optionally rename images processed with sharp
-  // Uncomment the rename line in the gulpfile.js 'sharp' task before use
+  // Optionally rename images processed with gm
+  // Uncomment the rename line in the gulpfile.js 'imgMagic' task before use
   // For options see https://github.com/hparra/gulp-rename#notes
-  sharpRename: {
-    suffix: '-sharp'
+  magicRename: {
+    suffix: '-sized'
   },
 
   // Responsive image generation via gulp-responsive
