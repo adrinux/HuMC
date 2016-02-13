@@ -64,7 +64,7 @@ module.exports = {
   // Image optimisation
   // gulp-imagemin
   imageminOptions: {
-    progressive: false,
+    interlaced: false,
     svgoPlugins: [{removeViewBox: false}]
   },
   // gulp-imageoptim
