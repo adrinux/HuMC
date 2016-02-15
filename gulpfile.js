@@ -320,7 +320,8 @@ function cleanImages (done) {
     'hugo/static/images/responsive/*',
     '.cache-magic',
     '.cache-responsive',
-    '.cache-imgmin'
+    '.cache-imgmin',
+    '.cache-imgoptim'
   ], done);
 }
 
@@ -330,7 +331,7 @@ function cleanResponsive (done) {
     'src/img_responsive/*',
     'hugo/static/images/responsive/*',
     '.cache-responsive',
-    '.cache-imgmin'
+    '.cache-imgoptim'
   ], done);
 }
 
