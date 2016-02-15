@@ -59,18 +59,13 @@ function imgResponsive() {
 
 //
 // Optimize responsive images and copy to final location
-// function imgOptim () {
-// }
-// function customBuild () {
-//   let exec = require('child_process').exec;
-//   let cmd = './node_modules/.bin/modernizr ';
-//   cmd += '-c ./config/modernizr-config.json ';
-//   cmd += '-d ./hugo/static/scripts_head/modernizr.custom.js';
-//   exec(cmd, {encoding: 'utf-8'});
-// }
-
-
-
+function imgOptim () {
+  let imgoptimCache = require('gulp-cache-money')({ cacheFile: __dirname + '/.cache-imageoptim' });
+  return gulp.src('src/img_responsive/**/*.{jpg,png}')
+    .pipe(imgoptimCache({cascade: false}))
+    .pipe(plugins.imageOptim.optimize(config.imageoptimOptions))
+  .pipe(gulp.dest('hugo/static/images/'));
+}
 
 //
 // Optimize and copy svg or gif images to final destination
@@ -349,7 +344,7 @@ gulp.task('watchnsync', () => {
     }
   });
 
-  gulp.watch('src/img_tmp', gulp.series('responsive', 'imgMin', 'hugoDev', 'htmlDev'));
+  gulp.watch('src/img_tmp', gulp.series('responsive', imgOptim, 'imgMin', 'hugoDev', 'htmlDev'));
   gulp.watch('src/sass/*.scss', gulp.series('sass', 'inject:head', 'hugoDev', 'htmlDev'));
   gulp.watch('config/modernizr-config.json', gulp.series('custoModernizr', 'inject:head', 'hugoDev', 'htmlDev'));
   gulp.watch('src/scripts/*.js', gulp.series('scripts', 'inject:footer', 'hugoDev', 'htmlDev'));
@@ -395,7 +390,7 @@ gulp.task('default',
     gulp.parallel(cleanStatic, cleanLayouts, cleanDev),
     gulp.parallel('custoModernizr', 'bowerjs', 'bowercss', imgMagic),
     gulp.parallel('sass', 'scripts', 'scriptsHead', imgResponsive),
-    gulp.parallel('html', 'imgMin'),
+    gulp.parallel('html', 'imgMin', imgOptim),
     gulp.parallel('inject:head', 'inject:footer'),
     'hugoDev',
     'htmlDev',
@@ -408,7 +403,7 @@ gulp.task('dev',
     gulp.parallel(cleanStatic, cleanLayouts, cleanDev),
     gulp.parallel('custoModernizr', 'bowerjs', 'bowercss', imgMagic),
     gulp.parallel('sass', 'scripts', 'scriptsHead', imgResponsive),
-    gulp.parallel('html', 'imgMin'),
+    gulp.parallel('html', 'imgMin', imgOptim),
     gulp.parallel('inject:head', 'inject:footer'),
     'hugoDev',
     'htmlDev'
@@ -420,7 +415,7 @@ gulp.task('stage',
     gulp.parallel(cleanStatic, cleanLayouts, cleanStage),
     gulp.parallel('custoModernizr', 'bowerjs', 'bowercss', imgMagic),
     gulp.parallel('minsass','minscripts', 'minscriptsHead', imgResponsive),
-    gulp.parallel('html', 'imgMin'),
+    gulp.parallel('html', 'imgMin', imgOptim),
     gulp.parallel('inject:head', 'inject:footer'),
     'hugoStage',
     'htmlStage'
@@ -432,7 +427,7 @@ gulp.task('live',
     gulp.parallel(cleanStatic, cleanLayouts, cleanLive),
     gulp.parallel('custoModernizr', 'bowerjs', 'bowercss', imgMagic),
     gulp.parallel('minsass','minscripts', 'minscriptsHead', imgResponsive),
-    gulp.parallel('html', 'imgMin'),
+    gulp.parallel('html', 'imgMin', imgOptim),
     gulp.parallel('inject:head', 'inject:footer'),
     'hugoLive',
     'htmlLive'
@@ -440,6 +435,6 @@ gulp.task('live',
 );
 
 // Clean and regenerate all images
-gulp.task('reprocess', gulp.series(cleanImages, imgMagic, imgResponsive, 'imgMin'));
+gulp.task('reprocess', gulp.series(cleanImages, imgMagic, imgResponsive, imgOptim, 'imgMin'));
 // Clean and regenerate responsive images (use after modifying responsive config)
-gulp.task('reprocess:responsive', gulp.series(cleanResponsive, imgResponsive));
+gulp.task('reprocess:responsive', gulp.series(cleanResponsive, imgResponsive, imgOptim));

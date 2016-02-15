@@ -70,7 +70,8 @@ module.exports = {
   // gulp-imageoptim
   imageoptimOptions: {
     status: true,
-    batchSize: 100
+    batchSize: 100,
+    jpegmini: true
   },
 
 
