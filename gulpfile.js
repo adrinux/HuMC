@@ -206,32 +206,19 @@ function html () {
 
 //
 // Inject css and js
-// Inject minified assets in only in stage/live
-function inject () {
+function injectHead () {
   return gulp.src('hugo/layouts/partials/head-meta.html')
     .pipe(plugins.inject(gulp.src('hugo/static/scripts_head/*.js', {read: false}), {selfClosingTag: true, ignorePath: 'hugo/static/', name: 'head'}))
     .pipe(plugins.inject(gulp.src('hugo/static/styles/*.css', {read: false}), {ignorePath: 'hugo/static/'}))
-    .pipe(gulp.src('hugo/layouts/partials/footer-scripts.html', {passthrough: true}))
-    .pipe(plugins.inject(gulp.src('hugo/static/scripts/bower-concat.min.js', {read: false}), {ignorePath: 'hugo/static/'}))
-    .pipe(plugins.inject(gulp.src(['hugo/static/scripts/*.js', '!hugo/static/scripts/bower-concat.min.js'], {read: false}), {ignorePath: 'hugo/static/'}))
     .pipe(gulp.dest('hugo/layouts/partials/'));
 }
 
-
-
-gulp.task('inject:head', () => {
-  return gulp.src('hugo/layouts/partials/head-meta.html')
-    .pipe(plugins.inject(gulp.src('hugo/static/scripts_head/*.js', {read: false}), {selfClosingTag: true, ignorePath: 'hugo/static/', name: 'head'}))
-    .pipe(plugins.inject(gulp.src('hugo/static/styles/*.css', {read: false}), {ignorePath: 'hugo/static/'}))
-    .pipe(gulp.dest('hugo/layouts/partials/'));
-});
-
-gulp.task('inject:footer', () => {
+function injectFoot () {
   return gulp.src('hugo/layouts/partials/footer-scripts.html')
     .pipe(plugins.inject(gulp.src('hugo/static/scripts/bower-concat.min.js', {read: false}), {ignorePath: 'hugo/static/'}))
     .pipe(plugins.inject(gulp.src(['hugo/static/scripts/*.js', '!hugo/static/scripts/bower-concat.min.js'], {read: false}), {ignorePath: 'hugo/static/'}))
     .pipe(gulp.dest('hugo/layouts/partials/'));
-});
+}
 
 
 //
@@ -360,12 +347,12 @@ gulp.task('watchnsync', () => {
   });
 
   gulp.watch('src/img_tmp', gulp.series('responsive', imgOptim, imgMin, 'hugoDev', 'htmlDev'));
-  gulp.watch('src/sass/*.scss', gulp.series(sass, 'inject:head', 'hugoDev', 'htmlDev'));
-  gulp.watch('config/modernizr-config.json', gulp.series('custoModernizr', 'inject:head', 'hugoDev', 'htmlDev'));
-  gulp.watch('src/scripts/*.js', gulp.series(scripts, 'inject:footer', 'hugoDev', 'htmlDev'));
-  gulp.watch('src/scripts_head/*.js', gulp.series(scriptsHead, 'inject:head', 'hugoDev', 'htmlDev'));
-  gulp.watch('bower_components', gulp.series(bowerjs, bowercss, 'inject:footer', 'hugoDev', 'htmlDev'));
-  gulp.watch('src/layouts/**/*.html', gulp.series(bowerjs, bowercss, 'inject:head', 'inject:footer', 'hugoDev','htmlDev'));
+  gulp.watch('src/sass/*.scss', gulp.series(sass, injectHead, 'hugoDev', 'htmlDev'));
+  gulp.watch('config/modernizr-config.json', gulp.series('custoModernizr', injectHead, 'hugoDev', 'htmlDev'));
+  gulp.watch('src/scripts/*.js', gulp.series(scripts, injectFoot, 'hugoDev', 'htmlDev'));
+  gulp.watch('src/scripts_head/*.js', gulp.series(scriptsHead, injectHead, 'hugoDev', 'htmlDev'));
+  gulp.watch('bower_components', gulp.series(bowerjs, bowercss, injectFoot, 'hugoDev', 'htmlDev'));
+  gulp.watch('src/layouts/**/*.html', gulp.series(bowerjs, bowercss, injectHead, injectFoot, 'hugoDev','htmlDev'));
   gulp.watch([
     'hugo/archetypes/*',
     'hugo/content/',
@@ -406,7 +393,7 @@ gulp.task('default',
     gulp.parallel('custoModernizr', bowerjs, bowercss, imgMagic),
     gulp.parallel(sass, scripts, scriptsHead, imgResponsive),
     gulp.parallel(html, imgMin, imgOptim),
-    gulp.parallel('inject:head', 'inject:footer'),
+    gulp.parallel(injectHead, injectFoot),
     'hugoDev',
     'htmlDev',
     'watchnsync'
@@ -419,7 +406,7 @@ gulp.task('dev',
     gulp.parallel('custoModernizr', bowerjs, bowercss, imgMagic),
     gulp.parallel(sass, scripts, scriptsHead, imgResponsive),
     gulp.parallel(html, imgMin, imgOptim),
-    gulp.parallel(inject),
+    gulp.parallel(injectHead, injectFoot),
     'hugoDev',
     'htmlDev'
   )
@@ -431,7 +418,7 @@ gulp.task('stage',
     gulp.parallel('custoModernizr', bowerjs, bowercss, imgMagic),
     gulp.parallel(minsass,minscripts, minscriptsHead, imgResponsive),
     gulp.parallel(html, imgMin, imgOptim),
-    gulp.parallel('inject:head', 'inject:footer'),
+    gulp.parallel(injectHead, injectFoot),
     'hugoStage',
     'htmlStage'
   )
@@ -443,7 +430,7 @@ gulp.task('live',
     gulp.parallel('custoModernizr', bowerjs, bowercss, imgMagic),
     gulp.parallel(minsass,minscripts, minscriptsHead, imgResponsive),
     gulp.parallel(html, imgMin, imgOptim),
-    gulp.parallel('inject:head', 'inject:footer'),
+    gulp.parallel(injectHead, injectFoot),
     'hugoLive',
     'htmlLive'
   )
