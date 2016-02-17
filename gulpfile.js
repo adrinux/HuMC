@@ -9,6 +9,7 @@ var lazypipe = require('lazypipe');
 var mainBowerFiles = require('main-bower-files');
 var browserSync = require('browser-sync');
 var rsync = require('rsyncwrapper');
+var cache = require('gulp-cache');
 
 
 // Auto load Gulp plugins
@@ -50,10 +51,8 @@ function imgMagic() {
 // Responsive Images
 // Generate diiferent sized images for srcset
 function imgResponsive() {
-  let responsiveCache = require('gulp-cache-money')({ cacheFile: __dirname + '/.cache-responsive' });
   return gulp.src('src/img_tmp/**/*.{jpg,png}')
-    .pipe(responsiveCache({cascade: false}))
-    .pipe(plugins.responsive(config.responsiveOptions, config.responsiveGlobals))
+    .pipe(cache(plugins.responsive(config.responsiveOptions, config.responsiveGlobals)))
     .pipe(gulp.dest('src/img_responsive/'));
 }
 
@@ -335,6 +334,10 @@ function cleanResponsive (done) {
     '.cache-imgoptim'
   ], done);
 }
+
+gulp.task('clear', (done) => {
+  return cache.clearAll(done);
+});
 
 
 //
