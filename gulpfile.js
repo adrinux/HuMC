@@ -9,7 +9,6 @@ var lazypipe = require('lazypipe');
 var mainBowerFiles = require('main-bower-files');
 var browserSync = require('browser-sync');
 var rsync = require('rsyncwrapper');
-var cache = require('gulp-cache');
 
 
 // Auto load Gulp plugins
@@ -50,7 +49,7 @@ function imgMagic() {
 // Generate diiferent sized images for srcset
 function imgResponsive() {
   return gulp.src('src/img_tmp/**/*.{jpg,png}')
-    .pipe(cache(plugins.responsive(config.responsiveOptions, config.responsiveGlobals)))
+    .pipe(plugins.responsive(config.responsiveOptions, config.responsiveGlobals))
     .pipe(gulp.dest('src/img_responsive/'));
 }
 
@@ -387,9 +386,9 @@ gulp.task('golive', () => {
 gulp.task('default',
   gulp.series(
     gulp.parallel(cleanStatic, cleanLayouts, cleanDev),
-    gulp.parallel('custoModernizr', bowerjs, bowercss, imgMagic),
-    gulp.parallel(sass, scripts, scriptsHead, imgResponsive),
-    gulp.parallel(html, imgMin, imgOptim),
+    gulp.parallel('custoModernizr', bowerjs, bowercss),
+    gulp.parallel(sass, scripts, scriptsHead),
+    gulp.parallel(html),
     gulp.parallel(injectHead, injectFoot),
     'hugoDev',
     'htmlDev',
@@ -400,9 +399,9 @@ gulp.task('default',
 gulp.task('dev',
   gulp.series(
     gulp.parallel(cleanStatic, cleanLayouts, cleanDev),
-    gulp.parallel('custoModernizr', bowerjs, bowercss, imgMagic),
-    gulp.parallel(sass, scripts, scriptsHead, imgResponsive),
-    gulp.parallel(html, imgMin, imgOptim),
+    gulp.parallel('custoModernizr', bowerjs, bowercss),
+    gulp.parallel(sass, scripts, scriptsHead),
+    gulp.parallel(html),
     gulp.parallel(injectHead, injectFoot),
     'hugoDev',
     'htmlDev'
@@ -412,9 +411,9 @@ gulp.task('dev',
 gulp.task('stage',
   gulp.series(
     gulp.parallel(cleanStatic, cleanLayouts, cleanStage),
-    gulp.parallel('custoModernizr', bowerjs, bowercss, imgMagic),
-    gulp.parallel(minsass,minscripts, minscriptsHead, imgResponsive),
-    gulp.parallel(html, imgMin, imgOptim),
+    gulp.parallel('custoModernizr', bowerjs, bowercss),
+    gulp.parallel(minsass,minscripts, minscriptsHead),
+    gulp.parallel(html),
     gulp.parallel(injectHead, injectFoot),
     'hugoStage',
     'htmlStage'
@@ -424,9 +423,9 @@ gulp.task('stage',
 gulp.task('live',
   gulp.series(
     gulp.parallel(cleanStatic, cleanLayouts, cleanLive),
-    gulp.parallel('custoModernizr', bowerjs, bowercss, imgMagic),
-    gulp.parallel(minsass,minscripts, minscriptsHead, imgResponsive),
-    gulp.parallel(html, imgMin, imgOptim),
+    gulp.parallel('custoModernizr', bowerjs, bowercss),
+    gulp.parallel(minsass,minscripts, minscriptsHead),
+    gulp.parallel(html),
     gulp.parallel(injectHead, injectFoot),
     'hugoLive',
     'htmlLive'
