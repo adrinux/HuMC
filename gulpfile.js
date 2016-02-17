@@ -36,9 +36,7 @@ var config = require('./config/config.js');
 //
 // Image processing via gulp-gm
 function imgMagic() {
-  let magicCache = require('gulp-cache-money')({ cacheFile: __dirname + '/.cache-magic' });
   return gulp.src('src/img_raw/*.{jpg,png}')
-    .pipe(magicCache({cascade: false}))
     .pipe(plugins.gm( function (gmfile) {
       return gmfile
         .resize(1280, 1024);
@@ -59,9 +57,7 @@ function imgResponsive() {
 //
 // Optimize responsive images and copy to final location
 function imgOptim () {
-  let imgoptimCache = require('gulp-cache-money')({ cacheFile: __dirname + '/.cache-imageoptim' });
   return gulp.src('src/img_responsive/**/*.{jpg,png}')
-    .pipe(imgoptimCache({cascade: false}))
     .pipe(plugins.imageOptim.optimize(config.imageoptimOptions))
     .pipe(gulp.dest('hugo/static/images/'));
 }
@@ -69,9 +65,7 @@ function imgOptim () {
 //
 // Optimize and copy svg or gif images to final destination
 function imgMin () {
-  let imgminCache = require('gulp-cache-money')({ cacheFile: __dirname + '/.cache-imgmin' });
   return gulp.src('src/img_tmp/**/*.{svg,gif}')
-    .pipe(imgminCache({cascade: false}))
     .pipe(plugins.imagemin(config.imageminOptions))
     .pipe(gulp.dest('hugo/static/images/'));
 }
