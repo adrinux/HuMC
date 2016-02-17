@@ -1,8 +1,11 @@
 # web-starter-hugo
-A static web site starter kit using Gulp and Hugo static site generator
+A static web site starter kit using gulp and Hugo static site generator. Uses gulp to process images, javascript, sass, css and html into a containted Hugo site and runs Hugo to process it all.
+
+## Features
+Includes seperate dev, stage and live flows. Includes browsersync for live sync during development. Has hugo templates based on [HTML5 boilerplate](https://html5boilerplate.com/). Includes normalize.css as a base for your CSS.
 
 ## How to use
-Eventually this project should be a Yeoman generator, in the meantime:
+Eventually this project should be a Yeoman/Slush generator, in the meantime:
 
 ```
 git clone
@@ -11,12 +14,22 @@ bower install
 # test run with
 gulp dev
 ```
+You may need to edit some variables in config/config.js before "gulp dev" will function properly.
 
-## Features
+Currently image processing tasks need to be run manually, be sure to run them after adding new images or changing image processing configuration.
 
+### Gulp tasks
+Process images: "gulp reprocess"
+Process responsive images: "gulp reprocess:responsive"
+To develop with live sync: "gulp"
+To do a development run without live sync "gulp dev"
+For a staging site run: "gulp stage"
+For a live/production site run: "gulp live" 
+To deploy to staging with rsync (configure first): "gulp upstage"
+To deploy to live with rsync (configure first): "gulp golive"
 
 ## Documentation
-You're reading it. For further info see docs for incorportated tools
+You're reading it. For further info see docs for incorportated tools:
 
 - [Gulp](https://github.com/gulpjs/gulp/tree/master/docs)
 - [Hugo](https://gohugo.io/overview/introduction/)
@@ -47,7 +60,6 @@ You're reading it. For further info see docs for incorportated tools
 - [gulp-imagemin](https://www.npmjs.com/package/gulp-imagemin)
 - [gulp-imageoptim](https://www.npmjs.com/package/gulp-imageoptim)
 - [gulp-responsive](https://www.npmjs.com/package/gulp-responsive)
-- [gulp-cache-money](https://www.npmjs.com/package/gulp-cache-money)
 
 ### PostCSS plugins included
 - [Autoprefixer](https://www.npmjs.com/package/autoprefixer)
@@ -60,7 +72,3 @@ The Modernizr npm module is installed locally when you run npm install. The conf
 ## Editor setup
 ### Linting
 (Describe .eslintrc.json use with sublime text and linters)
-
-
-## Someday features
-Yeoman generator to generate this.
