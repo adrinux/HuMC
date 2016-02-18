@@ -353,7 +353,7 @@ gulp.task('watchnsync', () => {
   gulp.watch('config/modernizr-config.json', gulp.series('custoModernizr', injectHead, 'hugoDev', 'htmlDev'));
   gulp.watch('src/scripts/*.js', gulp.series(scripts, injectFoot, 'hugoDev', 'htmlDev'));
   gulp.watch('src/scripts_head/*.js', gulp.series(scriptsHead, injectHead, 'hugoDev', 'htmlDev'));
-  gulp.watch('bower_components', gulp.series(bowerjs, bowercss, injectFoot, 'hugoDev', 'htmlDev'));
+  gulp.watch('bower_components', gulp.series(bowersass, bowerjs, bowercss, sass, injectHead, injectFoot, 'hugoDev', 'htmlDev'));
   gulp.watch('src/layouts/**/*.html', gulp.series(bowerjs, bowercss, injectHead, injectFoot, 'hugoDev','htmlDev'));
   gulp.watch([
     'hugo/archetypes/*',
@@ -392,7 +392,7 @@ gulp.task('golive', () => {
 gulp.task('default',
   gulp.series(
     gulp.parallel(cleanStatic, cleanLayouts, cleanDev),
-    gulp.parallel('custoModernizr', bowerjs, bowercss),
+    gulp.parallel('custoModernizr', bowerjs, bowercss, bowersass),
     gulp.parallel(sass, scripts, scriptsHead),
     gulp.parallel(html),
     gulp.parallel(injectHead, injectFoot),
@@ -405,7 +405,7 @@ gulp.task('default',
 gulp.task('dev',
   gulp.series(
     gulp.parallel(cleanStatic, cleanLayouts, cleanDev),
-    gulp.parallel('custoModernizr', bowerjs, bowercss),
+    gulp.parallel('custoModernizr', bowerjs, bowercss, bowersass),
     gulp.parallel(sass, scripts, scriptsHead),
     gulp.parallel(html),
     gulp.parallel(injectHead, injectFoot),
@@ -417,7 +417,7 @@ gulp.task('dev',
 gulp.task('stage',
   gulp.series(
     gulp.parallel(cleanStatic, cleanLayouts, cleanStage),
-    gulp.parallel('custoModernizr', bowerjs, bowercss),
+    gulp.parallel('custoModernizr', bowerjs, bowercss, bowersass),
     gulp.parallel(minsass,minscripts, minscriptsHead),
     gulp.parallel(html),
     gulp.parallel(injectHead, injectFoot),
@@ -429,7 +429,7 @@ gulp.task('stage',
 gulp.task('live',
   gulp.series(
     gulp.parallel(cleanStatic, cleanLayouts, cleanLive),
-    gulp.parallel('custoModernizr', bowerjs, bowercss),
+    gulp.parallel('custoModernizr', bowerjs, bowercss, bowersass),
     gulp.parallel(minsass,minscripts, minscriptsHead),
     gulp.parallel(html),
     gulp.parallel(injectHead, injectFoot),

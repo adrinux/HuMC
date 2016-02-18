@@ -6,7 +6,9 @@ $background-color: #acacae;
 $text-color: #3a3a3a;
 
 
+
 body {
+  @include container(80em);
   background: $background-color;
   color: $text-color;
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -14,6 +16,8 @@ body {
   margin: 0;
   padding: 2em 4em;
 }
+
+nav { @include span(50%); }
 
 .autoprefixer {
   display: flex;
