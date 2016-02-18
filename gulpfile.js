@@ -174,16 +174,26 @@ function bowercss () {
 }
 
 
-// TODO
-//
 // SASS
-// auto link bower based SASS into our main.scss
-// gulp.task('bowersass', () => {
-//   let onlySass = gulpFilter(['*.scss']);
-//   return gulp.src(mainBowerFiles())
-//     .pipe(onlySass)
-//     .pipe(gulp.dest('src/sass/main.scss'));
-// });
+// Inject @import statements for bower based SCSS into our main.scss
+function  bowersass () {
+  let scssFiles = gulp.src(mainBowerFiles(), {read: false}).pipe(gulpFilter(['*.scss']));
+
+  function transformPath(filepath) {
+    return "@import '" + filepath + "';";
+  }
+
+  let injectOptions = {
+    transform: transformPath,
+    starttag: '// bower:scss',
+    endtag: '// endbower',
+    addRootSlash: false
+  };
+
+  return gulp.src('src/sass/main.scss')
+    .pipe(plugins.inject(scssFiles, injectOptions))
+    .pipe(gulp.dest('src/sass/'));
+}
 
 
 //
@@ -328,10 +338,6 @@ function cleanResponsive (done) {
   ], done);
 }
 
-gulp.task('clear', (done) => {
-  return cache.clearAll(done);
-});
-
 
 //
 // Watch files and serve with Browsersync
@@ -436,3 +442,7 @@ gulp.task('live',
 gulp.task('reprocess', gulp.series(cleanImages, imgMagic, imgResponsive, imgOptim, imgMin));
 // Clean and regenerate responsive images (use after modifying responsive config)
 gulp.task('reprocess:responsive', gulp.series(cleanResponsive, imgResponsive, imgOptim));
+
+
+// Task used for debugging function based task or tasks
+gulp.task('dt', gulp.series(bowersass, sass));
