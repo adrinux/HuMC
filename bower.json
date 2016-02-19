@@ -1,7 +1,0 @@
-{
-  "name": "web-starter-hugo",
-  "dependencies": {
-    "susy": "~2.2.11",
-    "normalize-css": "~3.0.3"
-  }
-}

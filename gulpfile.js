@@ -3,10 +3,8 @@
 require('babel-polyfill');
 var gulp = require('gulp');
 var gulpLoadPlugins = require('gulp-load-plugins');
-var gulpFilter = require('gulp-filter');
 var del = require('del');
 var lazypipe = require('lazypipe');
-var mainBowerFiles = require('main-bower-files');
 var browserSync = require('browser-sync');
 var rsync = require('rsyncwrapper');
 var sseries = require('stream-series');
@@ -17,7 +15,6 @@ const plugins = gulpLoadPlugins({
   rename: {
     'gulp-util': 'gulpUtil',
     'gulp-inject': 'inject',
-    'gulp-concat': 'concat',
     'gulp-htmlmin': 'htmlmin',
     'gulp-htmltidy': 'htmltidy',
     'gulp-gm': 'gm',
@@ -155,49 +152,6 @@ gulp.task('custoModernizr', () => {
 
 
 //
-// Bower components process
-// Javascript
-function bowerjs () {
-  let onlyjs = gulpFilter(['*.js']);
-  return gulp.src(mainBowerFiles())
-    .pipe(onlyjs)
-    .pipe(plugins.concat('bower-concat.js'))
-    .pipe(minJs())
-    .pipe(gulp.dest('hugo/static/scripts/'));
-}
-
-// CSS
-function bowercss () {
-  let onlycss = gulpFilter(['*.css']);
-  return gulp.src(mainBowerFiles())
-    .pipe(onlycss)
-    .pipe(gulp.dest('hugo/static/styles/'));
-}
-
-
-// SASS
-// Inject @import statements for bower based SCSS into our main.scss
-function  bowersass () {
-  let scssFiles = gulp.src(mainBowerFiles(), {read: false}).pipe(gulpFilter(['*.scss']));
-
-  function transformPath(filepath) {
-    return "@import '" + filepath + "';";
-  }
-
-  let injectOptions = {
-    transform: transformPath,
-    starttag: '// bower:scss',
-    endtag: '// endbower',
-    addRootSlash: false
-  };
-
-  return gulp.src('src/sass/main.scss')
-    .pipe(plugins.inject(scssFiles, injectOptions))
-    .pipe(gulp.dest('src/sass/'));
-}
-
-
-//
 // HTML templates
 // Copy HTML templates from src/layouts to hugo/layouts
 // We cant lint and minify here because of hugo specific code
@@ -215,14 +169,17 @@ function injectHead () {
   let scriptsHead = gulp.src('hugo/static/scripts_head/*.js', {read: false});
 
   return gulp.src('hugo/layouts/partials/head-meta.html')
-    .pipe(plugins.inject(sseries(modernizrPath, scriptsHead), {selfClosingTag: true, ignorePath: 'hugo/static/', name: 'head'}))
-    .pipe(plugins.inject(gulp.src('hugo/static/styles/*.css', {read: false}), {ignorePath: 'hugo/static/'}))
+    .pipe(plugins.inject(sseries(modernizrPath, scriptsHead),
+      {selfClosingTag: true, ignorePath: 'hugo/static/', name: 'head'}))
+    .pipe(plugins.inject(gulp.src('hugo/static/styles/*.css',
+      {read: false}), {ignorePath: 'hugo/static/'}))
     .pipe(gulp.dest('hugo/layouts/partials/'));
 }
 
 function injectFoot () {
   return gulp.src('hugo/layouts/partials/footer-scripts.html')
-    .pipe(plugins.inject(gulp.src(['hugo/static/scripts/*.js'], {read: false}), {ignorePath: 'hugo/static/'}))
+    .pipe(plugins.inject(gulp.src(['hugo/static/scripts/*.js'],
+      {read: false}), {ignorePath: 'hugo/static/'}))
     .pipe(gulp.dest('hugo/layouts/partials/'));
 }
 
@@ -324,11 +281,7 @@ function cleanImages (done) {
     'src/img_tmp/**/*',
     'hugo/static/images/*',
     'src/img_responsive/*',
-    'hugo/static/images/responsive/*',
-    '.cache-magic',
-    '.cache-responsive',
-    '.cache-imgmin',
-    '.cache-imgoptim'
+    'hugo/static/images/responsive/*'
   ], done);
 }
 
@@ -336,9 +289,7 @@ function cleanImages (done) {
 function cleanResponsive (done) {
   return del([
     'src/img_responsive/*',
-    'hugo/static/images/responsive/*',
-    '.cache-responsive',
-    '.cache-imgoptim'
+    'hugo/static/images/responsive/*'
   ], done);
 }
 
@@ -357,8 +308,7 @@ gulp.task('watchnsync', () => {
   gulp.watch('config/modernizr-config.json', gulp.series('custoModernizr', injectHead, 'hugoDev', 'htmlDev'));
   gulp.watch('src/scripts/*.js', gulp.series(scripts, injectFoot, 'hugoDev', 'htmlDev'));
   gulp.watch('src/scripts_head/*.js', gulp.series(scriptsHead, injectHead, 'hugoDev', 'htmlDev'));
-  gulp.watch('bower_components', gulp.series(bowersass, bowerjs, bowercss, sass, injectHead, injectFoot, 'hugoDev', 'htmlDev'));
-  gulp.watch('src/layouts/**/*.html', gulp.series(bowerjs, bowercss, injectHead, injectFoot, 'hugoDev','htmlDev'));
+  gulp.watch('src/layouts/**/*.html', gulp.series(injectHead, injectFoot, 'hugoDev','htmlDev'));
   gulp.watch([
     'hugo/archetypes/*',
     'hugo/content/',
@@ -396,8 +346,7 @@ gulp.task('golive', () => {
 gulp.task('default',
   gulp.series(
     gulp.parallel(cleanStatic, cleanLayouts, cleanDev),
-    gulp.parallel('custoModernizr', bowerjs, bowercss, bowersass),
-    gulp.parallel(sass, scripts, scriptsHead),
+    gulp.parallel('custoModernizr', sass, scripts, scriptsHead),
     gulp.parallel(html),
     gulp.parallel(injectHead, injectFoot),
     'hugoDev',
@@ -409,8 +358,7 @@ gulp.task('default',
 gulp.task('dev',
   gulp.series(
     gulp.parallel(cleanStatic, cleanLayouts, cleanDev),
-    gulp.parallel('custoModernizr', bowerjs, bowercss, bowersass),
-    gulp.parallel(sass, scripts, scriptsHead),
+    gulp.parallel('custoModernizr', sass, scripts, scriptsHead),
     gulp.parallel(html),
     gulp.parallel(injectHead, injectFoot),
     'hugoDev',
@@ -421,8 +369,7 @@ gulp.task('dev',
 gulp.task('stage',
   gulp.series(
     gulp.parallel(cleanStatic, cleanLayouts, cleanStage),
-    gulp.parallel('custoModernizr', bowerjs, bowercss, bowersass),
-    gulp.parallel(minsass,minscripts, minscriptsHead),
+    gulp.parallel('custoModernizr', minsass, minscripts, minscriptsHead),
     gulp.parallel(html),
     gulp.parallel(injectHead, injectFoot),
     'hugoStage',
@@ -433,8 +380,7 @@ gulp.task('stage',
 gulp.task('live',
   gulp.series(
     gulp.parallel(cleanStatic, cleanLayouts, cleanLive),
-    gulp.parallel('custoModernizr', bowerjs, bowercss, bowersass),
-    gulp.parallel(minsass,minscripts, minscriptsHead),
+    gulp.parallel('custoModernizr', minsass, minscripts, minscriptsHead),
     gulp.parallel(html),
     gulp.parallel(injectHead, injectFoot),
     'hugoLive',
@@ -449,4 +395,4 @@ gulp.task('reprocess:responsive', gulp.series(cleanResponsive, imgResponsive, im
 
 
 // Task used for debugging function based task or tasks
-gulp.task('dt', gulp.series(bowersass, sass));
+gulp.task('dt', gulp.series(sass));

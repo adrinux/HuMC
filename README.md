@@ -10,7 +10,6 @@ Eventually this project should be a Yeoman/Slush generator, in the meantime:
 ```
 git clone
 npm install
-bower install
 # test run with
 gulp dev
 ```
