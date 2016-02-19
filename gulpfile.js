@@ -137,7 +137,7 @@ function minscriptsHead () {
 
 
 // Modernizr
-// Read custom config and generate a custom build
+// Read custom config and generate a custom build , already minified
 function customBuild () {
   let exec = require('child_process').exec;
   let cmd = './node_modules/.bin/modernizr ';
@@ -148,6 +148,13 @@ function customBuild () {
 
 gulp.task('custoModernizr', () => {
   return Promise.all([ customBuild() ]);
+});
+
+//
+// Copy picturefill.js
+gulp.task('picturefill', () => {
+  return gulp.src('node_modules/picturefill/dist/picturefill.min.js', { since: gulp.lastRun(html) })
+    .pipe(gulp.dest('hugo/static/scripts_vendor/'));
 });
 
 
@@ -162,14 +169,16 @@ function html () {
 
 
 //
-// Inject css and js
+// Inject css and js into templates
 function injectHead () {
-  //let polyfills = gulp.src([config.polyfills], {read: false});
+  let picturefillPath = gulp.src('hugo/static/scripts_vendor/picturefill.min.js', {read: false});
   let modernizrPath = gulp.src(['hugo/static/scripts_vendor/modernizr.custom.js'], {read: false});
   let scriptsHead = gulp.src('hugo/static/scripts_head/*.js', {read: false});
 
   return gulp.src('hugo/layouts/partials/head-meta.html')
-    .pipe(plugins.inject(sseries(modernizrPath, scriptsHead),
+    .pipe(plugins.inject(sseries(picturefillPath),
+      {selfClosingTag: true, ignorePath: 'hugo/static/', name: 'head'}))
+    .pipe(plugins.inject(sseries(picturefillPath, modernizrPath, scriptsHead),
       {selfClosingTag: true, ignorePath: 'hugo/static/', name: 'head'}))
     .pipe(plugins.inject(gulp.src('hugo/static/styles/*.css',
       {read: false}), {ignorePath: 'hugo/static/'}))
@@ -266,6 +275,7 @@ function cleanStatic (done) {
   return del([
     'hugo/static/scripts/*',
     'hugo/static/scripts_head/*',
+    'hugo/static/scripts_vendor/*',
     'hugo/static/styles/*'
   ], done);
 }
@@ -347,7 +357,7 @@ gulp.task('default',
   gulp.series(
     gulp.parallel(cleanStatic, cleanLayouts, cleanDev),
     gulp.parallel('custoModernizr', sass, scripts, scriptsHead),
-    gulp.parallel(html),
+    gulp.parallel(html, 'picturefill'),
     gulp.parallel(injectHead, injectFoot),
     'hugoDev',
     'htmlDev',
@@ -359,7 +369,7 @@ gulp.task('dev',
   gulp.series(
     gulp.parallel(cleanStatic, cleanLayouts, cleanDev),
     gulp.parallel('custoModernizr', sass, scripts, scriptsHead),
-    gulp.parallel(html),
+    gulp.parallel(html, 'picturefill'),
     gulp.parallel(injectHead, injectFoot),
     'hugoDev',
     'htmlDev'
@@ -370,7 +380,7 @@ gulp.task('stage',
   gulp.series(
     gulp.parallel(cleanStatic, cleanLayouts, cleanStage),
     gulp.parallel('custoModernizr', minsass, minscripts, minscriptsHead),
-    gulp.parallel(html),
+    gulp.parallel(html, 'picturefill'),
     gulp.parallel(injectHead, injectFoot),
     'hugoStage',
     'htmlStage'
@@ -381,7 +391,7 @@ gulp.task('live',
   gulp.series(
     gulp.parallel(cleanStatic, cleanLayouts, cleanLive),
     gulp.parallel('custoModernizr', minsass, minscripts, minscriptsHead),
-    gulp.parallel(html),
+    gulp.parallel(html, 'picturefill'),
     gulp.parallel(injectHead, injectFoot),
     'hugoLive',
     'htmlLive'
@@ -395,4 +405,4 @@ gulp.task('reprocess:responsive', gulp.series(cleanResponsive, imgResponsive, im
 
 
 // Task used for debugging function based task or tasks
-gulp.task('dt', gulp.series(sass));
+gulp.task('dt', gulp.series('picturefill'));
