@@ -2,8 +2,6 @@
   "name": "web-starter-hugo",
   "dependencies": {
     "susy": "~2.2.11",
-    "modernizr": "~3.3.1",
-    "normalize-css": "~3.0.3",
-    "modernizr-shim": "~0.0.2"
+    "normalize-css": "~3.0.3"
   }
 }
