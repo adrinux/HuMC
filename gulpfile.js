@@ -9,6 +9,7 @@ var lazypipe = require('lazypipe');
 var mainBowerFiles = require('main-bower-files');
 var browserSync = require('browser-sync');
 var rsync = require('rsyncwrapper');
+var sseries = require('stream-series');
 
 
 // Auto load Gulp plugins
@@ -144,7 +145,7 @@ function customBuild () {
   let exec = require('child_process').exec;
   let cmd = './node_modules/.bin/modernizr ';
   cmd += '-c ./config/modernizr-config.json ';
-  cmd += '-d ./hugo/static/scripts_head/modernizr.custom.js';
+  cmd += '-d ./hugo/static/scripts_vendor/modernizr.custom.js';
   exec(cmd, {encoding: 'utf-8'});
 }
 
@@ -209,16 +210,19 @@ function html () {
 //
 // Inject css and js
 function injectHead () {
+  //let polyfills = gulp.src([config.polyfills], {read: false});
+  let modernizrPath = gulp.src(['hugo/static/scripts_vendor/modernizr.custom.js'], {read: false});
+  let scriptsHead = gulp.src('hugo/static/scripts_head/*.js', {read: false});
+
   return gulp.src('hugo/layouts/partials/head-meta.html')
-    .pipe(plugins.inject(gulp.src('hugo/static/scripts_head/*.js', {read: false}), {selfClosingTag: true, ignorePath: 'hugo/static/', name: 'head'}))
+    .pipe(plugins.inject(sseries(modernizrPath, scriptsHead), {selfClosingTag: true, ignorePath: 'hugo/static/', name: 'head'}))
     .pipe(plugins.inject(gulp.src('hugo/static/styles/*.css', {read: false}), {ignorePath: 'hugo/static/'}))
     .pipe(gulp.dest('hugo/layouts/partials/'));
 }
 
 function injectFoot () {
   return gulp.src('hugo/layouts/partials/footer-scripts.html')
-    .pipe(plugins.inject(gulp.src('hugo/static/scripts/bower-concat.min.js', {read: false}), {ignorePath: 'hugo/static/'}))
-    .pipe(plugins.inject(gulp.src(['hugo/static/scripts/*.js', '!hugo/static/scripts/bower-concat.min.js'], {read: false}), {ignorePath: 'hugo/static/'}))
+    .pipe(plugins.inject(gulp.src(['hugo/static/scripts/*.js'], {read: false}), {ignorePath: 'hugo/static/'}))
     .pipe(gulp.dest('hugo/layouts/partials/'));
 }
 
