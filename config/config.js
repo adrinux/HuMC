@@ -76,12 +76,6 @@ module.exports = {
 
 
   //
-  // SASS
-  sassPaths: {
-    src: 'src/sass/main.scss',
-    dest: 'hugo/static/styles/'
-  },
-
   // PostCSS plugins and their options
   // For dev
   processors: [
