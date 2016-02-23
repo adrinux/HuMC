@@ -19,3 +19,12 @@ body {
 .autoprefixer {
   display: flex;
 }
+
+
+.modal {
+    z-index: 5000
+}
+
+.modal-overlay {
+    z-index: 5500
+}
