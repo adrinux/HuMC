@@ -136,16 +136,20 @@ function minscriptsHead () {
 
 // Modernizr
 // Read custom config and generate a custom build , already minified
-function customBuild () {
+// function customBuild () {
+//   let exec = require('child_process').exec;
+//   let cmd = './node_modules/.bin/modernizr ';
+//   cmd += '-c ./config/modernizr-config.json ';
+//   cmd += '-d ./hugo/static/scripts_vendor/modernizr.custom.js';
+//   exec(cmd, {encoding: 'utf-8'});
+// }
+
+gulp.task('custoModernizr', () => {
   let exec = require('child_process').exec;
   let cmd = './node_modules/.bin/modernizr ';
   cmd += '-c ./config/modernizr-config.json ';
   cmd += '-d ./hugo/static/scripts_vendor/modernizr.custom.js';
-  exec(cmd, {encoding: 'utf-8'});
-}
-
-gulp.task('custoModernizr', () => {
-  return Promise.all([ customBuild() ]);
+  return exec(cmd, {encoding: 'utf-8'});
 });
 
 //
