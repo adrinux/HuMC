@@ -61,7 +61,7 @@ You're reading it. For further info see docs for incorportated tools:
 - [gulp-responsive](https://www.npmjs.com/package/gulp-responsive)
 
 ### PostCSS plugins included
-- [Autoprefixer](https://www.npmjs.com/package/autoprefixer)
+- [PostCSS cssnext](http://cssnext.io/)
 - [Colorguard](https://www.npmjs.com/package/colorguard)
 - [PostCSS Reporter](https://www.npmjs.com/package/postcss-reporter)
 

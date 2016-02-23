@@ -81,11 +81,13 @@ module.exports = {
   processors: [
     require('postcss-cssnext')({browsers: ['> 1%', 'last 2 versions', 'Firefox ESR']}),
     require('colorguard')({threshold: ['3']}),
+    require('postcss-zindex')(),
     require('postcss-reporter')()
   ],
   // For stage and live
   minProcessors: [
     require('postcss-cssnext')({browsers: ['> 1%', 'last 2 versions', 'Firefox ESR']}),
+    require('postcss-zindex')(),
     require('cssnano')(),
     require('postcss-reporter')()
   ],
