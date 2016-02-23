@@ -79,13 +79,13 @@ module.exports = {
   // PostCSS plugins and their options
   // For dev
   processors: [
+    require('postcss-cssnext')({browsers: ['> 1%', 'last 2 versions', 'Firefox ESR']}),
     require('colorguard')({threshold: ['3']}),
-    require('autoprefixer')({browsers: ['> 1%', 'last 2 versions', 'Firefox ESR']}),
     require('postcss-reporter')()
   ],
   // For stage and live
   minProcessors: [
-    require('autoprefixer')({browsers: ['> 1%', 'last 2 versions', 'Firefox ESR']}),
+    require('postcss-cssnext')({browsers: ['> 1%', 'last 2 versions', 'Firefox ESR']}),
     require('cssnano')(),
     require('postcss-reporter')()
   ],
