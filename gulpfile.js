@@ -178,8 +178,6 @@ function injectHead () {
   let scriptsHead = gulp.src('hugo/static/scripts_head/*.js', {read: false});
 
   return gulp.src('hugo/layouts/partials/head-meta.html')
-    .pipe(plugins.inject(sseries(picturefillPath),
-      {selfClosingTag: true, ignorePath: 'hugo/static/', name: 'head'}))
     .pipe(plugins.inject(sseries(picturefillPath, modernizrPath, scriptsHead),
       {selfClosingTag: true, ignorePath: 'hugo/static/', name: 'head'}))
     .pipe(plugins.inject(gulp.src('hugo/static/styles/*.css',
@@ -407,4 +405,4 @@ gulp.task('reprocess:responsive', gulp.series(cleanResponsive, imgResponsive, im
 
 
 // Task used for debugging function based task or tasks
-gulp.task('dt', gulp.series(postCss));
+gulp.task('dt', gulp.series('custoModernizr', injectHead));
