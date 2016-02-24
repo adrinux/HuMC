@@ -79,15 +79,19 @@ module.exports = {
   // PostCSS plugins and their options
   // For dev
   processors: [
+    require('postcss-import')(),
     require('postcss-cssnext')({browsers: ['> 1%', 'last 2 versions', 'Firefox ESR']}),
     require('colorguard')({threshold: ['3']}),
     require('postcss-zindex')(),
+    require('css-mqpacker')(),
     require('postcss-reporter')()
   ],
   // For stage and live
   minProcessors: [
+    require('postcss-import')(),
     require('postcss-cssnext')({browsers: ['> 1%', 'last 2 versions', 'Firefox ESR']}),
     require('postcss-zindex')(),
+    require('css-mqpacker')(),
     require('cssnano')(),
     require('postcss-reporter')()
   ],

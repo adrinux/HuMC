@@ -69,7 +69,7 @@ function imgMin () {
 
 
 //
-// CSS processing, linting
+// CSS processing
 function postCss () {
   return gulp.src('src/styles/*.css', { since: gulp.lastRun(postCss) })
     .pipe(plugins.postcss(config.processors))
@@ -77,15 +77,14 @@ function postCss () {
     .pipe(sync.stream());
 }
 
-// CSS processing, linting, minification
+// CSS processing, minification
 function minpostCss () {
   return gulp.src('src/styles/*.css', { since: gulp.lastRun(postCss) })
     .pipe(plugins.sourcemaps.init())
-    .pipe(plugins.postcss(config.processors))
+    .pipe(plugins.postcss(config.minProcessors))
     .pipe(plugins.rename({extname: '.min.css'}))
     .pipe(plugins.sourcemaps.write('.'))
-    .pipe(gulp.dest('hugo/static/styles/'))
-    .pipe(sync.stream());
+    .pipe(gulp.dest('hugo/static/styles/'));
 }
 
 // Copy Vendor CSS into hugo/static
