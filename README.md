@@ -68,6 +68,8 @@ You're reading it. For further info see docs for incorportated tools:
 - [css-mqpacker](https://www.npmjs.com/package/css-mqpacker)
 - [PostCSS Reporter](https://www.npmjs.com/package/postcss-reporter)
 
+A good comparison of PostCSS plugin packs is available [https://github.com/timaschew/postcss-compare-packs](https://github.com/timaschew/postcss-compare-packs)
+
 ## Customising the Modernizr build
 The Modernizr npm module is installed locally when you run npm install. The configuration file is located in 'config/modernizr-config.json' and by default only contains the HTML5shiv and HTML5printshiv. To add detectors either hand edit this file or configure and copy/paste (or download) a new modernizr-config.json at [Modernizr.com](https://modernizr.com/download).
 
