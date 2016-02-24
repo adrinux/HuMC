@@ -1,0 +1,18 @@
+/* This css was used whilst working on tasks, needs incorporated into proper
+*  tests.
+*/
+
+/* Test for autoprefixer */
+.autoprefixer {
+  display: flex;
+}
+
+/* Test for postcss-zindex */
+.modal {
+  z-index: 5000;
+}
+
+.modal-overlay {
+  z-index: 5500;
+}
+
