@@ -2,7 +2,7 @@
 A static web site starter kit using gulp and Hugo static site generator. Uses gulp to process images, javascript, css and html into a containted Hugo site and runs Hugo to process it all.
 
 ## Features
-Includes seperate dev, stage and live flows. Includes browsersync for live sync during development. Has hugo templates based on [HTML5 boilerplate](https://html5boilerplate.com/). Includes normalize.css as a base for your CSS. Uses PostCSS.
+Includes seperate dev, stage and live flows. Includes browsersync for live sync during development. Has hugo templates based on [HTML5 boilerplate](https://html5boilerplate.com/). Includes normalize.css as a base for your CSS. Uses PostCSS for CSS processing.
 
 ## How to use
 Eventually this project should be a Yeoman/Slush generator, in the meantime:
@@ -61,8 +61,11 @@ You're reading it. For further info see docs for incorportated tools:
 - [gulp-responsive](https://www.npmjs.com/package/gulp-responsive)
 
 ### PostCSS plugins included
+- [postcss-import](https://github.com/postcss/postcss-import)
 - [PostCSS cssnext](http://cssnext.io/)
 - [Colorguard](https://www.npmjs.com/package/colorguard)
+- [postcss-zindex](https://www.npmjs.com/package/postcss-zindex)
+- [css-mqpacker](https://www.npmjs.com/package/css-mqpacker)
 - [PostCSS Reporter](https://www.npmjs.com/package/postcss-reporter)
 
 ## Customising the Modernizr build
