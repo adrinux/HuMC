@@ -1,4 +1,6 @@
 :root {
   --background: #acacae;
-  --text: #3a3a3a;
+  --text: #222;
+  --selection_bg: #b3d4fc;
+  --grey: #ccc;
 }
