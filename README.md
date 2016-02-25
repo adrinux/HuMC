@@ -69,6 +69,7 @@ You're reading it. For further info see docs for incorportated tools:
 - [postcss-import](https://github.com/postcss/postcss-import)
 - [PostCSS cssnext](http://cssnext.io/)
 - [Colorguard](https://www.npmjs.com/package/colorguard)
+- 
 - [postcss-zindex](https://www.npmjs.com/package/postcss-zindex)
 - [css-mqpacker](https://www.npmjs.com/package/css-mqpacker)
 - [PostCSS Reporter](https://www.npmjs.com/package/postcss-reporter)
@@ -83,3 +84,7 @@ The Modernizr npm module is installed locally when you run npm install. The conf
 The file .eslintrc.json is set up for use with the Sumblime Text 3 linter for eslint. For configuration of eslint when linting you projects javascript see config/eslint.json
 
 .stylelintrc is also currently setup for use by Sumblime Text 3 linter for stylelint, and not used by the gulp tasks.
+
+## Extending
+H5BP has a good list of things you may want to add when coding pages:
+[Extend and customise](https://github.com/h5bp/html5-boilerplate/blob/master/dist/doc/extend.md#extend-and-customise-html5-boilerplate)
