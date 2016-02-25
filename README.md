@@ -2,7 +2,12 @@
 A static web site starter kit using gulp and Hugo static site generator. Uses gulp to process images, javascript, css and html into a containted Hugo site and runs Hugo to process it all.
 
 ## Features
-Includes seperate dev, stage and live flows. Includes browsersync for live sync during development. Has hugo templates based on [HTML5 boilerplate](https://html5boilerplate.com/). Includes normalize.css as a base for your CSS. Uses PostCSS for CSS processing.
+- Includes seperate dev, stage and live flows.
+- Includes browsersync for live sync during development.
+- Has hugo templates based on [HTML5 boilerplate](https://html5boilerplate.com/).
+- Includes a custom and modifiable build of modernizr 
+- Includes normalize.css and the base H5BP CSS with some colours moved to variables.
+- Uses PostCSS for CSS processing.
 
 ## How to use
 Eventually this project should be a Yeoman/Slush generator, in the meantime:
@@ -75,4 +80,6 @@ The Modernizr npm module is installed locally when you run npm install. The conf
 
 ## Editor setup
 ### Linting
-(Describe .eslintrc.json use with sublime text and linters)
+The file .eslintrc.json is set up for use with the Sumblime Text 3 linter for eslint. For configuration of eslint when linting you projects javascript see config/eslint.json
+
+.stylelintrc is also currently setup for use by Sumblime Text 3 linter for stylelint, and not used by the gulp tasks.
