@@ -271,7 +271,8 @@ function cleanStatic (done) {
     'hugo/static/scripts/*',
     'hugo/static/scripts_head/*',
     'hugo/static/scripts_vendor/*',
-    'hugo/static/styles/*'
+    'hugo/static/styles/*',
+    'hugo/static/styles_vendor/*'
   ], done);
 }
 
