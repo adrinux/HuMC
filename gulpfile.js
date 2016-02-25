@@ -153,6 +153,13 @@ gulp.task('picturefill', () => {
     .pipe(gulp.dest('hugo/static/scripts_vendor/'));
 });
 
+//
+// Copy other assets like icons and txt files from src to hugo/static
+gulp.task('copy', () => {
+  return gulp.src('src/*.*', { since: gulp.lastRun('copy') })
+    .pipe(gulp.dest('hugo/static/'));
+});
+
 
 //
 // HTML templates
@@ -162,7 +169,6 @@ function html () {
   return gulp.src('src/layouts/**/*.html', { since: gulp.lastRun(html) })
     .pipe(gulp.dest('hugo/layouts/'));
 }
-
 
 //
 // Inject css and js into templates
@@ -310,7 +316,9 @@ gulp.task('watchnsync', () => {
   });
 
   gulp.watch('src/img_tmp', gulp.series(imgResponsive, imgOptim, imgMin, 'hugoDev', 'htmlDev'));
-  gulp.watch('src/sass/*.scss', gulp.series(postCss, injectHead, 'hugoDev', 'htmlDev'));
+  gulp.watch('src/styles/**/*.css', gulp.series(postCss, injectHead, 'hugoDev', 'htmlDev'));
+  gulp.watch('src/styles_vendor/*.css', gulp.series('vendorStyles', injectHead, 'hugoDev', 'htmlDev'));
+  gulp.watch('src/*.*', gulp.series('copy', 'hugoDev', 'htmlDev'));
   gulp.watch('config/modernizr-config.json', gulp.series('custoModernizr', injectHead, 'hugoDev', 'htmlDev'));
   gulp.watch('src/scripts/*.js', gulp.series(scripts, injectFoot, 'hugoDev', 'htmlDev'));
   gulp.watch('src/scripts_head/*.js', gulp.series(scriptsHead, injectHead, 'hugoDev', 'htmlDev'));
@@ -353,7 +361,7 @@ gulp.task('default',
   gulp.series(
     gulp.parallel(cleanStatic, cleanLayouts, cleanDev),
     gulp.parallel('custoModernizr', postCss, scripts, scriptsHead),
-    gulp.parallel(html, 'picturefill', 'vendorStyles'),
+    gulp.parallel('copy', html, 'picturefill', 'vendorStyles'),
     gulp.parallel(injectHead, injectFoot),
     'hugoDev',
     'htmlDev',
@@ -365,7 +373,7 @@ gulp.task('dev',
   gulp.series(
     gulp.parallel(cleanStatic, cleanLayouts, cleanDev),
     gulp.parallel('custoModernizr', postCss, scripts, scriptsHead),
-    gulp.parallel(html, 'picturefill', 'vendorStyles'),
+    gulp.parallel('copy', html, 'picturefill', 'vendorStyles'),
     gulp.parallel(injectHead, injectFoot),
     'hugoDev',
     'htmlDev'
@@ -376,7 +384,7 @@ gulp.task('stage',
   gulp.series(
     gulp.parallel(cleanStatic, cleanLayouts, cleanStage),
     gulp.parallel('custoModernizr', minpostCss, minscripts, minscriptsHead),
-    gulp.parallel(html, 'picturefill', 'vendorStyles'),
+    gulp.parallel('copy', html, 'picturefill', 'vendorStyles'),
     gulp.parallel(injectHead, injectFoot),
     'hugoStage',
     'htmlStage'
@@ -387,7 +395,7 @@ gulp.task('live',
   gulp.series(
     gulp.parallel(cleanStatic, cleanLayouts, cleanLive),
     gulp.parallel('custoModernizr', minpostCss, minscripts, minscriptsHead),
-    gulp.parallel(html, 'picturefill', 'vendorStyles'),
+    gulp.parallel('copy', html, 'picturefill', 'vendorStyles'),
     gulp.parallel(injectHead, injectFoot),
     'hugoLive',
     'htmlLive'
@@ -401,4 +409,4 @@ gulp.task('reprocess:responsive', gulp.series(cleanResponsive, imgResponsive, im
 
 
 // Task used for debugging function based task or tasks
-gulp.task('dt', gulp.series('vendorStyles', injectHead));
+gulp.task('dt', gulp.series('copy'));
