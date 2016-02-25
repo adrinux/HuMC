@@ -309,7 +309,7 @@ gulp.task('watchnsync', () => {
     }
   });
 
-  gulp.watch('src/img_tmp', gulp.series('responsive', imgOptim, imgMin, 'hugoDev', 'htmlDev'));
+  gulp.watch('src/img_tmp', gulp.series(imgResponsive, imgOptim, imgMin, 'hugoDev', 'htmlDev'));
   gulp.watch('src/sass/*.scss', gulp.series(postCss, injectHead, 'hugoDev', 'htmlDev'));
   gulp.watch('config/modernizr-config.json', gulp.series('custoModernizr', injectHead, 'hugoDev', 'htmlDev'));
   gulp.watch('src/scripts/*.js', gulp.series(scripts, injectFoot, 'hugoDev', 'htmlDev'));
