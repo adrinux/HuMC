@@ -82,6 +82,7 @@ module.exports = {
     require('postcss-import')(),
     require('postcss-cssnext')({browsers: ['> 1%', 'last 2 versions', 'Firefox ESR']}),
     require('colorguard')({threshold: ['3']}),
+    require('postcss-wcag-contrast')({compliance: 'AA'}),
     require('postcss-zindex')(),
     require('css-mqpacker')(),
     require('postcss-reporter')()
