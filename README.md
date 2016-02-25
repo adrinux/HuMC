@@ -69,7 +69,7 @@ You're reading it. For further info see docs for incorportated tools:
 - [postcss-import](https://github.com/postcss/postcss-import)
 - [PostCSS cssnext](http://cssnext.io/)
 - [Colorguard](https://www.npmjs.com/package/colorguard)
-- 
+- [postcss-wcag-contrast](https://github.com/jonathantneal/postcss-wcag-contrast)
 - [postcss-zindex](https://www.npmjs.com/package/postcss-zindex)
 - [css-mqpacker](https://www.npmjs.com/package/css-mqpacker)
 - [PostCSS Reporter](https://www.npmjs.com/package/postcss-reporter)
