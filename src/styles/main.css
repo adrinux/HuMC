@@ -89,7 +89,25 @@ textarea {
 /* ==========================================================================
    Author's custom styles
    ========================================================================== */
+body {
+  background-color: var(--background);
+}
 
+header {
+  background-color: var(--text);
+  color: var(--background);
+  padding: 1em;
+}
+
+.main-content {
+  padding: 1em;
+}
+
+footer {
+  background-color: var(--text);
+  color: var(--background);
+  padding: 1em;
+}
 
 /* ==========================================================================
    EXAMPLE Media Queries for Responsive Design.

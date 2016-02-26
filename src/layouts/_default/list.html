@@ -10,6 +10,8 @@
 
     {{ partial "header.html" . }}
 
+    <div class="main-content">
+
       <h1>{{ .Title }}</h1>
 
       <ul>
@@ -17,6 +19,8 @@
         <li><a href="{{ .Permalink }}">{{ .Title }}</a></li>
         {{ end }}
       </ul>
+
+    </div>
 
   {{ partial "footer.html" . }}
 

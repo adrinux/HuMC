@@ -10,15 +10,18 @@
 
   {{ partial "header.html" . }}
 
-    <h1>{{ .Title }}</h1>
+    <div class="main-content">
 
-    {{ if .Params.rendertoc }}
-    {{ .TableOfContents }}
-    {{ end }}
+      <h1>{{ .Title }}</h1>
 
-    <article>
-      {{ .Content }}
-    </article>
+      {{ if .Params.rendertoc }}
+      {{ .TableOfContents }}
+      {{ end }}
+
+      <article>
+        {{ .Content }}
+      </article>
+    </div>
 
   {{ partial "footer.html" . }}
 
