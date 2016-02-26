@@ -5,7 +5,7 @@ var gulp = require('gulp');
 var gulpLoadPlugins = require('gulp-load-plugins');
 var del = require('del');
 var lazypipe = require('lazypipe');
-var browserSync = require('browser-sync');
+var browserSync = require('browser-sync').create();
 var rsync = require('rsyncwrapper');
 var sseries = require('stream-series');
 
@@ -21,9 +21,6 @@ const plugins = gulpLoadPlugins({
     'gulp-imageoptim': 'imageOptim'
   }
 });
-
-// Simplify calls to browser-sync
-const sync = browserSync.create();
 
 //
 // Import task configuration
@@ -71,15 +68,14 @@ function imgMin () {
 //
 // CSS processing
 function postCss () {
-  return gulp.src('src/styles/*.css', { since: gulp.lastRun(postCss) })
+  return gulp.src('src/styles/*.css')
     .pipe(plugins.postcss(config.processors))
-    .pipe(gulp.dest('hugo/static/styles/'))
-    .pipe(sync.stream());
+    .pipe(gulp.dest('hugo/static/styles/'));
 }
 
 // CSS processing, minification
 function minpostCss () {
-  return gulp.src('src/styles/*.css', { since: gulp.lastRun(postCss) })
+  return gulp.src('src/styles/*.css')
     .pipe(plugins.sourcemaps.init())
     .pipe(plugins.postcss(config.minProcessors))
     .pipe(plugins.rename({extname: '.min.css'}))
@@ -107,14 +103,12 @@ let lintJs = lazypipe()
 function scripts () {
   return gulp.src('src/scripts/*.js', { since: gulp.lastRun(scripts) })
     .pipe(lintJs())
-    .pipe(gulp.dest('hugo/static/scripts/'))
-  .  pipe(sync.stream());
+    .pipe(gulp.dest('hugo/static/scripts/'));
 }
 function scriptsHead () {
   return gulp.src('src/scripts_head/*.js', { since: gulp.lastRun(scriptsHead) })
     .pipe(lintJs())
-    .pipe(gulp.dest('hugo/static/scripts_head/'))
-    .pipe(sync.stream());
+    .pipe(gulp.dest('hugo/static/scripts_head/'));
 }
 
 // Javascript minification and source mapping
@@ -127,12 +121,12 @@ let minJs = lazypipe()
 
 // stage and live js tasks
 function minscripts () {
-  return gulp.src('src/scripts/*.js', { since: gulp.lastRun(minscripts) })
+  return gulp.src('src/scripts/*.js')
     .pipe(minJs())
     .pipe(gulp.dest('hugo/static/scripts/'));
 }
 function minscriptsHead () {
-  return gulp.src('src/scripts_head/*.js', { since: gulp.lastRun(minscriptsHead) })
+  return gulp.src('src/scripts_head/*.js')
     .pipe(minJs())
     .pipe(gulp.dest('hugo/static/scripts_head/'));
 }
@@ -307,27 +301,36 @@ function cleanResponsive (done) {
 
 
 //
+// Serve and sync
+
+// Wrap browsersync reload
+// This seems to be required to get around a bug, see recent comments on this
+// issue https://github.com/BrowserSync/browser-sync/issues/711
+function reload () {
+  return browserSync.reload();
+}
+
 // Watch files and serve with Browsersync
-gulp.task('watchnsync', () => {
-  sync.init({
+gulp.task('watcher', () => {
+
+  // Start a server
+  browserSync.init({
     server: {
       baseDir: 'hugo/published/dev'
     }
   });
 
-  gulp.watch('src/img_tmp', gulp.series(imgResponsive, imgOptim, imgMin, 'hugoDev', 'htmlDev'));
-  gulp.watch('src/styles/**/*.css', gulp.series(postCss, injectHead, 'hugoDev', 'htmlDev'));
-  gulp.watch('src/styles_vendor/*.css', gulp.series('vendorStyles', injectHead, 'hugoDev', 'htmlDev'));
-  gulp.watch('src/*.*', gulp.series('copy', 'hugoDev', 'htmlDev'));
-  gulp.watch('config/modernizr-config.json', gulp.series('custoModernizr', injectHead, 'hugoDev', 'htmlDev'));
-  gulp.watch('src/scripts/*.js', gulp.series(scripts, injectFoot, 'hugoDev', 'htmlDev'));
-  gulp.watch('src/scripts_head/*.js', gulp.series(scriptsHead, injectHead, 'hugoDev', 'htmlDev'));
-  gulp.watch('src/layouts/**/*.html', gulp.series(injectHead, injectFoot, 'hugoDev','htmlDev'));
-  gulp.watch([
-    'hugo/archetypes/*',
-    'hugo/content/',
-    'hugo/data/'
-  ], gulp.series('hugoDev')).on('change', sync.reload);
+  // Watch files for changes
+  gulp.watch('src/img_tmp', gulp.series(imgResponsive, imgOptim, imgMin, 'hugoDev', 'htmlDev', reload));
+  gulp.watch('src/styles/*.css', gulp.series(postCss, injectHead, 'hugoDev', 'htmlDev', reload));
+  gulp.watch('src/styles/partials/*.css', gulp.series(postCss, injectHead, 'hugoDev', 'htmlDev', reload));
+  gulp.watch('src/styles_vendor/*.css', gulp.series('vendorStyles', injectHead, 'hugoDev', 'htmlDev', reload));
+  gulp.watch('src/*.*', gulp.series('copy', 'hugoDev', 'htmlDev', reload));
+  gulp.watch('config/modernizr-config.json', gulp.series('custoModernizr', injectHead, 'hugoDev', 'htmlDev', reload));
+  gulp.watch('src/scripts/*.js', gulp.series(scripts, injectFoot, 'hugoDev', 'htmlDev', reload));
+  gulp.watch('src/scripts_head/*.js', gulp.series(scriptsHead, injectHead, 'hugoDev', 'htmlDev', reload));
+  gulp.watch('src/layouts/**/*.html', gulp.series(html, injectHead, injectFoot, 'hugoDev', 'htmlDev', reload));
+  gulp.watch(['hugo/archetypes/*', 'hugo/content/', 'hugo/data/'], gulp.series('hugoDev', reload));
 });
 
 
@@ -365,7 +368,7 @@ gulp.task('default',
     gulp.parallel(injectHead, injectFoot),
     'hugoDev',
     'htmlDev',
-    'watchnsync'
+    'watcher'
   )
 );
 // 'gulp dev' a single run, hugo will generate pages for drafts and future posts
