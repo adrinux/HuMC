@@ -11,3 +11,7 @@ This is written in Markdown, but it's not the only way to go. HTML will work too
 ## Secondary Heading
 
 Another paragraph.
+
+### Tertiary heading
+
+And another paragraph.
