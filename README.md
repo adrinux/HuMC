@@ -13,12 +13,27 @@ A static web site starter kit using gulp and Hugo static site generator. Uses gu
 Eventually this project should be a Yeoman/Slush generator, in the meantime:
 
 ```
-git clone
+git clone https://github.com/adrinux/web-starter-hugo.git YOUR_NEW_SITE_NAME
+```
+You'll want to add any changes to a project specific repo so rename the remote configured by GitHub to upstream, you can then pull in changes and bug fixes via a normal upstream workflow:
+```
+git remote rename origin upstream
+```
+You can then configure 'origin' to be your own remote repo – I'll leave the specific to you.
+```
+cd YOUR_NEW_SITE_NAME
 npm install
-# test run with
+```
+Optionally take a look at config/config.js and configure your hugo base path and any other options you want to change.
+Then try running:
+```
 gulp dev
 ```
-You may need to edit some variables in config/config.js before "gulp dev" will function properly.
+If there are no errors you can try running with browsersync for live reload:
+```
+gulp
+```
+This should process the site and serve it using browsersync. You can now start developing the site.
 
 Currently image processing tasks need to be run manually, be sure to run them after adding new images or changing image processing configuration.
 
