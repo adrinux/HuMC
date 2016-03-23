@@ -6,15 +6,14 @@
 module.exports = {
 
   //
-  // Hugo is happiest with a 'baseurl' set. Normally in Hugo's
-  // config.[toml,yaml,json] but we set it dynamically so we can use different
-  // values for dev, stage and production runs.
+  // Hugo is happiest with a 'baseurl' set. For dev runs http://localhost:3000
+  // is set in Hugo's config.[toml,yaml,json] but we set it dynamically so we
+  // can use different values for stage and production runs.
   // See Hugo docs: https://gohugo.io/overview/configuration/
   // Change Stage and Base Urls to the domains you're using
   hugoBaseUrl: {
     stage: 'http://stage.example.com',
-    live: 'http://example.com',
-    dev: 'http://localhost:3000'
+    live: 'http://example.com'
   },
 
 

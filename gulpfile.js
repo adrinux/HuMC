@@ -202,7 +202,7 @@ function hugo (status) {
     cmd += ' -d published/live/ --baseURL="' + config.hugoBaseUrl.live + '"';
     plugins.gulpUtil.log('hugo command: \n' + cmd);
   } else {
-    cmd += ' -DF -d published/dev/ --baseURL="' + config.hugoBaseUrl.dev + '"';
+    cmd += ' -DF -d published/dev/';
     plugins.gulpUtil.log('hugo command: \n' + cmd);
   }
 

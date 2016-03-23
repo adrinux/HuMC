@@ -1,3 +1,6 @@
-#baseurl is defined when calling hugo from gulpfile.js
+# Hugo options
+# baseurls for stage and live sites are defined when calling hugo
+# from gulpfile.js default to dev url here so 'hugo new' etc still works
+baseurl = "http://localhost:3000"
 languageCode = "en-us"
 title = "My New Hugo Site"
