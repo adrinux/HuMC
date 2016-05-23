@@ -330,7 +330,7 @@ gulp.task('watcher', () => {
   gulp.watch('src/scripts/*.js', gulp.series(scripts, injectFoot, 'hugoDev', 'htmlDev', reload));
   gulp.watch('src/scripts_head/*.js', gulp.series(scriptsHead, injectHead, 'hugoDev', 'htmlDev', reload));
   gulp.watch('src/layouts/**/*.html', gulp.series(html, injectHead, injectFoot, 'hugoDev', 'htmlDev', reload));
-  gulp.watch(['hugo/archetypes/*', 'hugo/content/', 'hugo/data/'], gulp.series('hugoDev', reload));
+  gulp.watch(['hugo/archetypes/*', 'hugo/content/', 'hugo/data/', 'hugo/config.*'], gulp.series('hugoDev', reload));
 });
 
 
