@@ -62,10 +62,10 @@ module.exports = {
 
   // Image optimisation
   // gulp-imagemin
-  imageminOptions: {
-    interlaced: false,
-    svgoPlugins: [{removeViewBox: false}]
-  },
+  imageminOptions: [
+    require('gulp-imagemin').gifsicle({interlaced: false}), // the default
+    require('gulp-imagemin').svgo({removeViewBox: true})
+  ],
   // gulp-imageoptim
   imageoptimOptions: {
     status: true,
