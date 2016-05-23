@@ -304,10 +304,10 @@ function cleanResponsive (done) {
 // Serve and sync
 
 // Wrap browsersync reload
-// This seems to be required to get around a bug, see recent comments on this
-// issue https://github.com/BrowserSync/browser-sync/issues/711
-function reload () {
-  return browserSync.reload();
+// Workaround for https://github.com/BrowserSync/browser-sync/issues/1065
+function reload(done) {
+  browserSync.reload();
+  done();
 }
 
 // Watch files and serve with Browsersync
