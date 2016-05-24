@@ -68,14 +68,15 @@ function imgMin () {
 //
 // CSS processing
 function postCss () {
-  return gulp.src('src/styles/*.css')
+  return gulp.src('src/styles/*.{css,pcss}')
     .pipe(plugins.postcss(config.processors))
+    .pipe(plugins.rename({extname: '.css'}))
     .pipe(gulp.dest('hugo/static/styles/'));
 }
 
 // CSS processing, minification
 function minpostCss () {
-  return gulp.src('src/styles/*.css')
+  return gulp.src('src/styles/*.{css,pcss}')
     .pipe(plugins.sourcemaps.init())
     .pipe(plugins.postcss(config.minProcessors))
     .pipe(plugins.rename({extname: '.min.css'}))
