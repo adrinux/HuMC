@@ -1,37 +1,41 @@
 {
-    "rules": {
-        "indent": [
-            2,
-            2
-        ],
-        "linebreak-style": [
-            2,
-            "unix"
-        ],
-        "quote-props": [
-            2,
-            "as-needed"
-        ],
-        "quotes": [
-            2,
-            "single",
-            "avoid-escape"
-        ],
-        "semi": [
-            2,
-            "always"
-        ],
-        "no-extra-semi": [
-            2
-        ],
-        "no-console": [
-            1
-        ]
-    },
-    "env": {
-        "es6": true,
-        "node": false,
-        "browser": true
-    },
-    "extends": "eslint:recommended"
+  "rules": {
+    "indent": [
+      "error",
+      2
+    ],
+    "linebreak-style": [
+      "error",
+      "unix"
+    ],
+    "quotes": [
+      "error",
+      "single",
+      "avoid-escape"
+    ],
+    "semi": [
+      "error",
+      "never"
+    ],
+    "comma-dangle": [
+      "warn",
+      "always-multiline"
+    ],
+    "no-var": "warn",
+    "prefer-spread": "warn",
+    "require-yield": "error"
+  },
+  "env": {
+    "es6": true,
+    "node": true,
+    "browser": true
+  },
+  "extends": "eslint:recommended",
+  "parserOptions": {
+    "ecmaVersion": 7,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "experimentalObjectRestSpread": true
+    }
+  }
 }

@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 
 //
 // Configuration variables that we're likely to modify are in this file
@@ -155,4 +155,4 @@ module.exports = {
     exclude: ['.git*', 'cache', 'logs', '.DS_Store']
   }
 
-};
+}
