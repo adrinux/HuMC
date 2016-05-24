@@ -316,26 +316,26 @@ function reload(done) {
 }
 
 // Watch files and serve with Browsersync
-gulp.task('watcher', () => {
+gulp.task('watcher', (done) => {
 
   // Start a server
   browserSync.init({
     server: {
       baseDir: 'hugo/published/dev'
     }
-  });
+  }, done());
 
   // Watch files for changes
-  gulp.watch('src/img_tmp', gulp.series(imgResponsive, imgOptim, imgMin, 'hugoDev', 'htmlDev', reload));
-  gulp.watch('src/styles/*.css', gulp.series(postCss, injectHead, 'hugoDev', 'htmlDev', reload));
-  gulp.watch('src/styles/partials/*.css', gulp.series(postCss, injectHead, 'hugoDev', 'htmlDev', reload));
-  gulp.watch('src/styles_vendor/*.css', gulp.series('vendorStyles', injectHead, 'hugoDev', 'htmlDev', reload));
-  gulp.watch('src/*.*', gulp.series('copy', 'hugoDev', 'htmlDev', reload));
-  gulp.watch('config/modernizr-config.json', gulp.series('custoModernizr', injectHead, 'hugoDev', 'htmlDev', reload));
-  gulp.watch('src/scripts/*.js', gulp.series(scripts, injectFoot, 'hugoDev', 'htmlDev', reload));
-  gulp.watch('src/scripts_head/*.js', gulp.series(scriptsHead, injectHead, 'hugoDev', 'htmlDev', reload));
-  gulp.watch('src/layouts/**/*.html', gulp.series(html, injectHead, injectFoot, 'hugoDev', 'htmlDev', reload));
-  gulp.watch(['hugo/archetypes/*', 'hugo/content/', 'hugo/data/', 'hugo/config.*'], gulp.series('hugoDev', reload));
+  gulp.watch('src/img_tmp').on('change', gulp.series(imgResponsive, imgOptim, imgMin, 'hugoDev', 'htmlDev', reload));
+  gulp.watch('src/styles/*.{css,pcss}').on('change', gulp.series(postCss, injectHead, 'hugoDev', 'htmlDev', reload));
+  gulp.watch('src/styles/partials/*.{css,pcss}').on('change', gulp.series(postCss, injectHead, 'hugoDev', 'htmlDev', reload));
+  gulp.watch('src/styles_vendor/*.css').on('change', gulp.series('vendorStyles', injectHead, 'hugoDev', 'htmlDev', reload));
+  gulp.watch('src/*.*').on('change', gulp.series('copy', 'hugoDev', 'htmlDev', reload));
+  gulp.watch('config/modernizr-config.json').on('change', gulp.series('custoModernizr', injectHead, 'hugoDev', 'htmlDev', reload));
+  gulp.watch('src/scripts/*.js').on('change', gulp.series(scripts, injectFoot, 'hugoDev', 'htmlDev', reload));
+  gulp.watch('src/scripts_head/*.js').on('change', gulp.series(scriptsHead, injectHead, 'hugoDev', 'htmlDev', reload));
+  gulp.watch('src/layouts/**/*.html').on('change', gulp.series(html, injectHead, injectFoot, 'hugoDev', 'htmlDev', reload));
+  gulp.watch(['hugo/archetypes/*', 'hugo/content/', 'hugo/data/', 'hugo/config.*']).on('change', gulp.series('hugoDev', reload));
 });
 
 
