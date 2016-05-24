@@ -2,7 +2,6 @@
   "name": "web-starter-hugo",
   "version": "0.0.1",
   "description": "A static web site starter kit using Gulp and Hugo static site generator",
-  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -31,7 +30,7 @@
     "babel-preset-es2015": "^6.5.0",
     "browser-sync": "^2.11.1",
     "colorguard": "^1.0.1",
-    "css-mqpacker": "^4.0.0",
+    "css-mqpacker": "^5.0.1",
     "cssnano": "^3.5.1",
     "del": "^2.2.0",
     "eslint": "^2.0.0",
@@ -41,9 +40,9 @@
     "gulp": "github:gulpjs/gulp#4.0",
     "gulp-eslint": "^2.0.0",
     "gulp-gm": "0.0.8",
-    "gulp-htmlmin": "^1.3.0",
+    "gulp-htmlmin": "^2.0.0",
     "gulp-htmltidy": "^0.2.2",
-    "gulp-imagemin": "^2.4.0",
+    "gulp-imagemin": "^3.0.1",
     "gulp-imageoptim": "^1.0.1",
     "gulp-inject": "^3.0.0",
     "gulp-load-plugins": "^1.2.0",
