@@ -59,7 +59,7 @@ function imgOptim () {
 //
 // Optimize and copy svg or gif images to final destination
 function imgMin () {
-  return gulp.src('src/img_tmp/**/*.{svg,gif}')
+  return gulp.src('src/img_raw/**/*.{svg,gif}')
     .pipe(plugins.imagemin(config.imageminOptions))
     .pipe(gulp.dest('hugo/static/images/'));
 }
