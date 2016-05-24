@@ -304,8 +304,13 @@ function cleanResponsive (done) {
 // Serve and sync
 
 // Wrap browsersync reload
-// Workaround for https://github.com/BrowserSync/browser-sync/issues/1065
+// This wrapper seems to be required to get around a bug, see recent comments on
+// this issue https://github.com/BrowserSync/browser-sync/issues/711
 function reload(done) {
+  // return browserSync.reload(); switched to callback because some tasks don't
+  // signal completion to gulp, example issues
+  // https://github.com/BrowserSync/browser-sync/pull/987
+  // https://github.com/BrowserSync/browser-sync/issues/1065
   browserSync.reload();
   done();
 }
