@@ -10,7 +10,7 @@ A static web site starter kit using gulp and Hugo static site generator. Uses gu
 - Uses PostCSS for CSS processing.
 
 ## How to use
-Eventually this project should be a Yeoman/Slush generator, in the meantime:
+Eventually this should manage multiple sites, in the meantime clone and edit per site:
 
 ```
 git clone https://github.com/adrinux/web-starter-hugo.git YOUR_NEW_SITE_NAME
