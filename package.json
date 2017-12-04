@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/adrinux/web-starter-hugo#readme",
   "devDependencies": {
+    "ajv": "^5.5.1",
     "babel-core": "^6.26.0",
     "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.6.1",
