@@ -4,3 +4,5 @@
 baseurl = "http://localhost:3000"
 languageCode = "en-us"
 title = "My New Hugo Site"
+
+#disableKinds = ['RSS']
