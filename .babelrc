@@ -1,6 +1,4 @@
 {
-  "presets": ["es2015"],
-  // Remove the line below to enable ES2015 support in all js files.
-  "only": "gulpfile.babel.js",
+  "presets": ["env"],
   "retainLines": true
 }
