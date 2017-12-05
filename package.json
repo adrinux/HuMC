@@ -59,7 +59,6 @@
     "gulp-util": "^3.0.8",
     "lazypipe": "^1.0.1",
     "modernizr": "^3.5.0",
-    "picturefill": "^3.0.2",
     "postcss-cssnext": "^3.0.2",
     "postcss-import": "^11.0.0",
     "postcss-normalize": "^4.0.0",

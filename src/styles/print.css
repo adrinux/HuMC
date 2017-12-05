@@ -1,21 +1,18 @@
-/*! HTML5 Boilerplate v5.3.0 | MIT License | https://html5boilerplate.com/ */
-
-/* Extracted from H5BP's main.css */
+/*! HTML5 Boilerplate v6.0.1 | MIT License | https://html5boilerplate.com/ */
 
 /* ==========================================================================
    Print styles.
-   Inlined to avoid the additional HTTP request:
+   Extracted from H5BP's main.css not inlined because http2:
    http://www.phpied.com/delay-loading-your-print-css/
    ========================================================================== */
+
 @media print {
   *,
   *:before,
-  *:after,
-  *:first-letter,
-  *:first-line {
+  *:after {
     background: transparent !important;
     color: #000 !important; /* Black prints faster:
-                               http://www.sanbeiji.com/archives/953 */
+                   http://www.sanbeiji.com/archives/953 */
     box-shadow: none !important;
     text-shadow: none !important;
   }
@@ -34,12 +31,17 @@
   }
 
   /*
-     * Don't show links that are fragment identifiers,
-     * or use the `javascript:` pseudo protocol
-     */
+   * Don't show links that are fragment identifiers,
+   * or use the `javascript:` pseudo protocol
+   */
+
   a[href^="#"]:after,
   a[href^="javascript:"]:after {
     content: "";
+  }
+
+  pre {
+    white-space: pre-wrap !important;
   }
 
   pre,
@@ -49,9 +51,10 @@
   }
 
   /*
-     * Printing Tables:
-     * http://css-discuss.incutio.com/wiki/Printing_Tables
-     */
+   * Printing Tables:
+   * http://css-discuss.incutio.com/wiki/Printing_Tables
+   */
+
   thead {
     display: table-header-group;
   }
@@ -59,10 +62,6 @@
   tr,
   img {
     page-break-inside: avoid;
-  }
-
-  img {
-    max-width: 100% !important;
   }
 
   p,

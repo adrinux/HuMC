@@ -142,12 +142,6 @@ gulp.task('custoModernizr', () => {
   return exec(cmd, {encoding: 'utf-8'});
 });
 
-// Copy picturefill.js
-gulp.task('picturefill', () => {
-  return gulp.src('node_modules/picturefill/dist/picturefill.min.js', { since: gulp.lastRun('picturefill') })
-    .pipe(gulp.dest('hugo/static/scripts_vendor/'));
-});
-
 //
 // Copy other assets like icons and txt files from src to hugo/static
 gulp.task('copy', () => {
@@ -168,14 +162,13 @@ function html () {
 //
 // Inject css and js into templates
 function injectHead () {
-  let picturefillPath = gulp.src('hugo/static/scripts_vendor/picturefill.min.js', {read: false});
   let modernizrPath = gulp.src(['hugo/static/scripts_vendor/modernizr.custom.js'], {read: false});
   let scriptsHead = gulp.src('hugo/static/scripts_head/*.js', {read: false});
   let vendorCss = gulp.src('hugo/static/styles_vendor/*.css', {read: false});
   let projectCss = gulp.src('hugo/static/styles/*.css', {read: false});
 
   return gulp.src('hugo/layouts/partials/head-meta.html')
-    .pipe(plugins.inject(sseries(picturefillPath, modernizrPath, scriptsHead),
+    .pipe(plugins.inject(sseries(modernizrPath, scriptsHead),
       {selfClosingTag: true, ignorePath: 'hugo/static/', name: 'head'}))
     .pipe(plugins.inject(sseries(vendorCss, projectCss), {ignorePath: 'hugo/static/'}))
     .pipe(gulp.dest('hugo/layouts/partials/'));
@@ -370,7 +363,7 @@ gulp.task('default',
   gulp.series(
     gulp.parallel(cleanStatic, cleanLayouts, cleanDev),
     gulp.parallel('custoModernizr', postCss, scripts, scriptsHead),
-    gulp.parallel('copy', html, 'picturefill', 'vendorStyles'),
+    gulp.parallel('copy', html, 'vendorStyles'),
     gulp.parallel(injectHead, injectFoot),
     'hugoDev',
     'htmlDev',
@@ -382,7 +375,7 @@ gulp.task('dev',
   gulp.series(
     gulp.parallel(cleanStatic, cleanLayouts, cleanDev),
     gulp.parallel('custoModernizr', postCss, scripts, scriptsHead),
-    gulp.parallel('copy', html, 'picturefill', 'vendorStyles'),
+    gulp.parallel('copy', html, 'vendorStyles'),
     gulp.parallel(injectHead, injectFoot),
     'hugoDev',
     'htmlDev'
@@ -393,7 +386,7 @@ gulp.task('stage',
   gulp.series(
     gulp.parallel(cleanStatic, cleanLayouts, cleanStage),
     gulp.parallel('custoModernizr', minpostCss, minscripts, minscriptsHead),
-    gulp.parallel('copy', html, 'picturefill', 'vendorStyles'),
+    gulp.parallel('copy', html, 'vendorStyles'),
     gulp.parallel(injectHead, injectFoot),
     'hugoStage',
     'htmlStage'
@@ -404,7 +397,7 @@ gulp.task('live',
   gulp.series(
     gulp.parallel(cleanStatic, cleanLayouts, cleanLive),
     gulp.parallel('custoModernizr', minpostCss, minscripts, minscriptsHead),
-    gulp.parallel('copy', html, 'picturefill', 'vendorStyles'),
+    gulp.parallel('copy', html, 'vendorStyles'),
     gulp.parallel(injectHead, injectFoot),
     'hugoLive',
     'htmlLive'

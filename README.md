@@ -83,6 +83,7 @@ You're reading it. For further info see docs for incorportated tools:
 
 ### PostCSS plugins included
 - [postcss-import](https://github.com/postcss/postcss-import)
+- [postcss-normalize](https://github.com/postcss/postcss-import)
 - [PostCSS cssnext](http://cssnext.io/)
 - [Colorguard](https://www.npmjs.com/package/colorguard)
 - [postcss-wcag-contrast](https://github.com/jonathantneal/postcss-wcag-contrast)
@@ -93,7 +94,7 @@ You're reading it. For further info see docs for incorportated tools:
 A good comparison of PostCSS plugin packs is available [https://github.com/timaschew/postcss-compare-packs](https://github.com/timaschew/postcss-compare-packs)
 
 ## Customising the Modernizr build
-The Modernizr npm module is installed locally when you run npm install. The configuration file is located in 'config/modernizr-config.json' and by default only contains the HTML5shiv and HTML5printshiv. To add detectors either hand edit this file or configure and copy/paste (or download) a new modernizr-config.json at [Modernizr.com](https://modernizr.com/download).
+The Modernizr npm module is installed locally when you run npm install. The configuration file is located in 'config/modernizr-config.json' and uses the H5BP defaults, edit out what you don't need. Either hand edit this file or configure and copy/paste (or download) a new modernizr-config.json at [Modernizr.com](https://modernizr.com/download).
 
 ## Editor setup
 ### Linting
