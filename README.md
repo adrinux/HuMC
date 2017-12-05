@@ -83,7 +83,7 @@ You're reading it. For further info see docs for incorportated tools:
 
 ### PostCSS plugins included
 - [postcss-import](https://github.com/postcss/postcss-import)
-- [postcss-normalize](https://github.com/postcss/postcss-import)
+- [postcss-normalize](https://www.npmjs.com/package/postcss-normalize)
 - [PostCSS cssnext](http://cssnext.io/)
 - [Colorguard](https://www.npmjs.com/package/colorguard)
 - [postcss-wcag-contrast](https://github.com/jonathantneal/postcss-wcag-contrast)
