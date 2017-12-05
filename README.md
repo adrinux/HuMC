@@ -61,6 +61,7 @@ You're reading it. For further info see docs for incorportated tools:
 - [main-bower-files](https://www.npmjs.com/package/main-bower-files)
 - [browser-sync](https://www.npmjs.com/package/browser-sync)
 - [rsyncwrapper](https://www.npmjs.com/package/rsyncwrapper)
+- [browserslist](https://www.npmjs.com/package/browserslist)
 
 ### Gulp plugins included
 - [gulp-load-plugins](https://www.npmjs.com/package/gulp-load-plugins)
