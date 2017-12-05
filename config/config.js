@@ -79,7 +79,7 @@ module.exports = {
   // For dev
   processors: [
     require('postcss-import')(),
-    require('postcss-cssnext')({browsers: ['> 1%', 'last 2 versions', 'Firefox ESR']}),
+    require('postcss-cssnext')(),
     require('colorguard')({threshold: ['3']}),
     require('postcss-wcag-contrast')({compliance: 'AA'}),
     require('postcss-zindex')(),
@@ -89,7 +89,7 @@ module.exports = {
   // For stage and live
   minProcessors: [
     require('postcss-import')(),
-    require('postcss-cssnext')({browsers: ['> 1%', 'last 2 versions', 'Firefox ESR']}),
+    require('postcss-cssnext')(),
     require('postcss-zindex')(),
     require('css-mqpacker')(),
     require('cssnano')(),
