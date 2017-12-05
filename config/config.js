@@ -79,6 +79,7 @@ module.exports = {
   // For dev
   processors: [
     require('postcss-import')(),
+    require('postcss-normalize')({forceImport: true}),
     require('postcss-cssnext')(),
     require('colorguard')({threshold: ['3']}),
     require('postcss-wcag-contrast')({compliance: 'AA'}),
@@ -89,6 +90,7 @@ module.exports = {
   // For stage and live
   minProcessors: [
     require('postcss-import')(),
+    require('postcss-normalize')({forceImport: true}),
     require('postcss-cssnext')(),
     require('postcss-zindex')(),
     require('css-mqpacker')(),
