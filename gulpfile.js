@@ -1,13 +1,17 @@
 'use strict';
 
 require('babel-polyfill');
-var gulp = require('gulp');
-var gulpLoadPlugins = require('gulp-load-plugins');
-var del = require('del');
-var lazypipe = require('lazypipe');
-var browserSync = require('browser-sync').create();
-var rsync = require('rsyncwrapper');
-var sseries = require('stream-series');
+const gulp = require('gulp');
+const gulpLoadPlugins = require('gulp-load-plugins');
+const del = require('del');
+const lazypipe = require('lazypipe');
+const browserSync = require('browser-sync').create();
+const rsync = require('rsyncwrapper');
+const git = require('gulp-git');
+const sseries = require('stream-series');
+const gm = require('gulp-gm');
+const imagemin = require('gulp-imagemin');
+const imageminMozjpeg = require('imagemin-mozjpeg');
 
 
 // Auto load Gulp plugins
@@ -16,9 +20,7 @@ const plugins = gulpLoadPlugins({
     'gulp-util': 'gulpUtil',
     'gulp-inject': 'inject',
     'gulp-htmlmin': 'htmlmin',
-    'gulp-htmltidy': 'htmltidy',
-    'gulp-gm': 'gm',
-    'gulp-imageoptim': 'imageOptim'
+    'gulp-htmltidy': 'htmltidy'
   }
 });
 
@@ -33,7 +35,7 @@ function imgMagic() {
   return gulp.src('src/img_raw/*.{jpg,png}')
     .pipe(plugins.gm( function (gmfile) {
       return gmfile
-        .resize(1280, 1024);
+        .resize(1360, 1024);
     }))
     //.pipe(plugins.rename(config.magicRename))
     .pipe(gulp.dest('src/img_tmp/'));
@@ -52,15 +54,27 @@ function imgResponsive() {
 // Optimize responsive images and copy to final location
 function imgOptim () {
   return gulp.src('src/img_responsive/**/*.{jpg,png}')
-    .pipe(plugins.imageOptim.optimize(config.imageoptimOptions))
+    .pipe(imagemin([
+      imagemin.optipng({ optimizationLevel: 5 }),
+      imageminMozjpeg({ quality: 90 })
+    ],{verbose: true}))
     .pipe(gulp.dest('hugo/static/images/'));
 }
+
 
 //
 // Optimize and copy svg or gif images to final destination
 function imgMin () {
   return gulp.src('src/img_raw/**/*.{svg,gif}')
-    .pipe(plugins.imagemin(config.imageminOptions))
+    .pipe(imagemin([
+      imagemin.gifsicle({ interlaced: true }),
+      imagemin.svgo({
+        plugins: [
+          { removeViewBox: false },
+          { cleanupIDs: false }
+        ]
+      })
+    ],{verbose: true}))
     .pipe(gulp.dest('hugo/static/images/'));
 }
 
@@ -113,7 +127,6 @@ function scriptsHead () {
 }
 
 // Javascript minification and source mapping
-// TODO Possibly add concatenation (not really needed when served via HTTP2)
 let minJs = lazypipe()
     .pipe(plugins.sourcemaps.init)
       .pipe(plugins.uglify)

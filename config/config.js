@@ -60,20 +60,6 @@ module.exports = {
     errorOnUnusedConfig: false
   },
 
-  // Image optimisation
-  // gulp-imagemin
-  imageminOptions: [
-    require('gulp-imagemin').gifsicle({interlaced: false}), // the default
-    require('gulp-imagemin').svgo({removeViewBox: false})
-  ],
-  // gulp-imageoptim
-  imageoptimOptions: {
-    status: true,
-    batchSize: 100,
-    jpegmini: true
-  },
-
-
   //
   // PostCSS plugins and their options
   // For dev
