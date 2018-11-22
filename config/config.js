@@ -60,30 +60,6 @@ module.exports = {
     errorOnUnusedConfig: false
   },
 
-  //
-  // PostCSS plugins and their options
-  // For dev
-  processors: [
-    require('postcss-import')(),
-    require('postcss-normalize')(),
-    require('postcss-cssnext')(),
-    require('colorguard')({threshold: ['3']}),
-    require('postcss-wcag-contrast')({compliance: 'AA'}),
-    require('postcss-zindex')(),
-    require('css-mqpacker')(),
-    require('postcss-reporter')()
-  ],
-  // For stage and live
-  minProcessors: [
-    require('postcss-import')(),
-    require('postcss-normalize')(),
-    require('postcss-cssnext')(),
-    require('postcss-zindex')(),
-    require('css-mqpacker')(),
-    require('cssnano')(),
-    require('postcss-reporter')()
-  ],
-
 
   //
   // Javascript

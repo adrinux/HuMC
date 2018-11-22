@@ -80,31 +80,6 @@ function imgMin () {
 
 
 //
-// CSS processing
-function postCss () {
-  return gulp.src('src/styles/*.{css,pcss}')
-    .pipe(plugins.postcss(config.processors))
-    .pipe(plugins.rename({extname: '.css'}))
-    .pipe(gulp.dest('hugo/static/styles/'));
-}
-
-// CSS processing, minification
-function minpostCss () {
-  return gulp.src('src/styles/*.{css,pcss}')
-    .pipe(plugins.sourcemaps.init())
-    .pipe(plugins.postcss(config.minProcessors))
-    .pipe(plugins.rename({extname: '.min.css'}))
-    .pipe(plugins.sourcemaps.write('.'))
-    .pipe(gulp.dest('hugo/static/styles/'));
-}
-
-// Copy Vendor CSS into hugo/static
-gulp.task('vendorStyles', () => {
-  return gulp.src('src/styles_vendor/*.css', { since: gulp.lastRun('vendorStyles') })
-    .pipe(gulp.dest('hugo/static/styles_vendor/'));
-});
-
-//
 // Javascript processing
 //
 // Linting
@@ -126,24 +101,6 @@ function scriptsHead () {
     .pipe(gulp.dest('hugo/static/scripts_head/'));
 }
 
-// Javascript minification and source mapping
-let minJs = lazypipe()
-    .pipe(plugins.sourcemaps.init)
-      .pipe(plugins.uglify)
-      .pipe(plugins.rename, {extname: '.min.js'})
-    .pipe(plugins.sourcemaps.write, '.');
-
-// stage and live js tasks
-function minscripts () {
-  return gulp.src('src/scripts/*.js')
-    .pipe(minJs())
-    .pipe(gulp.dest('hugo/static/scripts/'));
-}
-function minscriptsHead () {
-  return gulp.src('src/scripts_head/*.js')
-    .pipe(minJs())
-    .pipe(gulp.dest('hugo/static/scripts_head/'));
-}
 
 // Modernizr
 // Read custom config and generate a custom build , already minified
