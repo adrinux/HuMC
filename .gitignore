@@ -1,9 +1,6 @@
 # node
 node_modules
 
-# bower
-bower_components
-
 # tmp files
 img_tmp
 img_responsive
