@@ -5,7 +5,6 @@
 
 module.exports = {
 
-  //
   // Hugo is happiest with a 'baseurl' set. For dev runs http://localhost:3000
   // is set in Hugo's config.[toml,yaml,json] but we set it dynamically so we
   // can use different values for stage and production runs.
@@ -17,7 +16,6 @@ module.exports = {
   },
 
 
-  //
   // Image processing
 
   // Optionally rename images processed with gm
@@ -61,29 +59,10 @@ module.exports = {
   },
 
 
-  //
   // Javascript
   // Use config/eslint.json to configure javascript linting
 
 
-  //
-  // HTML
-  // Linting with gulp-htmltidy
-  htmltidyOptions: {
-    doctype: 'html5',
-    hideComments: true,
-    indent: true,
-    indentSpaces: 2
-  },
-  // Minification with gulp-htmlmin
-  htmlminOptions: {
-    collapseWhitespace: true,
-    conservativeCollapse: true,
-    preserveLineBreaks: true
-  },
-
-
-  //
   // Rsync Deploy via rsyncwrapper
 
   // Rsync option explanations
