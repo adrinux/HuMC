@@ -2,7 +2,7 @@
 
 Since this project started Hugo has gained the ability to optimise images, process CSS/Javascript and matches browsersync functionality. Thus much of what this project does is now obsolete.
 
-I'm not yet sure whether this project will adapt or die.
+__The version2 branch has WIP adapting Web Starter Hugo to modern Hugo__
 
 ## web-starter-hugo
 
