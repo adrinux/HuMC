@@ -121,38 +121,6 @@ gulp.task('copy', () => {
 
 
 //
-// HTML templates
-// Copy HTML templates from src/layouts to hugo/layouts
-// We cant lint and minify here because of hugo specific code
-function html () {
-  return gulp.src('src/layouts/**/*.html', { since: gulp.lastRun(html) })
-    .pipe(gulp.dest('hugo/layouts/'));
-}
-
-//
-// Inject css and js into templates
-function injectHead () {
-  let modernizrPath = gulp.src(['hugo/static/scripts_vendor/modernizr.custom.js'], {read: false});
-  let scriptsHead = gulp.src('hugo/static/scripts_head/*.js', {read: false});
-  let vendorCss = gulp.src('hugo/static/styles_vendor/*.css', {read: false});
-  let projectCss = gulp.src('hugo/static/styles/*.css', {read: false});
-
-  return gulp.src('hugo/layouts/partials/head-meta.html')
-    .pipe(plugins.inject(sseries(modernizrPath, scriptsHead),
-      {selfClosingTag: true, ignorePath: 'hugo/static/', name: 'head'}))
-    .pipe(plugins.inject(sseries(vendorCss, projectCss), {ignorePath: 'hugo/static/'}))
-    .pipe(gulp.dest('hugo/layouts/partials/'));
-}
-
-function injectFoot () {
-  return gulp.src('hugo/layouts/partials/footer-scripts.html')
-    .pipe(plugins.inject(gulp.src(['hugo/static/scripts/*.js'],
-      {read: false}), {ignorePath: 'hugo/static/'}))
-    .pipe(gulp.dest('hugo/layouts/partials/'));
-}
-
-
-//
 // Hugo
 // -D is buildDrafts
 // -F is buildFuture
@@ -160,10 +128,10 @@ function hugo (status) {
   let exec = require('child_process').execSync;
   let cmd = 'hugo --config=hugo/config.toml -s hugo/';
   if (status === 'stage') {
-    cmd += ' -D -d published/stage/ --baseURL="' + config.hugoBaseUrl.stage + '"';
+    cmd += ' --minify' + ' - D - d published / stage / --baseURL = "' + config.hugoBaseUrl.stage + '"';
     plugins.gulpUtil.log('hugo command: \n' + cmd);
   } else if (status === 'live') {
-    cmd += ' -d published/live/ --baseURL="' + config.hugoBaseUrl.live + '"';
+    cmd += ' --minify' + ' -d published/live/ --baseURL="' + config.hugoBaseUrl.live + '"';
     plugins.gulpUtil.log('hugo command: \n' + cmd);
   } else {
     cmd += ' -DF -d published/dev/';
