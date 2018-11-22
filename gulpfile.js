@@ -1,6 +1,5 @@
 'use strict';
 
-require('babel-polyfill');
 const gulp = require('gulp');
 const gulpUtil = require('gulp-util');
 const del = require('del');
