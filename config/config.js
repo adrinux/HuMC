@@ -15,15 +15,11 @@ module.exports = {
     live: 'http://example.com'
   },
 
+  hugoTheme: {
+    name: 'pippy'
+  },
 
   // Image processing
-
-  // Optionally rename images processed with gm
-  // Uncomment the rename line in the gulpfile.js 'imgMagic' task before use
-  // For options see https://github.com/hparra/gulp-rename#notes
-  magicRename: {
-    suffix: '-sized'
-  },
 
   // Responsive image generation via gulp-responsive
   // Sizes etc

@@ -79,7 +79,7 @@ gulp.task('custoModernizr', () => {
 // -F is buildFuture
 function hugo (status) {
   let exec = require('child_process').execSync;
-  let cmd = 'hugo --config=hugo/config.toml -s hugo/';
+  let cmd = 'hugo --config=hugo/config.toml -s hugo/' + ' -t ' + config.hugoTheme.name;
   if (status === 'stage') {
     cmd += ' --minify' + ' - D - d published / stage / --baseURL = "' + config.hugoBaseUrl.stage + '"';
     gulpUtil.log('hugo command: \n' + cmd);
