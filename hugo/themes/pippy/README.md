@@ -25,9 +25,8 @@ npm install -D postcss-preset-env postcss-reporter postcss-import autoprefixer
 
 ### Google Analytics
 
-The GA code block from H5BP is in a hugo partial. It will be included when you define a variable 'GoogleAnalytics' containing your Google Analytics site ID.
+Hugo has a built in GA partial. It's included in the page head when you define a variable 'googleAnalytics' containing your Google Analytics property ID.
 eg inside config.toml
 ``` toml
-[Params]
-  GoogleAnalytics = "YOUR-GA-SITE-ID"
+googleAnalytics = "YOUR-GA-Property-ID"
 ```
