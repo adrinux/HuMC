@@ -9,8 +9,8 @@ img_responsive
 # Hugo
 published
 public
-static
-hugo/layouts
+hugo/resources/_gen/assets/css
+hugo/resources/_gen/assets/js
 
 # OSX
 .DS_Store
