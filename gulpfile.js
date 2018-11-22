@@ -110,15 +110,16 @@ gulp.task('hugoLive', () => {
 
 // Cleaning
 // Specific cleaning functions for dev/stage/live of hugo/published.
-function cleanDev (done) {
-  return del(['hugo/published/dev/'], done);
-}
-function cleanStage (done) {
-  return del(['hugo/published/stage/'], done);
-}
-function cleanLive (done) {
-  return del(['hugo/published/live/'], done);
-}
+gulp.task('cleanDev', () => {
+  return Promise.all([del('hugo/published/dev/')]);
+});
+gulp.task('cleanStage', () => {
+  return Promise.all([del('hugo/published/stage/')]);
+});
+gulp.task('cleanLive', () => {
+  return Promise.all([del('hugo/published/live/')]);
+});
+
 
 // Clean temporary image files created during processing
 function cleanImages (done) {
@@ -235,4 +236,4 @@ gulp.task('reprocess:responsive', gulp.series(cleanResponsive, imgResponsive, im
 
 
 // Task used for debugging function based task or tasks
-gulp.task('dt', gulp.series('copy'));
+gulp.task('dt', gulp.series('cleanDev'));
