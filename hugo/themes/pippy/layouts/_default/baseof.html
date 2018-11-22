@@ -1,0 +1,17 @@
+<!doctype html>
+<html class="no-js" lang="{{ .Site.LanguageCode}}">
+<head>
+  {{- partial "head-meta.html" . -}}
+</head>
+<body>
+  {{- partial "browserupgrade.html" . -}}
+
+  {{- partial "header.html" . -}}
+
+  {{- block "main" . }}{{- end }}
+
+  {{- partial "footer.html" . -}}
+
+  {{- partial "footer-scripts.html" . -}}
+</body>
+</html>

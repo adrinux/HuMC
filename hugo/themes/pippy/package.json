@@ -1,0 +1,35 @@
+{
+  "name": "pippy",
+  "version": "1.0.0",
+  "description": "A hugo theme",
+  "main": "postcss.config.js",
+  "directories": {
+    "doc": "doc"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "autoprefixer": "^9.3.1",
+    "eslint": "^5.8.0",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-node": "^8.0.0",
+    "eslint-plugin-promise": "^4.0.1",
+    "eslint-plugin-standard": "^4.0.0",
+    "postcss-import": "^12.0.1",
+    "postcss-preset-env": "^6.4.0",
+    "postcss-reporter": "^6.0.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adrinux/Pippy.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/adrinux/Pippy/issues"
+  },
+  "homepage": "https://github.com/adrinux/Pippy#readme"
+}
