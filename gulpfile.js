@@ -69,7 +69,7 @@ gulp.task('custoModernizr', () => {
   let exec = require('child_process').exec;
   let cmd = './node_modules/.bin/modernizr ';
   cmd += '-c ./config/modernizr-config.json ';
-  cmd += '-d ./hugo/static/scripts_vendor/modernizr.custom.js';
+  cmd += '-d ./hugo/themes/' + config.hugoTheme.name + '/assets/js/modernizr.custom.js';
   return exec(cmd, {encoding: 'utf-8'});
 });
 
@@ -79,7 +79,7 @@ gulp.task('custoModernizr', () => {
 // -F is buildFuture
 function hugo (status) {
   let exec = require('child_process').execSync;
-  let cmd = 'hugo --config=hugo/config.toml -s hugo/' + ' -t ' + config.hugoTheme.name;
+  let cmd = 'cd hugo && hugo -t ' + config.hugoTheme.name;
   if (status === 'stage') {
     cmd += ' --minify' + ' - D - d published / stage / --baseURL = "' + config.hugoBaseUrl.stage + '"';
     gulpUtil.log('hugo command: \n' + cmd);
