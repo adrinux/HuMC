@@ -1,16 +1,10 @@
+
+# Sites folder
+sites/*
+!sites/web-starter-hugo
+
 # node
 node_modules
-
-# tmp files
-img_tmp
-img_responsive
-.cache-*
-
-# Hugo
-published
-public
-hugo/resources/_gen/assets/css
-hugo/resources/_gen/assets/js
 
 # OSX
 .DS_Store
