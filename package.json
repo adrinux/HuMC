@@ -1,7 +1,7 @@
 {
-  "name": "web-starter-hugo",
+  "name": "web-mc",
   "version": "2.0.0",
-  "description": "A static web site starter kit using Gulp, Hugo and PostCSS",
+  "description": "web-mc to manage a collection of Hugo based web sites",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -34,22 +34,12 @@
     "eslint-plugin-node": "^8.0.0",
     "eslint-plugin-promise": "^4.0.1",
     "eslint-plugin-standard": "^4.0.0",
-    "gulp": "^4.0.0",
-    "gulp-eslint": "^5.0.0",
-    "gulp-git": "^2.8.0",
-    "gulp-gm": "0.0.9",
-    "gulp-imagemin": "^5.0.3",
-    "gulp-rename": "^1.4.0",
-    "gulp-responsive": "^2.11.0",
-    "gulp-useref": "^3.1.6",
-    "gulp-util": "^3.0.8",
     "imagemin": "^6.0.0",
     "imagemin-gifsicle": "^6.0.0",
     "imagemin-jpegtran": "^6.0.0",
     "imagemin-mozjpeg": "^8.0.0",
     "imagemin-optipng": "^6.0.0",
     "imagemin-svgo": "^7.0.0",
-    "modernizr": "^3.6.0",
-    "rsyncwrapper": "^3.0.1"
+    "modernizr": "^3.6.0"
   }
 }
