@@ -5,5 +5,17 @@ tasks:
 # Setup web-mc
   setup:
     cmds:
-      - echo 'Hello task!'
+      - echo 'Starting'
+      - nodejs-setup
 
+  # Find package.json and install node_modules
+  nodejs-setup:
+    deps: [node-installed]
+    desc: Search for package.json and install listed node modules
+    cmds:
+      - npm install
+
+  node-installed:
+    desc: Check if nodejs is installed
+    cmds:
+      - node -v
