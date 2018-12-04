@@ -1,10 +1,16 @@
 
-# Sites folder
+# Sites folder - all but test-site should have own repo
 sites/*
-!sites/web-starter-hugo
+!sites/test-site
 
 # node
 node_modules
+
+# Hugo output & cache
+published
+public
+sites/test-site/resources/_gen/assets/css
+sites/test-site/resources/_gen/assets/js
 
 # OSX
 .DS_Store
