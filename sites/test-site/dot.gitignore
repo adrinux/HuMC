@@ -1,0 +1,16 @@
+# node
+node_modules
+
+# tmp files
+img_tmp
+img_responsive
+.cache-*
+
+# Hugo
+published
+public
+resources/_gen/assets/css
+resources/_gen/assets/js
+
+# OSX
+.DS_Store
