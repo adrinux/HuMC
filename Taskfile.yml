@@ -1,0 +1,9 @@
+version: '2'
+
+tasks:
+
+# Setup web-mc
+  setup:
+    cmds:
+      - echo 'Hello task!'
+
