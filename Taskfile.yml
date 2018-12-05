@@ -1,5 +1,7 @@
 version: '2'
 
+#include: Taskvars.yml
+
 tasks:
 
 # Setup web-mc
@@ -40,3 +42,15 @@ tasks:
           exit 1
         fi
       - echo "hugo installed, ok."
+
+
+# Sites
+# Copy existing test-site to new name
+# how to pass in name? config file? Taskvars.yml can list global variables
+# seems like the place for site config
+
+# could also have sites/sitename/Taskvars.yml
+
+  sites:
+    cmds:
+      - echo {{ .SITE_NAME }}
