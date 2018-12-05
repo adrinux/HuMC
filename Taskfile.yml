@@ -6,16 +6,37 @@ tasks:
   setup:
     cmds:
       - echo 'Starting'
-      - nodejs-setup
+      - hugo-installed
+      - node-setup
 
-  # Find package.json and install node_modules
-  nodejs-setup:
-    deps: [node-installed]
-    desc: Search for package.json and install listed node modules
+
+  # Install node_modules
+  node-setup:
+    deps:
+      - node_installed
+    desc: Run npm install if node_modules doesn't exist
     cmds:
       - npm install
+    status:
+      - test -d node_modules
 
-  node-installed:
-    desc: Check if nodejs is installed
+  # Check if node installed
+  node_installed:
+    silent: true
     cmds:
-      - node -v
+      - |
+        if ! command -v node > /dev/null; then
+          echo "node is not installed. aborting."
+          exit 1
+        fi
+      - echo "node installed, ok."
+
+  hugo-installed:
+    silent: true
+    cmds:
+      - |
+        if ! command -v hugo > /dev/null; then
+          echo "hugo is not installed. aborting."
+          exit 1
+        fi
+      - echo "hugo installed, ok."
