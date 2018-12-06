@@ -16,7 +16,7 @@ module.exports = {
   },
 
   hugoTheme: {
-    name: 'pippy'
+    name: 'bunait'
   },
 
   // Image processing

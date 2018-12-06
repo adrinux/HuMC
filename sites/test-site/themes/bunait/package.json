@@ -1,5 +1,5 @@
 {
-  "name": "pippy",
+  "name": "bunait",
   "version": "1.0.0",
   "description": "A hugo theme",
   "main": "postcss.config.js",
@@ -24,7 +24,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/adrinux/Pippy.git"
+    "url": "git+https://github.com/adrinux/Bunait.git"
   },
   "author": "Adrian Simmons",
   "license": "MIT"
