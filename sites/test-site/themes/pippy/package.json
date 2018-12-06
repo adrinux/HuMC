@@ -26,10 +26,6 @@
     "type": "git",
     "url": "git+https://github.com/adrinux/Pippy.git"
   },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/adrinux/Pippy/issues"
-  },
-  "homepage": "https://github.com/adrinux/Pippy#readme"
+  "author": "Adrian Simmons",
+  "license": "MIT"
 }
