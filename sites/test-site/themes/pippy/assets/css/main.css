@@ -99,8 +99,44 @@ textarea {
 /* ==========================================================================
    Author's custom styles
    ========================================================================== */
+
+/* Layout */
+@supports (display: grid) {
+  .container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: auto 1fr auto;
+  }
+
+  header {
+    grid-column: 1 / span 3;
+    grid-row: 1 / span 1;
+  }
+  main {
+    grid-column: 1 / span 3;
+    grid-row: 2 /span 1;
+  }
+  footer {
+    grid-column: 1 / span 3;
+    grid-row: 6 / span 1;
+  }
+
+  .container {
+    height: auto;
+    min-height: 100vh;
+  }
+
+}
+
+/* End Layout */
+
+.container {
+  padding: 0 20px;
+  background-color: rgb(1, 128, 1);
+}
+
 body {
-  background-color: var(--background);
+  background-color: ;
 }
 
 header {
@@ -109,8 +145,9 @@ header {
   padding: 1.5em;
 }
 
-.main-content {
+main {
   padding: 2em;
+  background-color:var(--background);
 }
 
 footer {
