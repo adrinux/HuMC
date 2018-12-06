@@ -1,5 +1,5 @@
 {{ define "main" }}
-<div class="main-content">
+<main class="main-content">
   <h1>{{ .Title }}</h1>
 
   {{ if .Params.rendertoc }}
@@ -9,5 +9,5 @@
   <article>
     {{ .Content }}
   </article>
-</div>
+</main>
 {{ end }}
