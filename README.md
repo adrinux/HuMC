@@ -1,6 +1,16 @@
-# web-mc
+## Note
 
-A set of tasks to help manage a collection of web sites built with Hugo.
+This project is evolving from 'web-starter-hugo' which is on the wsh-1.0 branch. It's currently a WIP and not recommeded for production use.
+
+# HuMC
+
+(aka Hugo Master Controller or Hugo Multisite Controller)
+
+HuMC is:
+
+- A set of tasks to help manage, develop and deploy a collection of web sites built with [Hugo]().
+- A starter site for [Hugo]() (it may become several possible starter sites).
+- A starter theme for [Hugo]() based on [HTML5 Biolerplate]()
 
 
 ## Install & setup
@@ -15,4 +25,4 @@ rm -rf install.sh
 
 ```
 
-Clone web-mc from github.
+Clone HuMC from github.
