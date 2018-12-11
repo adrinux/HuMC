@@ -1,0 +1,16 @@
+# See https://github.com/gohugoio/hugoThemes#themetoml for an example
+
+name = "Bunait"
+license = "MIT"
+licenselink = "https://github.com/adrinux/Bunait/blob/master/LICENSE"
+description = "A Hugo theme based on HTML5boilerplate and using hugo pipes"
+homepage = "https://github.com/adrinux/Bunait"
+tags = []
+features = []
+min_version = "0.41"
+
+[author]
+  name = "Adrian Simmons"
+  homepage = "https://perlucida.com"
+
+

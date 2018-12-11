@@ -1,22 +1,16 @@
+
+# Sites folder - all but test-site should have own repo
+sites/*
+!sites/test-site
+
 # node
 node_modules
 
-# bower
-bower_components
-
-# tmp files
-img_tmp
-img_responsive
-.cache-*
-
-# Hugo
+# Hugo output & cache
 published
 public
-static
-hugo/layouts
+sites/test-site/resources/_gen/assets/css
+sites/test-site/resources/_gen/assets/js
 
 # OSX
 .DS_Store
-
-# Sublime Text 3
-.deprc

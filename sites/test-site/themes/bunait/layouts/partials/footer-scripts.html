@@ -1,0 +1,6 @@
+
+<!-- Scripts added to the footer of all pages -->
+{{ $customModernizr := resources.Get "js/modernizr.custom.js" | fingerprint }}
+<script src="{{ $customModernizr.Permalink }}"></script>
+{{ $customJs := resources.Get "js/main.js" | minify | fingerprint }}
+<script src="{{ $customJs.Permalink }}"></script>
