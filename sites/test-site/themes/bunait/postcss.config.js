@@ -7,6 +7,7 @@ module.exports = {
       stage: 2,
       preserve: false
     }),
+    require('postcss-color-mod-function'),
     require('autoprefixer'),
     require('postcss-reporter')
   ]

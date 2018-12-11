@@ -1,0 +1,29 @@
+@import 'vars.css';
+
+.main-content {
+  background-color: #fff;
+}
+
+.pal-row-wrapper {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+}
+
+.pal-row-wrapper div {
+  margin: 0 20px 20px 0;
+}
+.pal-cel-label {
+  font-size: 10px;
+}
+
+.grey0 { background-color: var(--grey0); }
+.grey1 { background-color: var(--grey1); }
+.grey2 { background-color: var(--grey2); }
+.grey3 { background-color: var(--grey3); }
+.grey4 { background-color: var(--grey4); }
+.grey5 { background-color: var(--grey5); }
+.grey6 { background-color: var(--grey6); }
+.grey7 { background-color: var(--grey7); }
+.grey8 { background-color: var(--grey8); }
+.grey9 { background-color: var(--grey9); }
+

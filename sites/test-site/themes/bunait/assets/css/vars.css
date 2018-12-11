@@ -8,14 +8,14 @@
   --brand: hsl(192, 100%, 50%);
 
   /* Color Palette */
-  --grey0: color-mod(--brand saturation(1%));
-  --grey1: color-mod(--brand saturation(10%));
-  --grey2: color-mod(--brand saturation(20%));
-  --grey3: color-mod(--brand saturation(30%));
-  --grey4: color-mod(--brand saturation(40%));
-  --grey5: color-mod(--brand saturation(50%));
-  --grey6: color-mod(--brand saturation(60%));
-  --grey7: color-mod(--brand saturation(70%));
-  --grey8: color-mod(--brand saturation(80%));
-  --grey9: color-mod(--brand saturation(90%));
+  --grey0: color-mod(hsl(0 0% 98%) blend(var(--brand) 4%));
+  --grey1: color-mod(hsl(0 0% 93%) blend(var(--brand) 4%));
+  --grey2: color-mod(hsl(0 0% 88%) blend(var(--brand) 4%));
+  --grey3: color-mod(hsl(0 0% 82%) blend(var(--brand) 4%));
+  --grey4: color-mod(hsl(0 0% 76%) blend(var(--brand) 4%));
+  --grey5: color-mod(hsl(0 0% 62%) blend(var(--brand) 4%));
+  --grey6: color-mod(hsl(0 0% 38%) blend(var(--brand) 4%));
+  --grey7: color-mod(hsl(0 0% 53%) blend(var(--brand) 4%));
+  --grey8: color-mod(hsl(0 0% 42%) blend(var(--brand) 4%));
+  --grey9: color-mod(hsl(0 0% 25%) blend(var(--brand) 4%));
 }
