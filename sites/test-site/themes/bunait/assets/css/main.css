@@ -136,12 +136,12 @@ textarea {
 }
 
 body {
-  background-color: ;
+  background-color: var(--background);
 }
 
 header {
   background-color: var(--text);
-  color: var(--background);
+  color: var(--brand);
   padding: 1.5em;
 }
 
