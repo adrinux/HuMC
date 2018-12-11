@@ -2,49 +2,20 @@
   --background: #ddd;
   --text: #222;
   --selection_bg: #b3d4fc;
-  --gray: #ccc;
+  --grey: #ccc;
 
   /* Brand color-mod */
-  --brand: #0cf;
-  --brand-dsat: color-mod(var(--brand) s(12%) l(69%));
+  --brand: hsl(192, 100%, 50%);
 
   /* Color Palette */
-  /* grays */
-  --gray0: color-mod(var(--brand-dsat) tint(92%));
-  --gray1: color-mod(var(--brand-dsat) tint(76%));
-  --gray2: color-mod(var(--brand-dsat) tint(59%));
-  --gray3: color-mod(var(--brand-dsat) tint(42%));
-  --gray4: color-mod(var(--brand-dsat) tint(20%));
-  --gray5: color-mod(var(--brand-dsat));
-  --gray6: color-mod(var(--brand-dsat) s(+6%) shade(12%));
-  --gray7: color-mod(var(--brand-dsat) s(+12%) shade(25%));
-  --gray8: color-mod(var(--brand-dsat) s(+12%) shade(40%));
-  --gray9: color-mod(var(--brand-dsat) s(+16%) shade(65%));
-
-  /* hues 11 steps of 30deg plus brand gives 12 steps */
-  --c30: color-mod(var(--brand) h(+30));
-  --c60: color-mod(var(--brand) h(+60));
-  --c90: color-mod(var(--brand) h(+90));
-  --c120: color-mod(var(--brand) h(+120));
-  --c150: color-mod(var(--brand) h(+150));
-  --c180: color-mod(var(--brand) h(+180));
-  --c210: color-mod(var(--brand) h(+210));
-  --c240: color-mod(var(--brand) h(+240));
-  --c270: color-mod(var(--brand) h(+270));
-  --c300: color-mod(var(--brand) h(+300));
-  --c330: color-mod(var(--brand) h(+330));
-
-  /* Tints and shades of hues */
-  --c30-0: color-mod(var(--c30) l(95%));
-  --c30-1: color-mod(var(--c30) l(89%));
-  --c30-2: color-mod(var(--c30) l(82%));
-  --c30-3: color-mod(var(--c30) l(74%));
-  --c30-4: color-mod(var(--c30) l(64%));
-  --c30-6: color-mod(var(--c30) l(45%));
-  --c30-7: color-mod(var(--c30) l(40%));
-  --c30-8: color-mod(var(--c30) l(33%));
-  --c30-9: color-mod(var(--c30) l(24%));
-
-
-
+  --grey0: color-mod(hsl(0 0% 98%) blend(var(--brand) 4%));
+  --grey1: color-mod(hsl(0 0% 93%) blend(var(--brand) 4%));
+  --grey2: color-mod(hsl(0 0% 88%) blend(var(--brand) 4%));
+  --grey3: color-mod(hsl(0 0% 82%) blend(var(--brand) 4%));
+  --grey4: color-mod(hsl(0 0% 76%) blend(var(--brand) 4%));
+  --grey5: color-mod(hsl(0 0% 62%) blend(var(--brand) 4%));
+  --grey6: color-mod(hsl(0 0% 38%) blend(var(--brand) 4%));
+  --grey7: color-mod(hsl(0 0% 53%) blend(var(--brand) 4%));
+  --grey8: color-mod(hsl(0 0% 42%) blend(var(--brand) 4%));
+  --grey9: color-mod(hsl(0 0% 25%) blend(var(--brand) 4%));
 }
