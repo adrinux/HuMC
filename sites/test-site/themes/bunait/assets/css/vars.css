@@ -3,19 +3,4 @@
   --text: #222;
   --selection_bg: #b3d4fc;
   --grey: #ccc;
-
-  /* Brand color-mod */
-  --brand: hsl(192, 100%, 50%);
-
-  /* Color Palette */
-  --grey0: color-mod(--brand saturation(1%));
-  --grey1: color-mod(--brand saturation(10%));
-  --grey2: color-mod(--brand saturation(20%));
-  --grey3: color-mod(--brand saturation(30%));
-  --grey4: color-mod(--brand saturation(40%));
-  --grey5: color-mod(--brand saturation(50%));
-  --grey6: color-mod(--brand saturation(60%));
-  --grey7: color-mod(--brand saturation(70%));
-  --grey8: color-mod(--brand saturation(80%));
-  --grey9: color-mod(--brand saturation(90%));
 }
