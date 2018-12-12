@@ -14,7 +14,7 @@
    ========================================================================== */
 
 html {
-  color: var(--text);
+  color: var(--black);
   font-size: 1em;
   line-height: 1.4;
 }
@@ -30,12 +30,12 @@ html {
  */
 
 ::-moz-selection {
-  background: var(--selection_bg);
+  background: var(--blue5);
   text-shadow: none;
 }
 
 ::selection {
-  background: var(--selection_bg);
+  background: var(--blue5);
   text-shadow: none;
 }
 
@@ -47,7 +47,7 @@ hr {
   display: block;
   height: 1px;
   border: 0;
-  border-top: 1px solid var(--grey);
+  border-top: 1px solid var(--gray4);
   margin: 1em 0;
   padding: 0;
 }
@@ -132,7 +132,7 @@ textarea {
 
 .container {
   padding: 0 20px;
-  background-color: rgb(1, 128, 1);
+  background-color: var(--cyan9);
 }
 
 body {
@@ -140,19 +140,19 @@ body {
 }
 
 header {
-  background-color: var(--text);
-  color: var(--background);
+  background-color: var(--black);
+  color: var(--base);
   padding: 1.5em;
 }
 
 main {
   padding: 2em;
-  background-color:var(--background);
+  background-color:var(--gray2);
 }
 
 footer {
-  background-color: var(--text);
-  color: var(--background);
+  background-color: var(--black);
+  color: var(--gray2);
   padding: 2em;
 }
 
