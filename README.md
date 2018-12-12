@@ -26,3 +26,5 @@ rm -rf install.sh
 ```
 
 Clone HuMC from github.
+
+Run setup tasks.
