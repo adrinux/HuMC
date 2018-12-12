@@ -8,22 +8,36 @@ tasks:
   setup:
     cmds:
       - echo 'Starting'
-      - hugo-installed
-      - node-setup
+      - task: hugo-installed
+      - task: node-setup
+      - task: node-setup-theme
+      - echo 'Finished setup task'
 
 
   # Install node_modules
   node-setup:
     deps:
-      - node_installed
+      - node-installed
     desc: Run npm install if node_modules doesn't exist
     cmds:
       - npm install
     status:
       - test -d node_modules
 
+  # Install node_modules in theme
+  node-setup-theme:
+    deps:
+      - node-setup
+    dir: sites/test-site/themes/bunait
+    desc: Symlink main node_modules in bunait theme and run npm install
+    cmds:
+      - ln -s ../../../../node_modules node_modules
+      - npm install
+    status:
+      - test -d node_modules
+
   # Check if node installed
-  node_installed:
+  node-installed:
     silent: true
     cmds:
       - |
