@@ -1,10 +1,6 @@
-# NOTE
+# OLD README
 
-Since this project started Hugo has gained the ability to optimise images, process CSS/Javascript and matches browsersync functionality. Thus much of what this project does is now obsolete.
-
-__The version2 branch is WIP on adapting Web Starter Hugo to modern Hugo.__
-
----------
+__This document should be ignored!__
 
 ## web-starter-hugo
 
