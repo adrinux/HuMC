@@ -136,7 +136,7 @@ textarea {
 }
 
 body {
-  background-color: ;
+  background-color: --var(--grey0);
 }
 
 header {
