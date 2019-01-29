@@ -1,0 +1,16 @@
+{{ define "main" }}
+<main class="main-content">
+  <h1>{{ .Title }}</h1>
+
+  {{ if .Params.rendertoc }}
+  {{ .TableOfContents }}
+  {{ end }}
+
+  <article>
+    {{ .Content }}
+  </article>
+
+  {{ partial "style-guide-menu.html" . }}
+
+</main>
+{{ end }}

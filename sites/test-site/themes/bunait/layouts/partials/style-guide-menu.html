@@ -1,0 +1,32 @@
+<div class="sidebar">
+  <nav class="menu">
+    <h3>Style-guide menu</h3>
+    <ul>
+      {{ $currentPage := . }}
+      {{ range .Site.Menus.styleguide }}
+      {{ if .HasChildren }}
+      <li class="{{ if $currentPage.HasMenuCurrent "styleguide" . }}active{{ end }}">
+        <a href="#">
+          {{ .Pre }}
+          <span>{{ .Name }}</span>
+        </a>
+      </li>
+      <ul class="sub-menu">
+        {{ range .Children }}
+        <li class="{{ if $currentPage.IsMenuCurrent "styleguide" . }}active{{ end }}">
+          <a href="{{ .URL }}">{{ .Name }}</a>
+        </li>
+        {{ end }}
+      </ul>
+      {{ else }}
+      <li>
+        <a href="{{ .URL }}">
+          {{ .Pre }}
+          <span>{{ .Name }}</span>
+        </a>
+      </li>
+      {{ end }}
+      {{ end }}
+    </ul>
+  </nav>
+</div>
