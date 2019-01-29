@@ -1,14 +1,18 @@
 {{ define "main" }}
 <main class="main-content">
 
-  {{- partial "style-guide-menu.html" . -}}
 
   {{ .Content }}
 
 <ul>
   {{ range .Pages.ByWeight }}
-  <li><a href="{{ .Permalink }}">{{ .Title }}</a></li>
+  <li><a href="{{ .Permalink }}">{{ .Title }}</a>
+  <p>{{ .Description }}</p>
+  </li>
   {{ end }}
 </ul>
+
+{{- partial "styleguide-menu.html" . -}}
+
 </main>
 {{ end }}

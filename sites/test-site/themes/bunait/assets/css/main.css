@@ -47,7 +47,7 @@ hr {
   display: block;
   height: 1px;
   border: 0;
-  border-top: 1px solid var(--gray4);
+  border-top: 1px solid var(--red1);
   margin: 1em 0;
   padding: 0;
 }
@@ -118,26 +118,24 @@ textarea {
   }
   footer {
     grid-column: 1 / span 3;
-    grid-row: 6 / span 1;
+    grid-row: 3 / span 1;
   }
 
-  .container {
-    height: auto;
-    min-height: 100vh;
-  }
+}
 
+.container {
+  width: auto;
+  min-height: 100vh;
+  padding: 0 6px;
 }
 
 /* End Layout */
 
-.container {
-  padding: 0 10px;
-  background-color: var(--grey9);
-
-}
-
 body {
-  background-color: --var(--grey0);
+  background-color: var(--grey3);
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-size: 1.25em;
+  line-height: 1.5;
 }
 
 header {
@@ -157,6 +155,37 @@ footer {
   color: var(--red0);
   padding: 2em;
 }
+
+/* Links */
+a {
+  outline: none;
+  text-decoration: none;
+}
+
+
+a:link {
+  color: var(--blue5);
+}
+
+a:visited {
+  color: var(--blue3);
+}
+
+a:focus {
+  background-color: var(--green0);
+  color: var(--green8);
+}
+
+a:hover {
+  color: var(--green8);
+}
+
+a:active {
+  background-color: var(--red3);
+  color: var(--red8);
+}
+
+
 
 /* ==========================================================================
    Helper classes

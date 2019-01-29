@@ -1,6 +1,5 @@
-<div class="sidebar">
+<div class="menu-styleguide">
   <nav class="menu">
-    <h3>Style-guide menu</h3>
     <ul>
       {{ $currentPage := . }}
       {{ range .Site.Menus.styleguide }}
@@ -19,7 +18,7 @@
         {{ end }}
       </ul>
       {{ else }}
-      <li>
+      <li{{ if $currentPage.IsMenuCurrent "styleguide" . }} class="active"{{ end }}>
         <a href="{{ .URL }}">
           {{ .Pre }}
           <span>{{ .Name }}</span>
