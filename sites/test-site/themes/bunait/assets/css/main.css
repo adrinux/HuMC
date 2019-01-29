@@ -1,5 +1,5 @@
 @import 'normalize.css';
-@import 'vars.css';
+@import 'colors.css';
 
 /*! HTML5 Boilerplate v6.1.0 | MIT License | https://html5boilerplate.com/ */
 
@@ -131,8 +131,9 @@ textarea {
 /* End Layout */
 
 .container {
-  padding: 0 20px;
-  background-color: var(--cyan9);
+  padding: 0 10px;
+  background-color: var(--grey9);
+
 }
 
 body {
@@ -140,19 +141,20 @@ body {
 }
 
 header {
-  background-color: var(--black);
-  color: var(--base);
+  background-color: var(--red9);
+  color: var(--red0);
   padding: 1.5em;
 }
 
 main {
   padding: 2em;
-  background-color:var(--gray2);
+  background-color:var(--red0);
+  color: var(--red9);
 }
 
 footer {
-  background-color: var(--black);
-  color: var(--gray2);
+  background-color: var(--red9);
+  color: var(--red0);
   padding: 2em;
 }
 
