@@ -5,3 +5,4 @@ baseurl = "http://localhost:3000"
 
 buildDrafts = true
 buildFuture = true
+

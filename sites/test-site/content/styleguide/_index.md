@@ -5,6 +5,9 @@ type: styleguide
 draft: false
 weight: 10
 menu:
+  main:
+    weight: 10000
+menu:
   styleguide
 ---
 
