@@ -1,8 +1,21 @@
-# Hugo options
-# baseurls for stage and live sites are defined when calling hugo
-# from gulpfile.js default to dev url here so 'hugo new' etc still works
-baseurl = "http://localhost:3000"
+# Option used in all environments
+
 languageCode = "en-us"
 title = "My New Hugo Site"
+description = "A web site built with Hugo"
+
+theme = bunait
 
 #disableKinds = ['RSS']
+#summarylength = 36
+#paginate = 10
+#rssLimit = 6
+
+#[permalinks]
+#  blog = "/blog/:year/:month/:title/"
+
+[imaging]
+# For filter options see https://github.com/disintegration/imaging
+resampleFilter = "Lanczos"
+quality = "86"
+anchor = "smart"
