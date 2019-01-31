@@ -9,32 +9,35 @@ menu:
 description: "Hugo shortcode examples and usage."
 ---
 
-Hugo shortcodes with examples.
+Hugo shortcode example output. View <code>test-site/content/styleguide/shortcodes.md</code> to see the code used.
+
 
 ### Hugo built in Shortocdes
 
-See Hugo [shortcodes docs](https://gohugo.io/content-management/shortcodes/) for full list. Here are the two most common.
+See Hugo [shortcode documentation](https://gohugo.io/content-management/shortcodes/) for full list. Here are two common shortcodes.
 
 ----
 
 #### figure
 
-For full list of attributes see [Hugo docs](https://gohugo.io/content-management/shortcodes/#figure)
+HTML Figure element with caption. For full list of attributes see [Figure shortcode documenation](https://gohugo.io/content-management/shortcodes/#figure).
 
-*This input:*
-
-<code>
-\{\{< figure src="/images/bluegreenchess.jpg"
-    title="Chequered pattern in blue and green"
-    width="300" alt="An absctract pattern" >\}\}
-</code>
-
-*Result:*
-
-{{< figure src="/images/bluegreenchess.jpg" title="Chequered pattern in blue and green" width="300" alt="An absctract chequer pattern overlaid with blue and green triangle shapes and tilted away from the viewer at the top" >}}
-
+{{< figure src="/images/bluegreenchess.jpg" title="Chequered pattern in blue and green" width="300" alt="An absctract chequer pattern overlaid with blue and green triangle shapes" >}}
 
 ----
 
 #### param
 
+Param grabs values set in front page matter. [Param shortcode documentation](https://gohugo.io/content-management/shortcodes/#param)
+
+This page's weight is set to: {{< param weight >}}.
+
+----
+
+### Shortcodes included with theme
+
+(Hunt out some popular shortcodes, or those we've used.)
+
+- picture
+- img srcset
+- others?
