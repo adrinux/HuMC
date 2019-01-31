@@ -139,20 +139,20 @@ body {
 }
 
 header {
-  background-color: var(--red9);
-  color: var(--red0);
+  background-color: var(--blue9);
+  color: var(--blue0);
   padding: 1.5em;
 }
 
 main {
   padding: 2em;
-  background-color:var(--red0);
-  color: var(--red9);
+  background-color:var(--blue0);
+  color: var(--blue9);
 }
 
 footer {
-  background-color: var(--red9);
-  color: var(--red0);
+  background-color: var(--blue9);
+  color: var(--blue0);
   padding: 2em;
 }
 
@@ -164,11 +164,11 @@ a {
 
 
 a:link {
-  color: var(--blue5);
+  color: var(--blue6);
 }
 
 a:visited {
-  color: var(--blue3);
+  color: var(--blue4);
 }
 
 a:focus {
@@ -181,8 +181,8 @@ a:hover {
 }
 
 a:active {
-  background-color: var(--red3);
-  color: var(--red8);
+  background-color: var(--blue3);
+  color: var(--blue8);
 }
 
 
