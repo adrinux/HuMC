@@ -20,9 +20,9 @@ See Hugo [shortcode documentation](https://gohugo.io/content-management/shortcod
 
 #### figure
 
-HTML Figure element with caption. For full list of attributes see [Figure shortcode documenation](https://gohugo.io/content-management/shortcodes/#figure).
+HTML Figure element with caption. For full list of attributes see [Figure shortcode documentation](https://gohugo.io/content-management/shortcodes/#figure).
 
-{{< figure src="/images/bluegreenchess.jpg" title="Chequered pattern in blue and green" width="300" alt="An absctract chequer pattern overlaid with blue and green triangle shapes" >}}
+{{< figure src="https://via.placeholder.com/200/c9177e.png" title="Placeholder Image" width="300" alt="Hugo pink via.placeholder.com image" >}}
 
 ----
 
