@@ -9,30 +9,28 @@ menu:
 description: "HTML media examples."
 ---
 
-<p>Raw image with fixed width and height. (In Hugo images are also added via <a href="/styleguide/shortcodes" >shortcodes</a>).</p>
-<img width="300px" height="200" src="/images/bluegreenchess.jpg" alt="An absctract chequer pattern overlaid with blue and green triangle shapes">
+<h3>Raw image</h3>
+<p>(In Hugo images are also added via <a href="/styleguide/shortcodes" >shortcodes</a>).</p>
+<img src="https://via.placeholder.com/200/fc1521.png" alt="via.placeholder.com image">
 
 <hr>
 
 <h3>Linked Image</h3>
-<a href="#"><img width="300px" height="200" src="/images/bluegreenchess.jpg" alt="An absctract chequer pattern overlaid with blue and green triangle shapes"></a>
+<a href="#"><img src="https://via.placeholder.com/200/c9177e.png" alt="via.placeholder.com image"></a>
 
 <h3>Missing Image (with alt text)</h3>
-<img alt="This is an example of a missing image">
+<img alt="This image is missing">
 
 <h3>Picture</h3>
 <picture>
-  <source media="(min-width: 60em)" srcset="http://placehold.it/600x600">
-  <source media="(min-width: 40em)" srcset="http://placehold.it/300x300">
-  <source srcset="http://placehold.it/150x150">
-  <img src="http://placehold.it/150x150" alt="Image alt text 5">
+  <source media="(min-width: 60em)" srcset="https://via.placeholder.com/300/0083c0.png">
+  <source media="(min-width: 40em)" srcset="https://via.placeholder.com/150/00a88a.png">
+  <source srcset="https://via.placeholder.com/100/ebb951.png">
+  <img src="https://via.placeholder.com/100/ebb951.png" alt="via.placeholder.com Image in Picture alt text">
 </picture>
 
-<h3>Svg</h3>
-<svg width="200px" height="200px">
-  <circle cx="100" cy="100" r="100" fill="#ff0000" />
-</svg>
-
+<h3>SVG embeded in HTML</h3>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="isolation:isolate" viewBox="548.647 277.484 188.075 199.353" width="188.075" height="199.353"><defs><clipPath id="_clipPath_wwmsIvYdGbtMF4asfj3MRuPrFJeh4hlp"><rect x="548.647" y="277.484" width="188.075" height="199.353"/></clipPath></defs><g clip-path="url(#_clipPath_wwmsIvYdGbtMF4asfj3MRuPrFJeh4hlp)"><path d=" M 662.849 476.838 L 620.726 425.014 L 556.017 431.916 L 590.138 374.015 L 563.864 311.799 L 627.075 327.838 L 675.546 282.484 L 680.491 350.298 L 736.722 384.484 L 676.567 410.357 L 662.849 476.838 Z " fill="rgb(255,0,255)"/><path d=" M 655.48 471.838 L 613.357 420.014 L 548.647 426.916 L 582.769 369.015 L 556.494 306.799 L 619.705 322.838 L 668.177 277.484 L 673.122 345.298 L 729.353 379.484 L 669.198 405.357 L 655.48 471.838 Z " fill="rgb(152,0,0)"/></g></svg>
 
 <h3>Video</h3>
 <div class="sg-video">
@@ -47,6 +45,13 @@ description: "HTML media examples."
 <h3>Missing Video</h3>
 <video id="video2" controls></video>
 <label class="sg-visually-hidden" for="video2">Missing video</label>
+
+<h3>Vimeo video</h3>
+<p>From <a href="https://gohugo.io/content-management/shortcodes/#vimeo">Hugo Vimeo shortcode</a>.</p>
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="//player.vimeo.com/video/146022717" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+ </div>
+
 
 
 <h3>Audio</h3>
