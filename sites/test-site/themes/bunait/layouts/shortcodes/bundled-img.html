@@ -1,7 +1,10 @@
+<!-- The image resize below should be tailored to your site design
+     as should CSS clases on the image-wrapper.
+-->
 {{ $image := $.Page.Resources.GetMatch (.Get 0)}}
 {{ $img := $image.Resize "280x" }}
 
-<div class="image-wrapper normal prime blog">
+<div class="image-wrapper bundled">
   <img src="{{ $img.RelPermalink }}" alt="{{ .Get 1 }}" />
 </div>
 

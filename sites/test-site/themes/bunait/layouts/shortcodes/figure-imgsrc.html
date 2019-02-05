@@ -1,14 +1,17 @@
-
+<!-- Image srcset sizes should be tailored to your site design
+     You also need to generate the pre-sized images with the name extensions
+     listed in the srcset declaration below.
+ -->
 <figure {{ with .Get "class" }}class="{{.}}"{{ end }}>
     {{ with .Get "link"}}<a href="{{.}}">{{ end }}
         <img src="/images/{{ .Get "src" }}-l.jpg"
              srcset="/images/{{ .Get "src" }}-mob.jpg 320w,
-                     /images/{{ .Get "src" }}-min.jpg 384w,
-                     /images/{{ .Get "src" }}-s.jpg 512w,
-                     /images/{{ .Get "src" }}-m.jpg 683w,
+                     /images/{{ .Get "src" }}-min.jpg 380w,
+                     /images/{{ .Get "src" }}-s.jpg 510w,
+                     /images/{{ .Get "src" }}-m.jpg 680w,
                      /images/{{ .Get "src" }}-l.jpg 800w,
                      /images/{{ .Get "src" }}-xl.jpg 960w,
-                     /images/{{ .Get "src" }}-full.jpg 1358w"
+                     /images/{{ .Get "src" }}-full.jpg 1380w"
              {{ if eq .Params.class "wide" }}sizes="90vw"{{ end }}
              {{ if eq .Params.class "tall" }}sizes="50vw"{{ else }}sizes="75vw"{{ end }}
         {{ if or (.Get "alt") (.Get "caption") }}alt="{{ with .Get "alt"}}{{.}}{{else}}{{ .Get "caption" }}{{ end }}"{{ end }} />
