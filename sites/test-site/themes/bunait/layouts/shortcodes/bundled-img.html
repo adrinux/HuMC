@@ -1,0 +1,7 @@
+{{ $image := $.Page.Resources.GetMatch (.Get 0)}}
+{{ $img := $image.Resize "280x" }}
+
+<div class="image-wrapper normal prime blog">
+  <img src="{{ $img.RelPermalink }}" alt="{{ .Get 1 }}" />
+</div>
+

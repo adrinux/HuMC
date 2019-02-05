@@ -1,0 +1,24 @@
+
+<div {{ with .Get "wrapperClass" }}class="image-wrapper {{.}}"{{ end }}>
+  <img
+  {{ with .Get "isProduct" }}itemprop="image"{{ end}}
+  src="/images/{{ .Get "src" }}"
+  srcset="
+    /images/{{ .Get "srcRoot" }}-micro.jpg 242w,
+    /images/{{ .Get "srcRoot" }}-mini.jpg 280w,
+    /images/{{ .Get "srcRoot" }}-small.jpg 320w,
+    /images/{{ .Get "srcRoot" }}-medium.jpg 380w,
+    /images/{{ .Get "srcRoot" }}-large.jpg 484w,
+    /images/{{ .Get "srcRoot" }}-wide.jpg 560w,
+    /images/{{ .Get "srcRoot" }}-xwide.jpg 740w
+    "
+  {{ if eq .Params.wrapperClass "xwide" }}
+  sizes="(max-width: 768px) 320w, 740w"
+  {{ else if eq .Params.wrapperClass "wide"}}
+  sizes="(max-width: 768px) 320w, 380w"
+  {{ else }}
+  sizes="(max-width: 1400px) 484w, (max-width: 1140px) 380w, (max-width: 768px) 320w, 280w"
+  {{ end }}
+  alt="{{.Get "alt"}}"
+  >
+</div>

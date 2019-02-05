@@ -1,0 +1,27 @@
+
+<figure {{ with .Get "class" }}class="{{.}}"{{ end }}>
+    {{ with .Get "link"}}<a href="{{.}}">{{ end }}
+        <img src="/images/{{ .Get "src" }}-l.jpg"
+             srcset="/images/{{ .Get "src" }}-mob.jpg 320w,
+                     /images/{{ .Get "src" }}-min.jpg 384w,
+                     /images/{{ .Get "src" }}-s.jpg 512w,
+                     /images/{{ .Get "src" }}-m.jpg 683w,
+                     /images/{{ .Get "src" }}-l.jpg 800w,
+                     /images/{{ .Get "src" }}-xl.jpg 960w,
+                     /images/{{ .Get "src" }}-full.jpg 1358w"
+             {{ if eq .Params.class "wide" }}sizes="90vw"{{ end }}
+             {{ if eq .Params.class "tall" }}sizes="50vw"{{ else }}sizes="75vw"{{ end }}
+        {{ if or (.Get "alt") (.Get "caption") }}alt="{{ with .Get "alt"}}{{.}}{{else}}{{ .Get "caption" }}{{ end }}"{{ end }} />
+    {{ if .Get "link"}}</a>{{ end }}
+    {{ if or (or (.Get "title") (.Get "caption")) (.Get "attr")}}
+    <figcaption>{{ if isset .Params "title" }}
+        <h4>{{ .Get "title" | markdownify | safeHTML }}</h4>{{ end }}
+        {{ if or (.Get "caption") (.Get "attr")}}<p>
+        {{ .Get "caption" | markdownify | safeHTML }}
+        {{ with .Get "attrlink"}}<a href="{{.}}"> {{ end }}
+            {{ .Get "attr" }}
+        {{ if .Get "attrlink"}}</a> {{ end }}
+        </p> {{ end }}
+    </figcaption>
+    {{ end }}
+</figure>
