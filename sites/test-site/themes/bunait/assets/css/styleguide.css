@@ -34,12 +34,19 @@
   color: var(--grey0);
 }
 
+.image-wrapper.wide {
+  max-width: 480px;
+}
+
+.image-wrapper.wide img {
+  width: 100%;
+}
+
 /* Palegen Color palette styles */
 
 .palette-wrapper {
   padding: 32px;
 }
-
 
 .cells {
   display: grid;

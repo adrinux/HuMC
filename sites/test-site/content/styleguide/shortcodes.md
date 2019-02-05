@@ -36,8 +36,44 @@ This page's weight is set to: {{< param weight >}}.
 
 ### Shortcodes included with theme
 
-(Hunt out some popular shortcodes, or those we've used.)
+These shortcodes are included with this theme.
 
-- picture
-- img srcset
-- others?
+----
+
+#### Responsive Image with image srcset
+
+MDN documentation for image [srcset](https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images#Resolution_switching_Different_sizes).
+
+Usage:
+
+<textarea rows="8" cols="46">
+{{%/* imgsrc
+  src="styleguide/example-mini.jpg"
+  srcRoot="styleguide/example"
+  alt="Description of example Photo"
+  class="normal"
+  wrapperClass="color wide"
+*/%}}
+</textarea>
+
+Output:
+
+{{% imgsrc
+  src="styleguide/example-mini.jpg"
+  srcRoot="styleguide/example"
+  alt="Description of example Photo"
+  class="normal"
+  wrapperClass="color wide"
+%}}
+
+File to edit:
+
+----
+
+#### Responsive Figure with image srcset
+
+Usage:
+
+Output:
+
+File to edit:

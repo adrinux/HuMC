@@ -3,9 +3,7 @@
      listed in the srcset declaration below.
 -->
 <div {{ with .Get "wrapperClass" }}class="image-wrapper {{.}}"{{ end }}>
-  <img
-  {{ with .Get "isProduct" }}itemprop="image"{{ end}}
-  src="/images/{{ .Get "src" }}"
+  <img src="/images/{{ .Get "src" }}"
   srcset="
     /images/{{ .Get "srcRoot" }}-micro.jpg 240w,
     /images/{{ .Get "srcRoot" }}-mini.jpg 280w,
@@ -13,10 +11,10 @@
     /images/{{ .Get "srcRoot" }}-medium.jpg 380w,
     /images/{{ .Get "srcRoot" }}-large.jpg 480w,
     /images/{{ .Get "srcRoot" }}-wide.jpg 560w,
-    /images/{{ .Get "srcRoot" }}-xwide.jpg 740w
+    /images/{{ .Get "srcRoot" }}-xwide.jpg 600w
     "
   {{ if eq .Params.wrapperClass "xwide" }}
-  sizes="(max-width: 760px) 320w, 740w"
+  sizes="(max-width: 760px) 320w, 600w"
   {{ else if eq .Params.wrapperClass "wide"}}
   sizes="(max-width: 760px) 320w, 380w"
   {{ else }}
