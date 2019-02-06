@@ -44,7 +44,7 @@ These shortcodes are included with this theme.
 
 MDN documentation for image [srcset](https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images#Resolution_switching_Different_sizes).
 
-Usage:
+##### Example shortcode:
 
 <textarea rows="8" cols="46">
 {{%/* imgsrc
@@ -56,7 +56,7 @@ Usage:
 */%}}
 </textarea>
 
-Output:
+##### Example output:
 
 {{% imgsrc
   src="styleguide/example-mini.jpg"
@@ -66,14 +66,28 @@ Output:
   wrapperClass="color wide"
 %}}
 
-File to edit:
+##### Files to edit when this needs change:
+
+- themes/bunait/layouts/shortcodes/imgsrc.html
+- themes/bunait/assets/css/styleguide.css
+- content/styleguide/shortcodes.md (this page)
 
 ----
 
 #### Responsive Figure with image srcset
 
-Usage:
+##### Example shortcode:
 
-Output:
+<textarea rows="4" cols="46">
+{{%/* figure-imgsrc src="styleguide/example" title="The optional figure title" caption="An optional caption for this test figure." class="tall" */%}}
+</textarea>
 
-File to edit:
+##### Example output:
+
+{{% figure-imgsrc src="styleguide/example" title="The optional figure title" caption="An optional caption for this test figure." class="tall" %}}
+
+##### File to edit when this needs to change:
+
+- themes/bunait/layouts/shortcodes/figure-imgsrc.html
+- themes/bunait/assets/css/styleguide.css
+- content/styleguide/shortcodes.md (this page)
