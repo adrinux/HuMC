@@ -186,6 +186,44 @@ a:active {
 }
 
 
+/* Component Styles */
+
+/* Pagination */
+nav.pager {
+  display: flex;
+  justify-content: center;
+}
+
+.pager ul {
+  display: flex;
+  padding-left: 0;
+}
+
+.pager li {
+  list-style: none;
+}
+
+.pager li a {
+  padding: .5em .75em;
+}
+
+.pager li a:hover,
+.pager li a:focus {
+  background-color: var(--green1);
+}
+
+.pager .current,
+.pager .current a {
+  color: var(--grey3);
+  cursor: default;
+}
+
+.pager .current a:hover,
+.pager .current a:focus {
+  background-color: transparent;
+}
+/* end pagination */
+/* End Component Styles */
 
 /* ==========================================================================
    Helper classes

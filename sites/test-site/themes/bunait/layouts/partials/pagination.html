@@ -17,12 +17,12 @@
 {{ $min_links := (add (mul $adjacent_links 2) 3) }}
 
 {{ if gt $paginator.TotalPages 1 }}
-<nav class="pager">
-  <ul class="pager-list">
+<nav class="pager" aria-label="pagination">
+  <ul>
 
     {{ if $paginator.HasPrev }}
     <li class="pager-item prev">
-      <a href="{{ $paginator.Prev.URL }}">Prev</a>
+      <a href="{{ $paginator.Prev.URL }}">prev</a>
     </li>
     {{ end }}
 
@@ -77,7 +77,7 @@
 
     {{ if $paginator.HasNext }}
     <li class="pager-item next">
-      <a href="{{ $paginator.Next.URL }}"><i>Next</i></a>
+      <a href="{{ $paginator.Next.URL }}">next</a>
     </li>
     {{ end }}
 
