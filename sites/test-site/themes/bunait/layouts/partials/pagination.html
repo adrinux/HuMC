@@ -69,7 +69,7 @@
       <!-- Output page numbers. -->
       {{ if eq ($.Scratch.Get "page_number_flag") true }}
         <li class="pager-item{{ if eq . $paginator }} current{{ end }}">
-          <a href="{{ .URL }}">{{ .PageNumber }}</a>
+          <a href="{{ .URL }}" {{ if eq . $paginator }} aria-current="page {{ .PageNumber }}" aria-disabled="true"{{ end }}>{{ .PageNumber }}</a>
         </li>
       {{ end }}
 
