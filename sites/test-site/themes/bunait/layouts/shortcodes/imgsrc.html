@@ -14,5 +14,5 @@ srcset="
   "
 sizes="(max-width: 1400px) 480w, (max-width: 1140px) 380w, (max-width: 760px) 320w, 280w"
 alt="{{.Get "alt"}}"
-class="{{.Get "class"}}"
+{{ with .Get "class" }}class="{{.}}"{{ end }}
 >
