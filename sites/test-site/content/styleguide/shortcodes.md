@@ -22,9 +22,9 @@ See Hugo [shortcode documentation](https://gohugo.io/content-management/shortcod
 
 HTML Figure element with caption. For full list of attributes see [Figure shortcode documentation](https://gohugo.io/content-management/shortcodes/#figure).
 
-{{< figure src="https://via.placeholder.com/200/c9177e.png" title="Placeholder Image" width="300" alt="Hugo pink via.placeholder.com image" >}}
+{{< figure src="https://via.placeholder.com/200/c9177e.png" title="Placeholder Image" alt="Hugo pink via.placeholder.com image">}}
 
-----
+<hr style="clear: both">
 
 #### param
 
@@ -52,7 +52,6 @@ MDN documentation for image [srcset](https://developer.mozilla.org/en-US/docs/Le
   srcRoot="styleguide/example"
   alt="Description of example Photo"
   class="normal"
-  wrapperClass="color wide"
 */%}}
 </textarea>
 
@@ -63,7 +62,6 @@ MDN documentation for image [srcset](https://developer.mozilla.org/en-US/docs/Le
   srcRoot="styleguide/example"
   alt="Description of example Photo"
   class="normal"
-  wrapperClass="color wide"
 %}}
 
 ##### Files to edit when this needs change:
@@ -79,12 +77,12 @@ MDN documentation for image [srcset](https://developer.mozilla.org/en-US/docs/Le
 ##### Example shortcode:
 
 <textarea rows="4" cols="46">
-{{%/* figure-imgsrc src="styleguide/example" title="The optional figure title" caption="An optional caption for this test figure." class="tall" */%}}
+{{%/* figure-imgsrc src="styleguide/example" title="The optional figure title" caption="An optional caption for this test figure." class="responsive" */%}}
 </textarea>
 
 ##### Example output:
 
-{{% figure-imgsrc src="styleguide/example" title="The optional figure title" caption="An optional caption for this test figure." class="tall" %}}
+{{% figure-imgsrc src="styleguide/example" title="The optional figure title" caption="An optional caption for this test figure." class="responsive" %}}
 
 ##### File to edit when this needs to change:
 

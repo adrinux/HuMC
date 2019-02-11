@@ -1,25 +1,18 @@
-<!-- Image srcet sizes should eb tailored to your site design.
+<!-- Image srcet sizes should be tailored to your site design.
      You also need to generate the pre-sized images with the name extensions
      listed in the srcset declaration below.
 -->
-<div {{ with .Get "wrapperClass" }}class="image-wrapper {{.}}"{{ end }}>
-  <img src="/images/{{ .Get "src" }}"
-  srcset="
-    /images/{{ .Get "srcRoot" }}-micro.jpg 240w,
-    /images/{{ .Get "srcRoot" }}-mini.jpg 280w,
-    /images/{{ .Get "srcRoot" }}-small.jpg 320w,
-    /images/{{ .Get "srcRoot" }}-medium.jpg 380w,
-    /images/{{ .Get "srcRoot" }}-large.jpg 480w,
-    /images/{{ .Get "srcRoot" }}-wide.jpg 560w,
-    /images/{{ .Get "srcRoot" }}-xwide.jpg 600w
-    "
-  {{ if eq .Params.wrapperClass "xwide" }}
-  sizes="(max-width: 760px) 320w, 600w"
-  {{ else if eq .Params.wrapperClass "wide"}}
-  sizes="(max-width: 760px) 320w, 380w"
-  {{ else }}
-  sizes="(max-width: 1400px) 480w, (max-width: 1140px) 380w, (max-width: 760px) 320w, 280w"
-  {{ end }}
-  alt="{{.Get "alt"}}"
-  >
-</div>
+<img src="/images/{{ .Get "src" }}"
+srcset="
+  /images/{{ .Get "srcRoot" }}-micro.jpg 240w,
+  /images/{{ .Get "srcRoot" }}-mini.jpg 280w,
+  /images/{{ .Get "srcRoot" }}-small.jpg 320w,
+  /images/{{ .Get "srcRoot" }}-medium.jpg 380w,
+  /images/{{ .Get "srcRoot" }}-large.jpg 480w,
+  /images/{{ .Get "srcRoot" }}-wide.jpg 560w,
+  /images/{{ .Get "srcRoot" }}-xwide.jpg 600w
+  "
+sizes="(max-width: 1400px) 480w, (max-width: 1140px) 380w, (max-width: 760px) 320w, 280w"
+alt="{{.Get "alt"}}"
+class="{{.Get "class"}}"
+>

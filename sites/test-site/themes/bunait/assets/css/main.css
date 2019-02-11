@@ -138,22 +138,9 @@ body {
   line-height: 1.5;
 }
 
-header {
-  background-color: var(--blue9);
-  color: var(--blue0);
-  padding: 1.5em;
-}
-
-main {
-  padding: 2em;
-  background-color:var(--blue0);
-  color: var(--blue9);
-}
-
-footer {
-  background-color: var(--blue9);
-  color: var(--blue0);
-  padding: 2em;
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--cyan7);
 }
 
 /* Links */
@@ -183,6 +170,49 @@ a:hover {
 a:active {
   background-color: var(--blue3);
   color: var(--blue8);
+}
+
+header {
+  background-color: var(--blue9);
+  color: var(--blue0);
+  padding: 1.5em;
+}
+
+main {
+  padding: 2em;
+  background-color:var(--blue0);
+  color: var(--blue9);
+}
+
+footer {
+  background-color: var(--blue9);
+  color: var(--blue0);
+  padding: 2em;
+}
+
+/* Shortcode Styles */
+/* Figure (built in)*/
+figure {
+  float: left;
+  text-align: center;
+}
+
+figure img {
+  border: 1px solid var(--blue9);
+}
+
+figcaption h4 {
+  margin-top: 0;
+}
+
+/* Responsive image with srcset */
+img.normal {
+  width: 36%;
+}
+
+/* Responsive Figure with img srcset */
+figure.responsive {
+  width: 50%;
 }
 
 
