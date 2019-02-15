@@ -2,4 +2,7 @@
   {{ if .IsHome }}<h1>{{ .Site.Title }}</h1>{{ end }}
   {{ if not .IsHome }}<h2>{{ .Site.Title }}</h2>{{ end }}
   <p> Header content here. </p>
+
+  {{- partial "menu-main.html" . -}}
+
 </header>

@@ -112,10 +112,12 @@ textarea {
     grid-column: 1 / span 3;
     grid-row: 1 / span 1;
   }
+
   main {
     grid-column: 1 / span 3;
     grid-row: 2 /span 1;
   }
+
   footer {
     grid-column: 1 / span 3;
     grid-row: 3 / span 1;
@@ -139,7 +141,12 @@ body {
 }
 
 /* Headings */
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   color: var(--cyan7);
 }
 
@@ -180,7 +187,7 @@ header {
 
 main {
   padding: 2em;
-  background-color:var(--blue0);
+  background-color: var(--blue0);
   color: var(--blue9);
 }
 
@@ -218,6 +225,32 @@ figure.responsive {
 
 /* Component Styles */
 
+/* Main menu */
+.menu-main ul {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+}
+
+.menu-main li {
+  padding: 0;
+  list-style-type: none;
+  list-style-image: none;
+}
+
+.menu-main li a {
+  padding: .5em .75em;
+  text-decoration: none;
+}
+
+.menu-main li.active a {
+  color: var(--grey);
+  cursor: default;
+}
+
 /* Pagination */
 nav.pager {
   display: flex;
@@ -252,6 +285,7 @@ nav.pager {
 .pager .current a:focus {
   background-color: transparent;
 }
+
 /* end pagination */
 /* End Component Styles */
 
@@ -285,7 +319,8 @@ nav.pager {
   padding: 0;
   position: absolute;
   width: 1px;
-  white-space: nowrap; /* 1 */
+  white-space: nowrap;
+  /* 1 */
 }
 
 /*
@@ -327,8 +362,10 @@ nav.pager {
 
 .clearfix:before,
 .clearfix:after {
-  content: " "; /* 1 */
-  display: table; /* 2 */
+  content: " ";
+  /* 1 */
+  display: table;
+  /* 2 */
 }
 
 .clearfix:after {
@@ -346,9 +383,9 @@ nav.pager {
 }
 
 @media print,
-  (-webkit-min-device-pixel-ratio: 1.25),
-  (min-resolution: 1.25dppx),
-  (min-resolution: 120dpi) {
+(-webkit-min-device-pixel-ratio: 1.25),
+(min-resolution: 1.25dppx),
+(min-resolution: 120dpi) {
   /* Style adjustments for high resolution devices */
 }
 
@@ -359,11 +396,13 @@ nav.pager {
    ========================================================================== */
 
 @media print {
+
   *,
   *:before,
   *:after {
     background: transparent !important;
-    color: #000 !important; /* Black prints faster */
+    color: #000 !important;
+    /* Black prints faster */
     -webkit-box-shadow: none !important;
     box-shadow: none !important;
     text-shadow: none !important;
@@ -375,11 +414,11 @@ nav.pager {
   }
 
   a[href]:after {
-    content: " (" attr(href) ")";
+    content: " ("attr(href) ")";
   }
 
   abbr[title]:after {
-    content: " (" attr(title) ")";
+    content: " ("attr(title) ")";
   }
 
   /*

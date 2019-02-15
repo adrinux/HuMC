@@ -1,5 +1,5 @@
 <!-- sidebar start -->
-<nav>
+<nav class="menu-main">
   <ul>
     {{ $currentPage := . }}
     {{ range .Site.Menus.main }}
@@ -18,7 +18,7 @@
       {{ end }}
     </ul>
     {{ else }}
-    <li>
+    <li {{ if $currentPage.IsMenuCurrent "main" . }} class="active" {{ end }}>
       <a href="{{ .URL }}">
         {{ .Pre }}
         <span>{{ .Name }}</span>
@@ -26,11 +26,5 @@
     </li>
     {{ end }}
     {{ end }}
-    <li>
-      <a href="#" target="_blank">Hardcoded Link 1</a>
-    </li>
-    <li>
-      <a href="#" target="_blank">Hardcoded Link 2</a>
-    </li>
   </ul>
 </nav>

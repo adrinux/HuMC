@@ -6,9 +6,9 @@ draft: false
 weight: 10
 menu:
   main:
-    weight: 10000
-menu:
-  styleguide
+    name: "Style Guide"
+    weight: 9500
+  styleguide:
 ---
 
 This is part pattern library and part living style-guide.
