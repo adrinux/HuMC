@@ -1,4 +1,4 @@
-<div class="menu-styleguide">
+<div class="menu menu-styleguide">
   <nav class="menu">
     <ul>
       {{ $currentPage := . }}
@@ -18,7 +18,7 @@
         {{ end }}
       </ul>
       {{ else }}
-      <li{{ if $currentPage.IsMenuCurrent "styleguide" . }} class="active"{{ end }}>
+      <li {{ if $currentPage.IsMenuCurrent "styleguide" . }} class="active" {{ end }}>
         <a href="{{ .URL }}">
           {{ .Pre }}
           <span>{{ .Name }}</span>
