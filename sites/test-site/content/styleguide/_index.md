@@ -7,7 +7,7 @@ weight: 10
 menu:
   main:
     name: "Style Guide"
-    weight: 9500
+    weight: 100
   styleguide:
 ---
 
