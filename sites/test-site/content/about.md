@@ -8,4 +8,4 @@ menu:
     weight: 8000
 ---
 
-A page describing this website.
+A page describing the organisation or person that owns this website, or an overview of the website itself.
