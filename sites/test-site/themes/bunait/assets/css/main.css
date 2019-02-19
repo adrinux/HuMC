@@ -166,17 +166,16 @@ a:visited {
 }
 
 a:focus {
-  background-color: var(--green0);
-  color: var(--green8);
+  background-color: var(--cyan0);
+  color: var(--cyan4);
 }
 
 a:hover {
-  color: var(--green8);
+  color: var(--cyan4);
 }
 
 a:active {
-  background-color: var(--blue3);
-  color: var(--blue8);
+  color: var(--cyan2);
 }
 
 header {
@@ -225,30 +224,38 @@ figure.responsive {
 
 /* Component Styles */
 
-/* Main menu */
-.menu-main ul {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
+/* Common Menu Styles*/
+.menu ul {
   margin: 0;
   padding: 0;
 }
 
-.menu-main li {
+.menu li {
   padding: 0;
   list-style-type: none;
   list-style-image: none;
 }
 
-.menu-main li a {
+.menu li a {
   padding: .5em .75em;
   text-decoration: none;
 }
 
-.menu-main li.active a {
+.menu li.active a {
   color: var(--grey);
   cursor: default;
+}
+
+/* Main Menu */
+.menu-main ul {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.menu-footer ul {
+  margin-left: -0.75em;
 }
 
 /* Pagination */

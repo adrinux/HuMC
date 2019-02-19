@@ -9,15 +9,6 @@
   box-shadow: 0 0 8px var(--blue9);
 }
 
-.menu-styleguide ul {
-  margin: 0;
-  padding-left: 0;
-}
-
-.menu-styleguide ul li {
-  list-style: none;
-}
-
 .menu-styleguide ul li a {
   padding: 0 10px;
   display: block;
@@ -25,12 +16,7 @@
 
 .menu-styleguide ul li a:hover,
 .menu-styleguide ul li a:focus {
-  background-color: var(--green8);
-  color: var(--grey0);
-}
-
-.menu-styleguide ul li.active a {
-  background-color: var(--green8);
+  background-color: var(--blue9);
   color: var(--grey0);
 }
 
@@ -60,23 +46,23 @@
   margin: 16px 0;
 }
 
-.input > .label {
+.input>.label {
   grid-column: 1 / span 2;
   grid-row: 1 1;
   align-self: start;
   line-height: 32px;
 }
 
-.input > .base {
+.input>.base {
   grid-column: 3 / span 2;
   grid-row: 1 1;
 }
 
-.input > .base div {
+.input>.base div {
   height: 32px;
 }
 
-.cells > div {
+.cells>div {
   margin-bottom: 20px;
   width: calc(100/13%);
   font-size: 12px;
@@ -84,26 +70,70 @@
   text-transform: capitalize;
 }
 
-.cells > div > div {
+.cells>div>div {
   height: 16px;
   width: 100%;
 }
 
-.base div { background-color: var(--base);}
-.red div { background-color: var(--red); }
-.orange div { background-color: var(--orange); }
-.yellow div { background-color: var(--yellow); }
-.lime div { background-color: var(--lime); }
-.green div { background-color: var(--green); }
-.teal div { background-color: var(--teal); }
-.cyan div { background-color: var(--cyan); }
-.blue div { background-color: var(--blue); }
-.indigo div { background-color: var(--indigo); }
-.violet div { background-color: var(--violet); }
-.fuschia div { background-color: var(--fuschia); }
-.pink div { background-color: var(--pink); }
-.grey div { background-color: var(--grey); }
-.black div { background-color: var(--black); }
+.base div {
+  background-color: var(--base);
+}
+
+.red div {
+  background-color: var(--red);
+}
+
+.orange div {
+  background-color: var(--orange);
+}
+
+.yellow div {
+  background-color: var(--yellow);
+}
+
+.lime div {
+  background-color: var(--lime);
+}
+
+.green div {
+  background-color: var(--green);
+}
+
+.teal div {
+  background-color: var(--teal);
+}
+
+.cyan div {
+  background-color: var(--cyan);
+}
+
+.blue div {
+  background-color: var(--blue);
+}
+
+.indigo div {
+  background-color: var(--indigo);
+}
+
+.violet div {
+  background-color: var(--violet);
+}
+
+.fuschia div {
+  background-color: var(--fuschia);
+}
+
+.pink div {
+  background-color: var(--pink);
+}
+
+.grey div {
+  background-color: var(--grey);
+}
+
+.black div {
+  background-color: var(--black);
+}
 
 
 .variants {
@@ -114,7 +144,7 @@
   grid-column-gap: 16px;
 }
 
-.variants > div {
+.variants>div {
   margin-bottom: 20px;
   width: calc(100/13%);
   font-size: 12px;
@@ -122,152 +152,529 @@
   text-transform: capitalize;
 }
 
-.variants > div > div {
+.variants>div>div {
   height: 32px;
   width: 100%;
 }
 
-.red0 div { background-color: var(--red0);}
-.red1 div { background-color: var(--red1);}
-.red2 div { background-color: var(--red2);}
-.red3 div { background-color: var(--red3);}
-.red4 div { background-color: var(--red4);}
-.red5 div { background-color: var(--red5);}
-.red6 div { background-color: var(--red6);}
-.red7 div { background-color: var(--red7);}
-.red8 div { background-color: var(--red8);}
-.red9 div { background-color: var(--red9);}
+.red0 div {
+  background-color: var(--red0);
+}
 
-.orange0 div { background-color: var(--orange0);}
-.orange1 div { background-color: var(--orange1);}
-.orange2 div { background-color: var(--orange2);}
-.orange3 div { background-color: var(--orange3);}
-.orange4 div { background-color: var(--orange4);}
-.orange5 div { background-color: var(--orange5);}
-.orange6 div { background-color: var(--orange6);}
-.orange7 div { background-color: var(--orange7);}
-.orange8 div { background-color: var(--orange8);}
-.orange9 div { background-color: var(--orange9);}
+.red1 div {
+  background-color: var(--red1);
+}
 
-.yellow0 div { background-color: var(--yellow0);}
-.yellow1 div { background-color: var(--yellow1);}
-.yellow2 div { background-color: var(--yellow2);}
-.yellow3 div { background-color: var(--yellow3);}
-.yellow4 div { background-color: var(--yellow4);}
-.yellow5 div { background-color: var(--yellow5);}
-.yellow6 div { background-color: var(--yellow6);}
-.yellow7 div { background-color: var(--yellow7);}
-.yellow8 div { background-color: var(--yellow8);}
-.yellow9 div { background-color: var(--yellow9);}
+.red2 div {
+  background-color: var(--red2);
+}
 
-.lime0 div { background-color: var(--lime0);}
-.lime1 div { background-color: var(--lime1);}
-.lime2 div { background-color: var(--lime2);}
-.lime3 div { background-color: var(--lime3);}
-.lime4 div { background-color: var(--lime4);}
-.lime5 div { background-color: var(--lime5);}
-.lime6 div { background-color: var(--lime6);}
-.lime7 div { background-color: var(--lime7);}
-.lime8 div { background-color: var(--lime8);}
-.lime9 div { background-color: var(--lime9);}
+.red3 div {
+  background-color: var(--red3);
+}
 
-.green0 div { background-color: var(--green0);}
-.green1 div { background-color: var(--green1);}
-.green2 div { background-color: var(--green2);}
-.green3 div { background-color: var(--green3);}
-.green4 div { background-color: var(--green4);}
-.green5 div { background-color: var(--green5);}
-.green6 div { background-color: var(--green6);}
-.green7 div { background-color: var(--green7);}
-.green8 div { background-color: var(--green8);}
-.green9 div { background-color: var(--green9);}
+.red4 div {
+  background-color: var(--red4);
+}
 
-.teal0 div { background-color: var(--teal0);}
-.teal1 div { background-color: var(--teal1);}
-.teal2 div { background-color: var(--teal2);}
-.teal3 div { background-color: var(--teal3);}
-.teal4 div { background-color: var(--teal4);}
-.teal5 div { background-color: var(--teal5);}
-.teal6 div { background-color: var(--teal6);}
-.teal7 div { background-color: var(--teal7);}
-.teal8 div { background-color: var(--teal8);}
-.teal9 div { background-color: var(--teal9);}
+.red5 div {
+  background-color: var(--red5);
+}
 
-.cyan0 div { background-color: var(--cyan0);}
-.cyan1 div { background-color: var(--cyan1);}
-.cyan2 div { background-color: var(--cyan2);}
-.cyan3 div { background-color: var(--cyan3);}
-.cyan4 div { background-color: var(--cyan4);}
-.cyan5 div { background-color: var(--cyan5);}
-.cyan6 div { background-color: var(--cyan6);}
-.cyan7 div { background-color: var(--cyan7);}
-.cyan8 div { background-color: var(--cyan8);}
-.cyan9 div { background-color: var(--cyan9);}
+.red6 div {
+  background-color: var(--red6);
+}
 
-.blue0 div { background-color: var(--blue0);}
-.blue1 div { background-color: var(--blue1);}
-.blue2 div { background-color: var(--blue2);}
-.blue3 div { background-color: var(--blue3);}
-.blue4 div { background-color: var(--blue4);}
-.blue5 div { background-color: var(--blue5);}
-.blue6 div { background-color: var(--blue6);}
-.blue7 div { background-color: var(--blue7);}
-.blue8 div { background-color: var(--blue8);}
-.blue9 div { background-color: var(--blue9);}
+.red7 div {
+  background-color: var(--red7);
+}
 
-.indigo0 div { background-color: var(--indigo0);}
-.indigo1 div { background-color: var(--indigo1);}
-.indigo2 div { background-color: var(--indigo2);}
-.indigo3 div { background-color: var(--indigo3);}
-.indigo4 div { background-color: var(--indigo4);}
-.indigo5 div { background-color: var(--indigo5);}
-.indigo6 div { background-color: var(--indigo6);}
-.indigo7 div { background-color: var(--indigo7);}
-.indigo8 div { background-color: var(--indigo8);}
-.indigo9 div { background-color: var(--indigo9);}
+.red8 div {
+  background-color: var(--red8);
+}
 
-.violet0 div { background-color: var(--violet0);}
-.violet1 div { background-color: var(--violet1);}
-.violet2 div { background-color: var(--violet2);}
-.violet3 div { background-color: var(--violet3);}
-.violet4 div { background-color: var(--violet4);}
-.violet5 div { background-color: var(--violet5);}
-.violet6 div { background-color: var(--violet6);}
-.violet7 div { background-color: var(--violet7);}
-.violet8 div { background-color: var(--violet8);}
-.violet9 div { background-color: var(--violet9);}
+.red9 div {
+  background-color: var(--red9);
+}
 
-.fuschia0 div { background-color: var(--fuschia0);}
-.fuschia1 div { background-color: var(--fuschia1);}
-.fuschia2 div { background-color: var(--fuschia2);}
-.fuschia3 div { background-color: var(--fuschia3);}
-.fuschia4 div { background-color: var(--fuschia4);}
-.fuschia5 div { background-color: var(--fuschia5);}
-.fuschia6 div { background-color: var(--fuschia6);}
-.fuschia7 div { background-color: var(--fuschia7);}
-.fuschia8 div { background-color: var(--fuschia8);}
-.fuschia9 div { background-color: var(--fuschia9);}
+.orange0 div {
+  background-color: var(--orange0);
+}
 
-.pink0 div { background-color: var(--pink0);}
-.pink1 div { background-color: var(--pink1);}
-.pink2 div { background-color: var(--pink2);}
-.pink3 div { background-color: var(--pink3);}
-.pink4 div { background-color: var(--pink4);}
-.pink5 div { background-color: var(--pink5);}
-.pink6 div { background-color: var(--pink6);}
-.pink7 div { background-color: var(--pink7);}
-.pink8 div { background-color: var(--pink8);}
-.pink9 div { background-color: var(--pink9);}
+.orange1 div {
+  background-color: var(--orange1);
+}
 
-.grey0 div { background-color: var(--grey0);}
-.grey1 div { background-color: var(--grey1);}
-.grey2 div { background-color: var(--grey2);}
-.grey3 div { background-color: var(--grey3);}
-.grey4 div { background-color: var(--grey4);}
-.grey5 div { background-color: var(--grey5);}
-.grey6 div { background-color: var(--grey6);}
-.grey7 div { background-color: var(--grey7);}
-.grey8 div { background-color: var(--grey8);}
-.grey9 div { background-color: var(--grey9);}
+.orange2 div {
+  background-color: var(--orange2);
+}
+
+.orange3 div {
+  background-color: var(--orange3);
+}
+
+.orange4 div {
+  background-color: var(--orange4);
+}
+
+.orange5 div {
+  background-color: var(--orange5);
+}
+
+.orange6 div {
+  background-color: var(--orange6);
+}
+
+.orange7 div {
+  background-color: var(--orange7);
+}
+
+.orange8 div {
+  background-color: var(--orange8);
+}
+
+.orange9 div {
+  background-color: var(--orange9);
+}
+
+.yellow0 div {
+  background-color: var(--yellow0);
+}
+
+.yellow1 div {
+  background-color: var(--yellow1);
+}
+
+.yellow2 div {
+  background-color: var(--yellow2);
+}
+
+.yellow3 div {
+  background-color: var(--yellow3);
+}
+
+.yellow4 div {
+  background-color: var(--yellow4);
+}
+
+.yellow5 div {
+  background-color: var(--yellow5);
+}
+
+.yellow6 div {
+  background-color: var(--yellow6);
+}
+
+.yellow7 div {
+  background-color: var(--yellow7);
+}
+
+.yellow8 div {
+  background-color: var(--yellow8);
+}
+
+.yellow9 div {
+  background-color: var(--yellow9);
+}
+
+.lime0 div {
+  background-color: var(--lime0);
+}
+
+.lime1 div {
+  background-color: var(--lime1);
+}
+
+.lime2 div {
+  background-color: var(--lime2);
+}
+
+.lime3 div {
+  background-color: var(--lime3);
+}
+
+.lime4 div {
+  background-color: var(--lime4);
+}
+
+.lime5 div {
+  background-color: var(--lime5);
+}
+
+.lime6 div {
+  background-color: var(--lime6);
+}
+
+.lime7 div {
+  background-color: var(--lime7);
+}
+
+.lime8 div {
+  background-color: var(--lime8);
+}
+
+.lime9 div {
+  background-color: var(--lime9);
+}
+
+.green0 div {
+  background-color: var(--green0);
+}
+
+.green1 div {
+  background-color: var(--green1);
+}
+
+.green2 div {
+  background-color: var(--green2);
+}
+
+.green3 div {
+  background-color: var(--green3);
+}
+
+.green4 div {
+  background-color: var(--green4);
+}
+
+.green5 div {
+  background-color: var(--green5);
+}
+
+.green6 div {
+  background-color: var(--green6);
+}
+
+.green7 div {
+  background-color: var(--green7);
+}
+
+.green8 div {
+  background-color: var(--green8);
+}
+
+.green9 div {
+  background-color: var(--green9);
+}
+
+.teal0 div {
+  background-color: var(--teal0);
+}
+
+.teal1 div {
+  background-color: var(--teal1);
+}
+
+.teal2 div {
+  background-color: var(--teal2);
+}
+
+.teal3 div {
+  background-color: var(--teal3);
+}
+
+.teal4 div {
+  background-color: var(--teal4);
+}
+
+.teal5 div {
+  background-color: var(--teal5);
+}
+
+.teal6 div {
+  background-color: var(--teal6);
+}
+
+.teal7 div {
+  background-color: var(--teal7);
+}
+
+.teal8 div {
+  background-color: var(--teal8);
+}
+
+.teal9 div {
+  background-color: var(--teal9);
+}
+
+.cyan0 div {
+  background-color: var(--cyan0);
+}
+
+.cyan1 div {
+  background-color: var(--cyan1);
+}
+
+.cyan2 div {
+  background-color: var(--cyan2);
+}
+
+.cyan3 div {
+  background-color: var(--cyan3);
+}
+
+.cyan4 div {
+  background-color: var(--cyan4);
+}
+
+.cyan5 div {
+  background-color: var(--cyan5);
+}
+
+.cyan6 div {
+  background-color: var(--cyan6);
+}
+
+.cyan7 div {
+  background-color: var(--cyan7);
+}
+
+.cyan8 div {
+  background-color: var(--cyan8);
+}
+
+.cyan9 div {
+  background-color: var(--cyan9);
+}
+
+.blue0 div {
+  background-color: var(--blue0);
+}
+
+.blue1 div {
+  background-color: var(--blue1);
+}
+
+.blue2 div {
+  background-color: var(--blue2);
+}
+
+.blue3 div {
+  background-color: var(--blue3);
+}
+
+.blue4 div {
+  background-color: var(--blue4);
+}
+
+.blue5 div {
+  background-color: var(--blue5);
+}
+
+.blue6 div {
+  background-color: var(--blue6);
+}
+
+.blue7 div {
+  background-color: var(--blue7);
+}
+
+.blue8 div {
+  background-color: var(--blue8);
+}
+
+.blue9 div {
+  background-color: var(--blue9);
+}
+
+.indigo0 div {
+  background-color: var(--indigo0);
+}
+
+.indigo1 div {
+  background-color: var(--indigo1);
+}
+
+.indigo2 div {
+  background-color: var(--indigo2);
+}
+
+.indigo3 div {
+  background-color: var(--indigo3);
+}
+
+.indigo4 div {
+  background-color: var(--indigo4);
+}
+
+.indigo5 div {
+  background-color: var(--indigo5);
+}
+
+.indigo6 div {
+  background-color: var(--indigo6);
+}
+
+.indigo7 div {
+  background-color: var(--indigo7);
+}
+
+.indigo8 div {
+  background-color: var(--indigo8);
+}
+
+.indigo9 div {
+  background-color: var(--indigo9);
+}
+
+.violet0 div {
+  background-color: var(--violet0);
+}
+
+.violet1 div {
+  background-color: var(--violet1);
+}
+
+.violet2 div {
+  background-color: var(--violet2);
+}
+
+.violet3 div {
+  background-color: var(--violet3);
+}
+
+.violet4 div {
+  background-color: var(--violet4);
+}
+
+.violet5 div {
+  background-color: var(--violet5);
+}
+
+.violet6 div {
+  background-color: var(--violet6);
+}
+
+.violet7 div {
+  background-color: var(--violet7);
+}
+
+.violet8 div {
+  background-color: var(--violet8);
+}
+
+.violet9 div {
+  background-color: var(--violet9);
+}
+
+.fuschia0 div {
+  background-color: var(--fuschia0);
+}
+
+.fuschia1 div {
+  background-color: var(--fuschia1);
+}
+
+.fuschia2 div {
+  background-color: var(--fuschia2);
+}
+
+.fuschia3 div {
+  background-color: var(--fuschia3);
+}
+
+.fuschia4 div {
+  background-color: var(--fuschia4);
+}
+
+.fuschia5 div {
+  background-color: var(--fuschia5);
+}
+
+.fuschia6 div {
+  background-color: var(--fuschia6);
+}
+
+.fuschia7 div {
+  background-color: var(--fuschia7);
+}
+
+.fuschia8 div {
+  background-color: var(--fuschia8);
+}
+
+.fuschia9 div {
+  background-color: var(--fuschia9);
+}
+
+.pink0 div {
+  background-color: var(--pink0);
+}
+
+.pink1 div {
+  background-color: var(--pink1);
+}
+
+.pink2 div {
+  background-color: var(--pink2);
+}
+
+.pink3 div {
+  background-color: var(--pink3);
+}
+
+.pink4 div {
+  background-color: var(--pink4);
+}
+
+.pink5 div {
+  background-color: var(--pink5);
+}
+
+.pink6 div {
+  background-color: var(--pink6);
+}
+
+.pink7 div {
+  background-color: var(--pink7);
+}
+
+.pink8 div {
+  background-color: var(--pink8);
+}
+
+.pink9 div {
+  background-color: var(--pink9);
+}
+
+.grey0 div {
+  background-color: var(--grey0);
+}
+
+.grey1 div {
+  background-color: var(--grey1);
+}
+
+.grey2 div {
+  background-color: var(--grey2);
+}
+
+.grey3 div {
+  background-color: var(--grey3);
+}
+
+.grey4 div {
+  background-color: var(--grey4);
+}
+
+.grey5 div {
+  background-color: var(--grey5);
+}
+
+.grey6 div {
+  background-color: var(--grey6);
+}
+
+.grey7 div {
+  background-color: var(--grey7);
+}
+
+.grey8 div {
+  background-color: var(--grey8);
+}
+
+.grey9 div {
+  background-color: var(--grey9);
+}
 
 /* End Palegen Color palette styles */
