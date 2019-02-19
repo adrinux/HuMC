@@ -5,7 +5,23 @@ draft: false
 menu:
   footer:
     name: "Colophon"
-    weight: 1000
+    weight: 10000
 ---
 
-Details about how the site was made.
+How this site is built.
+
+## Typography
+
+
+
+## Software Stack
+
+Built with [Hugo](https://gohugo.io/)
+
+Built and maintained with [HuMC](https://github.com/adrinux/HuMC)
+
+HTML Templates initally based on [HTML5 Boilerplate](https://html5boilerplate.com/)
+
+## Hosting and Deployment
+
+[Add Details]
