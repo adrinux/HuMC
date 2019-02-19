@@ -6,6 +6,9 @@ description = "A web site built with Hugo"
 
 theme = "bunait"
 
+# Enable git derived last modified dates
+enableGitInfo = true
+
 #disableKinds = ['RSS']
 #summarylength = 36
 #paginate = 10
