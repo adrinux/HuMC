@@ -101,35 +101,44 @@ textarea {
    ========================================================================== */
 
 /* Layout */
-@supports (display: grid) {
-  .container {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: auto 1fr auto;
-  }
-
-  header {
-    grid-column: 1 / span 3;
-    grid-row: 1 / span 1;
-  }
-
-  main {
-    grid-column: 1 / span 3;
-    grid-row: 2 /span 1;
-  }
-
-  footer {
-    grid-column: 1 / span 3;
-    grid-row: 3 / span 1;
-  }
-
-}
 
 .container {
   width: auto;
   min-height: 100vh;
-  padding: 0 6px;
 }
+
+@supports (display: grid) {
+
+  body {
+    display: grid;
+    grid-template-columns: [left-gutter] 20px [container] 1fr [right-gutter] 20px;
+  }
+
+
+  .container {
+    grid-column: container;
+    display: grid;
+    grid-template-rows: [header] auto [main] 1fr [footer] auto;
+    grid-template-columns: [sidebar] 4fr [content] 8fr;
+  }
+
+  header {
+    grid-row: header;
+    grid-column: sidebar / right-gutter;
+  }
+
+  main {
+    grid-row: main;
+    grid-column: sidebar / right-gutter;
+  }
+
+  footer {
+    grid-row: footer;
+    grid-column: sidebar / right-gutter;
+  }
+
+}
+
 
 /* End Layout */
 
@@ -179,21 +188,21 @@ a:active {
 }
 
 header {
+  padding: 0 1.6em 0.8em;
   background-color: var(--blue9);
   color: var(--blue0);
-  padding: 1.5em;
 }
 
 main {
-  padding: 2em;
+  padding: 0 1.6em 0.8em;
   background-color: var(--blue0);
   color: var(--blue9);
 }
 
 footer {
+  padding: 1.6em;
   background-color: var(--blue9);
   color: var(--blue0);
-  padding: 2em;
 }
 
 /* Shortcode Styles */
@@ -237,7 +246,7 @@ figure.responsive {
 }
 
 .menu li a {
-  padding: .5em .75em;
+  padding: .5em .75em .5em 0;
   text-decoration: none;
 }
 
@@ -250,13 +259,8 @@ figure.responsive {
 .menu-main ul {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
 }
 
-.menu-footer ul {
-  margin-left: -0.75em;
-}
 
 /* Pagination */
 nav.pager {

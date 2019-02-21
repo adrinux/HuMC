@@ -3,9 +3,9 @@
 .menu-styleguide {
   background-color: var(--blue0);
   position: fixed;
-  right: 16px;
-  top: 64px;
-  padding: 10px 0;
+  right: 0.6em;
+  top: 3em;
+  padding: 0.6em 0;
   box-shadow: 0 0 8px var(--blue9);
 }
 
@@ -19,6 +19,7 @@
   background-color: var(--blue9);
   color: var(--grey0);
 }
+
 
 .image-wrapper.wide {
   max-width: 480px;
