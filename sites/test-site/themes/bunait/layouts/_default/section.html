@@ -1,5 +1,6 @@
 {{ define "main" }}
 <main class="main-content">
+  <h1>{{ .Title }}</h1>
   {{ .Content }}
   <ul class="contents">
     {{ range .Paginator.Pages }}
@@ -10,6 +11,6 @@
     </li>
     {{ end }}
   </ul>
-  {{ template "_internal/pagination.html" . }}
+  {{ partial "pagination.html" . }}
 </main>
 {{ end }}
