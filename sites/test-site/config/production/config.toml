@@ -1,0 +1,4 @@
+# Production specific options
+
+baseURL = "https://live.example.com"
+

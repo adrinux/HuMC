@@ -6,16 +6,22 @@ description = "A web site built with Hugo"
 
 theme = "bunait"
 
-#disableKinds = ['RSS']
 #summarylength = 36
 #paginate = 10
+#disableKinds = ['RSS']
 #rssLimit = 6
 
 [permalinks]
-  blog = "/:year-:month/:title/"
+  blog = "/blog/:year-:month/:title/"
 
 [imaging]
 # For filter options see https://github.com/disintegration/imaging
 resampleFilter = "Lanczos"
 quality = "86"
 anchor = "smart"
+
+# Personal/Organizational Params
+[params.social]
+  # github = "username"
+  # linkedin = "username"
+  # twitter = "username"

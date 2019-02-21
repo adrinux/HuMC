@@ -1,6 +1,6 @@
 # development params are automatically applied in hugo 'server' mode
 
 # baseurls for staging site
-baseurl = "https://stage.example.com"
+baseURL = "https://stage.example.com"
 
 buildDrafts = true

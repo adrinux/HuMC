@@ -1,7 +1,8 @@
 # development params are automatically applied in hugo 'server' mode
 
 # baseurls for stage and live sites are defined seperately
-baseurl = "http://localhost:3000"
+# this default for 'hugo server' doesn't seem to be modifiable here.
+#baseURL = "http://localhost"
 
 buildDrafts = true
 buildFuture = true
