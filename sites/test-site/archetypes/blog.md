@@ -1,7 +1,6 @@
 ---
 date: {{ .Date }}
 publishDate: {{ .PublishDate }}
-lastmod: {{ .Lastmod }}
 draft: true
 
 type: "blog"
