@@ -7,7 +7,6 @@ draft: true
 type: "blog"
 
 title: "{{ replace .TranslationBaseName "-" " " | title }}"
-#slug:
 description: ""
 author: ""
 tags: []

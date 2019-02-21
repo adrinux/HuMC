@@ -14,8 +14,8 @@ enableGitInfo = true
 #paginate = 10
 #rssLimit = 6
 
-#[permalinks]
-#  blog = "/blog/:year/:month/:title/"
+[permalinks]
+  blog = "/:year-:month/:title/"
 
 [imaging]
 # For filter options see https://github.com/disintegration/imaging
