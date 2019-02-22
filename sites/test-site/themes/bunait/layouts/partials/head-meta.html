@@ -1,22 +1,36 @@
-  <meta charset="utf-8">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <title>{{ if .Title }}{{ .Title }} - {{ end }}{{ .Site.Title }}</title>
-  <meta name="description" content="">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes">
-  <link rel="manifest" href="site.webmanifest">
-  <link rel="apple-touch-icon" href="icon.png">
-  <!-- Place favicon.ico in the root directory -->
-  {{ template "_internal/google_analytics_async.html" . }}
-  {{ $postcssed := resources.Get "css/main.css" | postCSS | minify | fingerprint }}
-  <link rel="stylesheet" href="{{ $postcssed.Permalink }}">
-  {{ if eq .Type "styleguide" }}
-  {{ $guidecss := resources.Get "css/styleguide.css" | postCSS | minify | fingerprint }}
-  <link rel="stylesheet" href="{{ $guidecss.Permalink }}">
-  {{ end }}
-  <!-- Hugo-specific bits -->
-  {{ if .RSSLink }}
-    <link href="{{ .RSSLink }}" rel="alternate" type="application/rss+xml" title="{{ .Site.Title }}" />
-    <link href="{{ .RSSLink }}" rel="feed" type="application/rss+xml" title="{{ .Site.Title }}" />
-  {{ end }}
-  {{ .Hugo.Generator }}
-  <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml">
+<meta charset="utf-8">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<title>{{ if .Title }}{{ .Title }} - {{ end }}{{ .Site.Title }}</title>
+<meta name="description" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes">
+<link rel="manifest" href="site.webmanifest">
+<link rel="apple-touch-icon" href="icon.png">
+<!-- Place favicon.ico in the root directory -->
+{{ template "_internal/google_analytics_async.html" . }}
+
+{{- if .Site.IsServer -}}
+{{ $postcssed := resources.Get "css/main.css" | postCSS }}
+<link rel="stylesheet" href="{{ $postcssed.Permalink }}">
+{{- else -}}
+{{ $postcssed := resources.Get "css/main.css" | postCSS | minify | fingerprint }}
+<link rel="stylesheet" href="{{ $postcssed.Permalink }}">
+{{- end -}}
+
+{{- if eq .Type "styleguide" -}}
+{{- if .Site.IsServer -}}
+{{ $guidecss := resources.Get "css/styleguide.css" | postCSS }}
+<link rel="stylesheet" href="{{ $guidecss.Permalink }}">
+{{- else -}}
+{{ $guidecss := resources.Get "css/styleguide.css" | postCSS | minify | fingerprint }}
+<link rel="stylesheet" href="{{ $guidecss.Permalink }}">
+{{- end -}}
+{{- end -}}
+
+
+<!-- Hugo-specific bits -->
+{{ if .RSSLink }}
+<link href="{{ .RSSLink }}" rel="alternate" type="application/rss+xml" title="{{ .Site.Title }}" />
+<link href="{{ .RSSLink }}" rel="feed" type="application/rss+xml" title="{{ .Site.Title }}" />
+{{ end }}
+{{ .Hugo.Generator }}
+<link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml">
