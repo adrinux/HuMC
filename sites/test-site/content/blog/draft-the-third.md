@@ -8,7 +8,7 @@ type: "blog"
 title: "Draft the Third"
 #slug: ""
 description: ""
-author: ""
+author: "Author name"
 tags: ["test", "bunait"]
 ---
 

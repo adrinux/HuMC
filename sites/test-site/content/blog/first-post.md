@@ -7,7 +7,7 @@ type: "blog"
 
 title: "First Post"
 description: ""
-author: ""
+author: "Author Name"
 tags: ["test", "bunait"]
 ---
 

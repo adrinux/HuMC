@@ -7,7 +7,7 @@ type: "blog"
 
 title: "Second Draft"
 description: ""
-author: ""
+author: "Author Name"
 tags: ["test", "bunait"]
 ---
 

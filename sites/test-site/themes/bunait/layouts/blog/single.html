@@ -1,7 +1,14 @@
 {{ define "main" }}
 <main class="main-content">
   <h1>{{ .Title }}</h1>
-
+  <div class="published-date">
+    <time datetime="{{ .Date.Format "2006-01-02 15:04:05 MST" }}">
+      <span class="published-day">{{ .Date.Format "02" }}</span>
+      <span class="published-month">{{ .Date.Format "Jan" }}</span>
+      <span class="published-year">{{ .Date.Format "2006" }}</span>
+    </time>
+  </div>
+  <div class="post-author">{{ .Params.author }}</div>
   {{ if .Params.rendertoc }}
   {{ .TableOfContents }}
   {{ end }}
