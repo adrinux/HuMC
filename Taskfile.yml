@@ -59,21 +59,12 @@ tasks:
 
 
 # Sites
-# Copy existing test-site to new name
-# how to pass in name? config file? Taskvars.yml can list global variables
-# seems like the place for site config
-# could also have sites/sitename/Taskvars.yml
-
-  sites:
-    cmds:
-      - echo {{ .SITE_NAME }}
-
 
 # Copy starter to new site with new name
   new-site:
     cmds:
       - echo 'Creating new site' {{ .NAME }}
-      - cp -rn starters/test-site sites/{{ .NAME }}
+      - cp -rn starters/five-page sites/{{ .NAME }}
       - mv -n sites/{{ .NAME }}/themes/bunait sites/{{ .NAME }}/themes/{{ .NAME }}
       - find sites/{{ .NAME }}/ -not -path '*/\.git*' -type f -readable -exec sed -i "s/bunait/{{ .NAME }}/gI" {} \;
       - echo 'Init new git repo in sites/Name'
