@@ -1,6 +1,6 @@
 {{ define "main" }}
-<main class="main-content">
-<h1>{{ .Title }}</h1>
+<main class="main-content" id="maincontent">
+  <h1>{{ .Title }}</h1>
   <ul>
     {{ range .Data.Pages }}
     <li><a href="{{ .Permalink }}">{{ .Title }}</a></li>
