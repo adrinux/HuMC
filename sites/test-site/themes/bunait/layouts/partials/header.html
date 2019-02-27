@@ -3,6 +3,10 @@
   {{ if not .IsHome }}<h2>{{ .Site.Title }}</h2>{{ end }}
   <p> Header content here. </p>
 
+  <div class="skip-link visuallyhidden">
+    <a href="#maincontent">Skip to main content</a>
+  </div>
+
   {{- partial "menu-main.html" . -}}
 
 </header>
