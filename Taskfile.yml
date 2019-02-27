@@ -73,13 +73,12 @@ tasks:
   new-site:
     cmds:
       - echo 'Creating new site' {{ .NAME }}
-      - cp -rn sites/test-site sites/{{ .NAME }}
+      - cp -rn starters/test-site sites/{{ .NAME }}
       - mv -n sites/{{ .NAME }}/themes/bunait sites/{{ .NAME }}/themes/{{ .NAME }}
-      - echo 'Searching new sites/NAME and replace bunait with NAME'
-      - echo 'Add sites/NAME to .gitignore'
+      - find sites/{{ .NAME }}/ -not -path '*/\.git*' -type f -readable -exec sed -i "s/bunait/{{ .NAME }}/gI" {} \;
       - echo 'Init new git repo in sites/Name'
       - echo 'Finished creating site' {{ .NAME }}
-      - echo 'New git repo created, add a remote and push'
+      - echo 'New git repo created, you should add a remote and push'
 # Notes:
 # For 'cp' and 'mv'
 # -r is recursive
