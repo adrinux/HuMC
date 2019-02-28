@@ -1,16 +1,10 @@
 
-# Sites folder - all but test-site should have own repo
-sites/*
+# Sites folder - all sites should have their own repo
+sites/
 !sites/.gitkeep
 
-# node
+# node folder and symlinks to it
 node_modules
-
-# Hugo output & cache
-published
-public
-starters/test-site/resources/_gen/assets/css
-starters/test-site/resources/_gen/assets/js
 
 # OSX
 .DS_Store
