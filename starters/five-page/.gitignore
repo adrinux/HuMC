@@ -1,0 +1,6 @@
+
+# Hugo output & cache
+published/
+public/
+resources/_gen/assets/css/
+resources/_gen/assets/js/

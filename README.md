@@ -17,8 +17,22 @@ HuMC is:
 ## Dependencies
 
 HuMC uses the go-task task runner. Installation is detailed below.
+
 The new-site task relies on sed, this works fine on Linux but some BSD based sed versions dont allow case insensitive search - AFAIK that includes OSX - so install gnu-sed uisng your favourite package manager (brew, macports, fink etc).
-You'll need hugo of course. You'll need a hugo-extended version to have the PostCSS processing in Bunait work.
+
+You'll need hugo of course. You'll need a hugo-extended version to have the PostCSS asset processing in Bunait work. I use dkebler's script detailed on the [Hugo discourse Forum](https://discourse.gohugo.io/t/script-to-install-latest-hugo-release-on-macos-and-ubuntu/14774/14) - note the script may need tweaked for your linux distro, read the discussion there.
+
+```bash
+wget https://download.kebler.net/hugo-update
+chmod +x hugo-update
+# Check the script contents before running it!
+sudo mv hugo-update /usr/local/bin
+sudo hugo-update
+```
+
+You'll also need nodejs installed for some asset processing.
+
+The setup task will check if these are installed, with the exception of gnu-sed.
 
 
 ## Install & setup
@@ -28,14 +42,11 @@ Install the task runner [Task](https://taskfile.org/#/installation) by your chos
 ```bash
 wget https://taskfile.org/install.sh
 chmod 700 install.sh
-./install.sh -b /usr/local/bin
+sudo ./install.sh -b /usr/local/bin
 rm -rf install.sh
-
 ```
 
 Clone HuMC from github.
-
-
 
 Run setup tasks.
 
@@ -43,3 +54,26 @@ Run setup tasks.
 cd HuMC
 task setup
 ```
+
+Test HuMC.
+
+```bash
+cd starters/five-page
+hugo serve
+```
+
+And visit http://localhost:1313 to check everything is working.
+
+
+## Start a new site
+
+From within the HuMC directory:
+
+```bash
+task new-site NAME=awesome
+```
+
+Will create a new site at 'sites/awsome' with a custom theme 'sites/awsome/theme/awsome' ready to go. It will also have run 'git init', 'git add .' and 'git commit'.
+
+Add a git remote and push before you start work.
+(Or does a git based deploy make that redundant?)
