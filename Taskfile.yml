@@ -67,11 +67,11 @@ tasks:
       - cp -rn starters/five-page sites/{{ .NAME }}
       - mv -n sites/{{ .NAME }}/themes/bunait sites/{{ .NAME }}/themes/{{ .NAME }}
       - find sites/{{ .NAME }}/ -not -path '*/\.git*' -type f -readable -exec sed -i "s/bunait/{{ .NAME }}/gI" {} \;
-      - echo 'Initing new git repo in sites/{{ .NAME }}'
       - cd sites/{{ .NAME }} && git init
       - cd sites/{{ .NAME }} && git add .
       - cd sites/{{ .NAME }} && git commit -m"Initial Commit of HuMC generated site"
       - echo 'Finished creating site' {{ .NAME }}
+      - echo 'A new git repo has been initialized in sites/{{ .NAME }} and all files committed.'
       - echo 'NOTE You need to add a git remote and push manually'
     silent: true
 # Notes:
@@ -79,4 +79,3 @@ tasks:
 # -r is recursive
 # -n will not overwrite existing
 # -v is verbose
-
