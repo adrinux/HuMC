@@ -1,8 +1,8 @@
 # Option used in all environments
 
 languageCode = "en-us"
-title = "My New Hugo Site"
-description = "A web site built with Hugo"
+title = "bunait"
+description = "A web site built with Hugo & HuMC"
 
 theme = "bunait"
 

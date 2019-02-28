@@ -8,7 +8,7 @@ menu:
     name: "Blog"
     weight: 200
 
-title: "Blog"
+title: "Bunait Blog"
 description: ""
 author: ""
 tags: []
