@@ -4,10 +4,10 @@ name = "Bunait"
 license = "MIT"
 licenselink = "https://github.com/adrinux/Bunait/blob/master/LICENSE"
 description = "A Hugo theme based on HTML5boilerplate and using hugo pipes"
-homepage = "https://github.com/adrinux/Bunait"
+homepage = "https://github.com/adrinux/HuMC"
 tags = []
 features = []
-min_version = "0.41"
+min_version = "0.54"
 
 [author]
   name = "Adrian Simmons"
