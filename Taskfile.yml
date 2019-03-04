@@ -70,9 +70,13 @@ tasks:
       - cd sites/{{ .NAME }} && git init
       - cd sites/{{ .NAME }} && git add .
       - cd sites/{{ .NAME }} && git commit -m"Initial Commit of HuMC generated site"
+      - cd sites/{{ .NAME }} && git branch staging
+      - cd sites/{{ .NAME }} && git branch production
       - echo 'Finished creating site' {{ .NAME }}
       - echo 'A new git repo has been initialized in sites/{{ .NAME }} and all files committed.'
-      - echo 'NOTE You need to add a git remote and push manually'
+      - echo 'Git branches have been created for staging and production'
+      - echo '*** NOTE ***'
+      - echo 'You should probably add a git remote and push before doing anythng else'
     silent: true
 # Notes:
 # For 'cp' and 'mv'
