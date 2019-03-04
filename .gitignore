@@ -1,4 +1,6 @@
 
+# How to use .gitignore: https://help.github.com/articles/ignoring-files
+
 # Sites folder - all sites should have their own repo
 sites/
 !sites/.gitkeep
