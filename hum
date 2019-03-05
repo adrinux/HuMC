@@ -396,32 +396,27 @@ fi
 ### Hum Functions
 ################################
 
-function hum_setup() {
-
+function check_hugo() {
   # Check if hugo is installed
+  if ! command -v hugo > /dev/null; then
+    critical "SHugo is not installed. Aborting."
+    notice "Please install Hugo: https://gohugo.io/getting-started/installing/"
+    exit 1
+  else
+    info "Hugo found."
+  fi
+}
 
-  # hugo-installed:
-  #   silent: true
-  #   cmds:
-  #     - |
-  #       if ! command -v hugo > /dev/null; then
-  #         echo "hugo is not installed. aborting."
-  #         exit 1
-  #       fi
-  #     - echo "hugo installed, ok."
-
-
+function check_node() {
   # Check node js is installed
-
-  # node-installed:
-  #   silent: true
-  #   cmds:
-  #     - |
-  #       if ! command -v node > /dev/null; then
-  #         echo "node is not installed. aborting."
-  #         exit 1
-  #       fi
-  #     - echo "node installed, ok."
+  if ! command -v node > /dev/null; then
+    critical "Node.js is not installed. Aborting."
+    notice "Please install nodejs: https://nodejs.org/en/"
+    exit 1
+  else
+    info "Node.js found."
+  fi
+}
 
 
   # Check if node_modules exists
@@ -449,7 +444,6 @@ function hum_setup() {
   #   status:
   #     - test -d node_modules
 
-}
 
 
 function new_site() {
@@ -483,7 +477,7 @@ function new_site() {
 
 
 
-  # Create new site with name
+# Create new site with name
 if [[ -n "${arg_n}" ]]; then
   # Check if site/name already exists
   if [ -d "sites/${arg_n}" ]; then
@@ -493,3 +487,8 @@ if [[ -n "${arg_n}" ]]; then
   fi
 fi
 
+# Check hum setup
+if [[ -n "${arg_s}" ]]; then
+  check_hugo
+  check_node
+fi
