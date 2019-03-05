@@ -8,15 +8,14 @@ This project is evolving from 'web-starter-hugo' which is on the git branch 'wsh
 
 HuMC is:
 
-- A set of tasks to help manage, develop and deploy a collection of web sites built with [Hugo]().
+- A script, 'hum' to help manage, develop and deploy a collection of web sites built with [Hugo]().
 - A starter site for [Hugo]() (it may become several possible starter sites).
 - A starter theme for [Hugo]() based on [HTML5 Biolerplate]() called Bunait
-- Pronounced (in my head) as 'humsee'.
+
+In my head I pronounce HuMC as 'hum'.
 
 
 ## Dependencies
-
-HuMC uses the go-task task runner. Installation is detailed below.
 
 The new-site task relies on sed, this works fine on Linux but some BSD based sed versions dont allow case insensitive search - AFAIK that includes OSX - so install gnu-sed uisng your favourite package manager (brew, macports, fink etc).
 
@@ -37,22 +36,13 @@ The setup task will check if these are installed, with the exception of gnu-sed.
 
 ## Install & setup
 
-Install the task runner [Task](https://taskfile.org/#/installation) by your chosen method. Here's an example using the install script to install task in /usr/local/bin:
-
-```bash
-wget https://taskfile.org/install.sh
-chmod 700 install.sh
-sudo ./install.sh -b /usr/local/bin
-rm -rf install.sh
-```
-
 Clone HuMC from github.
 
-Run setup tasks.
+Run setup task.
 
 ```bash
 cd HuMC
-task setup
+./hum setup
 ```
 
 Test HuMC.
@@ -63,27 +53,35 @@ hugo serve
 ```
 
 And visit http://localhost:1313 to check everything is working.
+Use 'ctrl-c' to quit server.
 
 
 ## Start a new site
 
-From within the HuMC directory:
+From within the HuMC directory run 'hum --new-site SITENAME' e.g. for a site named 'awesome' do:
 
 ```bash
-task new-site NAME=awesome
+./hum --new-site awesome
 ```
 
-Will create a new site at 'sites/awsome' with a custom theme 'sites/awsome/theme/awsome' ready to go. It will also have run 'git init', 'git add .' and 'git commit'.
-
-Add a git remote and push before you start work. (Would an automated git deploy setup make this redundant?)
-You can use the 'all' flag to push all branches at once:
+Or using the short cli flag:
 
 ```bash
+./hum -n awesome
+```
+
+This will create a new site at 'sites/awesome' with a custom theme 'sites/awesome/theme/awesome' ready to go. It will also have run 'git init', 'git add .' and 'git commit'.
+
+(Optional, but wise) Next add a git remote and push the starter code before you begin work. (An automated git deploy setup might make this redundant in future.)
+You can use the '--all' flag to push all branches at once:
+
+```bash
+cd sites/awesome
 git remote add origin gitea@gitea.example.com:username/awesome.git
 git push -u origin --all
 ```
 
-To launch your new site and begin work change directory and launch Hugo serve:
+To view your new site and begin work change directory and launch Hugo's built in server:
 
 ```bash
 cd sites/awesome
@@ -91,3 +89,14 @@ hugo serve
 ```
 
 Then visit localhost:1313 in your browser as normal for Hugo.
+
+
+## Workflow
+
+### Development
+
+### Content editing
+
+### Deployment to Staging
+
+### Deployment to production

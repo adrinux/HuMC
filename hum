@@ -140,6 +140,7 @@ function help () {
   -h --help           This page
   -w --no-color       Disable color output
   -n --new-site [arg] Create a new site with name.
+  -s --setup          Check for dependencies and setup
 EOF
 
 # shellcheck disable=SC2015
@@ -395,8 +396,69 @@ fi
 ### Hum Functions
 ################################
 
+function hum_setup() {
+
+  # Check if hugo is installed
+
+  # hugo-installed:
+  #   silent: true
+  #   cmds:
+  #     - |
+  #       if ! command -v hugo > /dev/null; then
+  #         echo "hugo is not installed. aborting."
+  #         exit 1
+  #       fi
+  #     - echo "hugo installed, ok."
+
+
+  # Check node js is installed
+
+  # node-installed:
+  #   silent: true
+  #   cmds:
+  #     - |
+  #       if ! command -v node > /dev/null; then
+  #         echo "node is not installed. aborting."
+  #         exit 1
+  #       fi
+  #     - echo "node installed, ok."
+
+
+  # Check if node_modules exists
+
+  # node-setup:
+  #   deps:
+  #     - node-installed
+  #   desc: Run npm install if node_modules doesn't exist
+  #   cmds:
+  #     - npm install
+  #   status:
+  #     - test -d node_modules
+
+
+  # Check if theme/node_modules is symlinked to humc/node_modules
+
+  # node-setup-theme:
+  #   deps:
+  #     - node-setup
+  #   dir: starters/five-page/themes/bunait
+  #   desc: Symlink main node_modules in bunait theme and run npm install
+  #   cmds:
+  #     - ln -s ../../../../node_modules node_modules
+  #     - npm install
+  #   status:
+  #     - test -d node_modules
+
+}
+
+
 function new_site() {
   info "Adding new site in sites/${arg_n} ..."
+  # Notes:
+  # For 'cp' and 'mv'
+  # -r is recursive
+  # -n will not overwrite existing
+  # -v is verbose
   cp -rn starters/five-page sites/${arg_n}
 
   info "Adding custom theme ${arg_n} ..."
@@ -418,6 +480,7 @@ function new_site() {
 
   notice "$(echo -e "Please add a git remote and\n'git push -u origin -all'\nbefore before starting work on ${arg_n}.")"
 }
+
 
 
   # Create new site with name
