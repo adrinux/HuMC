@@ -1,19 +1,17 @@
 #!/usr/bin/env bash
 # This file:
 #
-#  - Demos BASH3 Boilerplate (change this for your script)
+#  - Runs various tasks for HuMC Hugo site manager and starter kit
 #
 # Usage:
 #
-#  LOG_LEVEL=7 ./main.sh -f /tmp/x -d (change this for your script)
+#  LOG_LEVEL=7 ./hum -f /tmp/x -d (change this for your script)
 #
 # Based on a template by BASH3 Boilerplate v2.3.0
 # http://bash3boilerplate.sh/#authors
 #
 # The MIT License (MIT)
 # Copyright (c) 2013 Kevin van Zonneveld and contributors
-# You are not obligated to bundle the LICENSE file with your b3bp projects as long
-# as you leave these references intact in the header comments of your source files.
 
 # Exit on error. Append "|| true" if you expect an error.
 set -o errexit
@@ -24,7 +22,7 @@ set -o nounset
 # Catch the error in case mysqldump fails (but gzip succeeds) in `mysqldump |gzip`
 set -o pipefail
 # Turn on traces, useful while debugging but commented out by default
-# set -o xtrace
+#set -o xtrace
 
 if [[ "${BASH_SOURCE[0]}" != "${0}" ]]; then
   __i_am_main_script="0" # false
@@ -136,18 +134,17 @@ function help () {
 
 # shellcheck disable=SC2015
 [[ "${__usage+x}" ]] || read -r -d '' __usage <<-'EOF' || true # exits non-zero when EOF encountered
-  -f --file  [arg] Filename to process. Required.
-  -t --temp  [arg] Location of tempfile. Default="/tmp/bar"
-  -v               Enable verbose mode, print script as it is executed
-  -d --debug       Enables debug mode
-  -h --help        This page
-  -n --no-color    Disable color output
-  -1 --one         Do just one thing
+  -f --file     [arg] Name of config file. Default='hum.conf'
+  -v                  Enable verbose mode, print script as it is executed
+  -d --debug          Enables debug mode
+  -h --help           This page
+  -w --no-color       Disable color output
+  -n --new-site [arg] Create a new site with name.
 EOF
 
 # shellcheck disable=SC2015
 [[ "${__helptext+x}" ]] || read -r -d '' __helptext <<-'EOF' || true # exits non-zero when EOF encountered
- This is Bash3 Boilerplate's help text. Feel free to add any description of your
+ This is hum's help text. Feel free to add any description of your
  program or elaborate more on command-line arguments. This section is not
  parsed and will be added as-is to the help.
 EOF
@@ -348,7 +345,7 @@ if [[ "${arg_v:?}" = "1" ]]; then
 fi
 
 # no color mode
-if [[ "${arg_n:?}" = "1" ]]; then
+if [[ "${arg_w:?}" = "1" ]]; then
   NO_COLOR="true"
 fi
 
@@ -362,32 +359,43 @@ fi
 ### Validation. Error out if the things required for your script are not present
 ##############################################################################
 
-[[ "${arg_f:-}" ]]     || help      "Setting a filename with -f or --file is required"
+#[[ "${arg_f:-}" ]]     || help      "Setting a filename with -f or --file is required"
 [[ "${LOG_LEVEL:-}" ]] || emergency "Cannot continue without LOG_LEVEL. "
 
 
 ### Runtime
 ##############################################################################
 
-info "__i_am_main_script: ${__i_am_main_script}"
-info "__file: ${__file}"
-info "__dir: ${__dir}"
-info "__base: ${__base}"
-info "OSTYPE: ${OSTYPE}"
+#info "__i_am_main_script: ${__i_am_main_script}"
+# info "__file: ${__file}"
+# info "__dir: ${__dir}"
+# info "__base: ${__base}"
+# info "OSTYPE: ${OSTYPE}"
 
-info "arg_f: ${arg_f}"
-info "arg_d: ${arg_d}"
-info "arg_v: ${arg_v}"
-info "arg_h: ${arg_h}"
+# info "arg_f: ${arg_f}"
+#info "arg_d: ${arg_d}"
+#info "arg_v: ${arg_v}"
+#info "arg_h: ${arg_h}"
 
-info "$(echo -e "multiple lines example - line #1\nmultiple lines example - line #2\nimagine logging the output of 'ls -al /path/'")"
+#info "arg_n: ${arg_n}"
+
+# info "$(echo -e "multiple lines example - line #1\nmultiple lines example - line #2\nimagine logging the output of 'ls -al /path/'")"
 
 # All of these go to STDERR, so you can use STDOUT for piping machine readable information to other software
-debug "Info useful to developers for debugging the application, not useful during operations."
-info "Normal operational messages - may be harvested for reporting, measuring throughput, etc. - no action required."
-notice "Events that are unusual but not error conditions - might be summarized in an email to developers or admins to spot potential problems - no immediate action required."
-warning "Warning messages, not an error, but indication that an error will occur if action is not taken, e.g. file system 85% full - each item must be resolved within a given time. This is a debug message"
-error "Non-urgent failures, these should be relayed to developers or admins; each item must be resolved within a given time."
-critical "Should be corrected immediately, but indicates failure in a primary system, an example is a loss of a backup ISP connection."
-alert "Should be corrected immediately, therefore notify staff who can fix the problem. An example would be the loss of a primary ISP connection."
-emergency "A \"panic\" condition usually affecting multiple apps/servers/sites. At this level it would usually notify all tech staff on call."
+# debug "Info useful to developers for debugging the application, not useful during operations."
+# info "Normal operational messages - may be harvested for reporting, measuring throughput, etc. - no action required."
+# notice "Events that are unusual but not error conditions - might be summarized in an email to developers or admins to spot potential problems - no immediate action required."
+# warning "Warning messages, not an error, but indication that an error will occur if action is not taken, e.g. file system 85% full - each item must be resolved within a given time. This is a debug message"
+# error "Non-urgent failures, these should be relayed to developers or admins; each item must be resolved within a given time."
+# critical "Should be corrected immediately, but indicates failure in a primary system, an example is a loss of a backup ISP connection."
+# alert "Should be corrected immediately, therefore notify staff who can fix the problem. An example would be the loss of a primary ISP connection."
+# emergency "A \"panic\" condition usually affecting multiple apps/servers/sites. At this level it would usually notify all tech staff on call."
+
+
+  # Create new site with name
+if [[ -n "${arg_n}" ]]; then
+  info "Creating a site named: ${arg_n}}"
+  cp -rn starters/five-page sites/${arg_n}
+fi
+
+
