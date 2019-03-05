@@ -392,10 +392,41 @@ fi
 # emergency "A \"panic\" condition usually affecting multiple apps/servers/sites. At this level it would usually notify all tech staff on call."
 
 
+### Hum Functions
+################################
+
+function new_site() {
+  info "Adding new site in sites/${arg_n} ..."
+  cp -rn starters/five-page sites/${arg_n}
+
+  info "Adding custom theme ${arg_n} ..."
+  mv -n sites/${arg_n}/themes/bunait sites/${arg_n}/themes/${arg_n}
+  find sites/${arg_n}/ -not -path '*/\.git*' -type f -readable -exec sed -i "s/bunait/${arg_n}/gI" {} \;
+
+  info "Init git repository..."
+  (
+    cd sites/${arg_n} && git init
+
+    info "Adding and committing all files to repository..."
+    git add .
+    git commit --quiet -m"Initial Commit of HuMC generated site"
+    
+    info "Adding staging and production branches..."
+    git branch staging
+    git branch production
+  )
+
+  notice "$(echo -e "Please add a git remote and\n'git push -u origin -all'\nbefore before starting work on ${arg_n}.")"
+}
+
+
   # Create new site with name
 if [[ -n "${arg_n}" ]]; then
-  info "Creating a site named: ${arg_n}}"
-  cp -rn starters/five-page sites/${arg_n}
+  # Check if site/name already exists
+  if [ -d "sites/${arg_n}" ]; then
+    error "sites/${arg_n} already exists"
+  else
+    new_site
+  fi
 fi
-
 
