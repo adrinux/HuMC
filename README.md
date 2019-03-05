@@ -75,5 +75,19 @@ task new-site NAME=awesome
 
 Will create a new site at 'sites/awsome' with a custom theme 'sites/awsome/theme/awsome' ready to go. It will also have run 'git init', 'git add .' and 'git commit'.
 
-Add a git remote and push before you start work.
-(Or does a git based deploy make that redundant?)
+Add a git remote and push before you start work. (Would an automated git deploy setup make this redundant?)
+You can use the 'all' flag to push all branches at once:
+
+```bash
+git remote add origin gitea@gitea.example.com:username/awesome.git
+git push -u origin --all
+```
+
+To launch your new site and begin work change directory and launch Hugo serve:
+
+```bash
+cd sites/awesome
+hugo serve
+```
+
+Then visit localhost:1313 in your browser as normal for Hugo.
