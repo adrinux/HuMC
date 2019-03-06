@@ -81,7 +81,7 @@ function __b3bp_log () {
   local color="${!colorvar:-${color_error}}"
   local color_reset="\x1b[0m"
 
-  if [[ "${NO_COLOR:-}" = "true" ]] || ( [[ "${TERM:-}" != "xterm"* ]] && [[ "${TERM:-}" != "screen"* ]] ) || [[ ! -t 2 ]]; then
+  if [[ "${NO_COLOR:-}" = "true" ]] || ( [[ "${TERM:-}" != "xterm"* ]] && [[ "${TERM:-}" != "screen"* ]] ;) || [[ ! -t 2 ]]; then
     if [[ "${NO_COLOR:-}" != "false" ]]; then
       # Don't use colors on pipes or non-recognized terminals
       color=""; color_reset=""
@@ -418,18 +418,15 @@ function check_node() {
   fi
 }
 
-
+function check_nodemod() {
   # Check if node_modules exists
-
-  # node-setup:
-  #   deps:
-  #     - node-installed
-  #   desc: Run npm install if node_modules doesn't exist
-  #   cmds:
-  #     - npm install
-  #   status:
-  #     - test -d node_modules
-
+  if [ -d "node_modules" ]; then
+    info "Top level node_modules found."
+  else
+    notice "Running npm install to fetch node_modules"
+    npm install
+  fi
+}
 
   # Check if theme/node_modules is symlinked to humc/node_modules
 
@@ -459,8 +456,9 @@ function new_site() {
   mv -n sites/${arg_n}/themes/bunait sites/${arg_n}/themes/${arg_n}
   find sites/${arg_n}/ -not -path '*/\.git*' -type f -readable -exec sed -i "s/bunait/${arg_n}/gI" {} \;
 
-  info "Init git repository..."
   (
+    # Sub shell because of the cd
+    info "Init git repository..."
     cd sites/${arg_n} && git init
 
     info "Adding and committing all files to repository..."
@@ -491,4 +489,5 @@ fi
 if [[ -n "${arg_s}" ]]; then
   check_hugo
   check_node
+  check_nodemod
 fi
