@@ -423,7 +423,7 @@ function check_nodemod() {
   if [ -d "node_modules" ]; then
     info "Top level node_modules found."
   else
-    notice "Running npm install to fetch node_modules"
+    info "Running npm install to fetch node_modules"
     npm install
   fi
 }
@@ -433,12 +433,24 @@ function check_theme_nodemod() {
   if [ -d "starters/five-page/themes/bunait/node_modules" ]; then
     info "Theme level node_modules found."
   else
-    notice "Symlinking main node_modules inside bunait theme and running npm install"
+    info "Symlinking main node_modules inside bunait theme and running npm install"
     ln -s node_modules starters/five-page/themes/bunait/node_modules
     npm install
   fi
 }
 
+function node_cleanup() {
+  # Remove node modules ready for reinstallation
+  if [ -d "node_modules" ]; then
+    info "Removing node_modules."
+    rm -rf node_modules
+    check_nodemod
+    cd starters/five-page/themes/bunait
+    npm install
+  else
+    info "node_modules not found. Run 'hum -s'"
+  fi
+}
 
 function new_site() {
   info "Adding new site in sites/${arg_n} ..."
