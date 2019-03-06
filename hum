@@ -428,19 +428,16 @@ function check_nodemod() {
   fi
 }
 
-  # Check if theme/node_modules is symlinked to humc/node_modules
-
-  # node-setup-theme:
-  #   deps:
-  #     - node-setup
-  #   dir: starters/five-page/themes/bunait
-  #   desc: Symlink main node_modules in bunait theme and run npm install
-  #   cmds:
-  #     - ln -s ../../../../node_modules node_modules
-  #     - npm install
-  #   status:
-  #     - test -d node_modules
-
+function check_theme_nodemod() {
+    # Check if theme/node_modules is symlinked to humc/node_modules
+  if [ -d "starters/five-page/themes/bunait/node_modules" ]; then
+    info "Theme level node_modules found."
+  else
+    notice "Symlinking main node_modules inside bunait theme and running npm install"
+    ln -s node_modules starters/five-page/themes/bunait/node_modules
+    npm install
+  fi
+}
 
 
 function new_site() {
@@ -490,4 +487,5 @@ if [[ -n "${arg_s}" ]]; then
   check_hugo
   check_node
   check_nodemod
+  check_theme_nodemod
 fi
