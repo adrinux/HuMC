@@ -141,6 +141,7 @@ function help () {
   -w --no-color       Disable color output
   -n --new-site [arg] Create a new site with name.
   -s --setup          Check for dependencies and setup
+  -c --node-cleanup   Remove and reinstall node_modules
 EOF
 
 # shellcheck disable=SC2015
@@ -500,4 +501,9 @@ if [[ -n "${arg_s}" ]]; then
   check_node
   check_nodemod
   check_theme_nodemod
+fi
+
+# Check hum setup
+if [[ -n "${arg_c}" ]]; then
+  node_cleanup
 fi
