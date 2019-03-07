@@ -453,6 +453,8 @@ function node_cleanup() {
     rm -rf node_modules
     check_nodemod
     check_theme_nodemod
+    cd starters/five-page/themes/bunait
+    npm install
   else
     info "node_modules not found. Run 'hum -s'"
   fi
