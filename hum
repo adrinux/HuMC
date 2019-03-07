@@ -484,6 +484,9 @@ function new_site() {
 }
 
 
+# Pull in changes in all sites
+
+
 
 # Create new site with name
 if [[ -n "${arg_n}" ]]; then
