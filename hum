@@ -379,7 +379,10 @@ fi
 #info "arg_v: ${arg_v}"
 #info "arg_h: ${arg_h}"
 
-#info "arg_n: ${arg_n}"
+info "arg_n is: ${arg_n}"
+info "arg_s is: ${arg_s}"
+info "arg_c is: ${arg_c}"
+
 
 # info "$(echo -e "multiple lines example - line #1\nmultiple lines example - line #2\nimagine logging the output of 'ls -al /path/'")"
 
@@ -421,7 +424,7 @@ function check_node() {
 
 function check_nodemod() {
   # Check if node_modules exists
-  if [ -d "node_modules" ]; then
+  if [[ -d "node_modules" ]]; then
     info "Top level node_modules found."
   else
     info "Running npm install to fetch node_modules"
@@ -431,23 +434,25 @@ function check_nodemod() {
 
 function check_theme_nodemod() {
     # Check if theme/node_modules is symlinked to humc/node_modules
-  if [ -d "starters/five-page/themes/bunait/node_modules" ]; then
-    info "Theme level node_modules found."
+  if [[ -L "starters/five-page/themes/bunait/node_modules" ]]; then
+    info "Theme level node_modules link found."
   else
     info "Symlinking main node_modules inside bunait theme and running npm install"
-    ln -s node_modules starters/five-page/themes/bunait/node_modules
-    npm install
+    (
+      cd starters/five-page/themes/bunait
+      ln -s ../../../../node_modules node_modules
+      npm install
+    )
   fi
 }
 
 function node_cleanup() {
   # Remove node modules ready for reinstallation
-  if [ -d "node_modules" ]; then
+  if [[ -d "node_modules" ]]; then
     info "Removing node_modules."
     rm -rf node_modules
     check_nodemod
-    cd starters/five-page/themes/bunait
-    npm install
+    check_theme_nodemod
   else
     info "node_modules not found. Run 'hum -s'"
   fi
@@ -455,7 +460,7 @@ function node_cleanup() {
 
 function check_conf() {
   # create conf folder if not found
-  if [ -d "sites/conf" ]; then
+  if [[ -d "sites/conf" ]]; then
     info "sites/conf found."
   else
     info "Creating sites configuration directory"
@@ -463,31 +468,25 @@ function check_conf() {
   fi
 
   # create conf file if not found
-  if [ -f "sites/conf/sites.conf" ]; then
+  if [[ -f "sites/conf/sites.conf" ]]; then
     info "sites.conf found."
   else
     info "Creating sites configuration file"
-    echo '# hum sites conf file\n' > sites/conf/sites.conf
+    echo '# hum sites conf file' > sites/conf/sites.conf
   fi
 
   # Check if a git repo exists in sites/conf
   # init repo is not
-  if [ -f "sites/conf/.git" ]; then
+  if [[ -d "sites/conf/.git" ]]; then
     info "Found a git repo in sites/conf."
   else
     info "Init git repository for configuration"
-    
-    (
-      # Sub shell because of the cd
-      cd sites/conf && git init
+    cd sites/conf && git init
+    info "Adding and committing config files to repository..."
+    git add .
+    git commit --quiet -m"Initial Commit of HuMC sites configuration"
 
-      info "Adding and committing config files to repository..."
-      git add .
-      git commit --quiet -m"Initial Commit of HuMC sites configuration"
-
-      notice "Please add a git remote and git push\n to save your config"
-    )
-
+    notice "Please add a git remote and git push\n to save your config"
   fi
 }
 
@@ -502,6 +501,7 @@ function new_site() {
   cp -rn starters/five-page sites/${arg_n}
 
   info "Adding custom theme ${arg_n} ..."
+  # Rename bunait to new site name
   mv -n sites/${arg_n}/themes/bunait sites/${arg_n}/themes/${arg_n}
   find sites/${arg_n}/ -not -path '*/\.git*' -type f -readable -exec sed -i "s/bunait/${arg_n}/gI" {} \;
 
@@ -526,26 +526,28 @@ function new_site() {
 # Pull in changes in all sites
 
 
-
 # Create new site with name
+# 'hum -n SITENAME'
 if [[ -n "${arg_n}" ]]; then
   # Check if site/name already exists
-  if [ -d "sites/${arg_n}" ]; then
+  if [[ -d "sites/${arg_n}" ]]; then
     error "sites/${arg_n} already exists"
   else
     new_site
   fi
 fi
 
-# Check hum setup
-if [[ -n "${arg_s}" ]]; then
+# Check hum setup  'hum -s'
+if [[ "${arg_s}" -eq 1 ]]; then
   check_hugo
   check_node
   check_nodemod
   check_theme_nodemod
+  check_conf
 fi
 
-# Check hum setup
-if [[ -n "${arg_c}" ]]; then
+# Remove and reinstall node_modules
+# 'hum -c'
+if [[ "${arg_c}" -eq 1 ]]; then
   node_cleanup
 fi
