@@ -453,6 +453,45 @@ function node_cleanup() {
   fi
 }
 
+function check_conf() {
+  # create conf folder if not found
+  if [ -d "sites/conf" ]; then
+    info "sites/conf found."
+  else
+    info "Creating sites configuration directory"
+    mkdir sites/conf
+  fi
+
+  # create conf file if not found
+  if [ -f "sites/conf/sites.conf" ]; then
+    info "sites.conf found."
+  else
+    info "Creating sites configuration file"
+    echo '# hum sites conf file\n' > sites/conf/sites.conf
+  fi
+
+  # Check if a git repo exists in sites/conf
+  # init repo is not
+  if [ -f "sites/conf/.git" ]; then
+    info "Found a git repo in sites/conf."
+  else
+    info "Init git repository for configuration"
+    
+    (
+      # Sub shell because of the cd
+      cd sites/conf && git init
+
+      info "Adding and committing config files to repository..."
+      git add .
+      git commit --quiet -m"Initial Commit of HuMC sites configuration"
+
+      notice "Please add a git remote and git push\n to save your config"
+    )
+
+  fi
+}
+
+
 function new_site() {
   info "Adding new site in sites/${arg_n} ..."
   # Notes:
@@ -483,7 +522,7 @@ function new_site() {
   notice "$(echo -e "Please add a git remote and\n'git push -u origin -all'\nbefore before starting work on ${arg_n}.")"
 }
 
-
+# Find sites and put info into conf for use in later commands
 # Pull in changes in all sites
 
 

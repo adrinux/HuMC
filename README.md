@@ -1,6 +1,7 @@
 ## Note
 
-This project is evolving from 'web-starter-hugo' which is on the git branch 'wsh-1.0'. It's a WIP and not recommeded for production use. Yet.
+This project is evolving from 'web-starter-hugo' which is on the git branch 'wsh-1.0'.
+It's a WIP and whilst rudimentary it is usable.
 
 # HuMC
 
