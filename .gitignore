@@ -4,6 +4,7 @@
 # Sites folder - all sites should have their own repo
 sites/
 !sites/.gitkeep
+sites/conf/
 
 # node folder and symlinks to it
 node_modules
