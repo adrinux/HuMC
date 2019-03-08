@@ -134,7 +134,7 @@ function help () {
 
 # shellcheck disable=SC2015
 [[ "${__usage+x}" ]] || read -r -d '' __usage <<-'EOF' || true # exits non-zero when EOF encountered
-  -f --file     [arg] Name of config file. Default='hum.conf'
+  -f --file     [arg] Name of config file.
   -v                  Enable verbose mode, print script as it is executed
   -d --debug          Enables debug mode
   -h --help           This page
@@ -379,9 +379,9 @@ fi
 #info "arg_v: ${arg_v}"
 #info "arg_h: ${arg_h}"
 
-info "arg_n is: ${arg_n}"
-info "arg_s is: ${arg_s}"
-info "arg_c is: ${arg_c}"
+# info "arg_n is: ${arg_n}"
+# info "arg_s is: ${arg_s}"
+# info "arg_c is: ${arg_c}"
 
 
 # info "$(echo -e "multiple lines example - line #1\nmultiple lines example - line #2\nimagine logging the output of 'ls -al /path/'")"
@@ -474,7 +474,7 @@ function check_conf() {
     info "sites.conf found."
   else
     info "Creating sites configuration file"
-    echo '# hum sites conf file' > sites/conf/sites.conf
+    echo -e '# hum sites conf file\n# One conf file per site added by new-site task' > sites/conf/sites.conf
   fi
 
   # Check if a git repo exists in sites/conf
@@ -507,6 +507,10 @@ function new_site() {
   mv -n sites/${arg_n}/themes/bunait sites/${arg_n}/themes/${arg_n}
   find sites/${arg_n}/ -not -path '*/\.git*' -type f -readable -exec sed -i "s/bunait/${arg_n}/gI" {} \;
 
+  info "Adding site config file sites/conf/${arg_n}.conf"
+  declare -A site='( ["loc"]="sites/${arg_n}" ["remote"]="ADD-REMOTE" )'
+  declare -p site > sites/conf/${arg_n}.conf
+
   (
     # Sub shell because of the cd
     info "Init git repository..."
@@ -521,7 +525,7 @@ function new_site() {
     git branch production
   )
 
-  notice "$(echo -e "Please add a git remote and\n'git push -u origin -all'\nbefore before starting work on ${arg_n}.")"
+  notice "$(echo -e "Please add a git remote and\n'git push -u origin -all'\nAlso edit sites/conf/${arg_n}.conf to add the remote\nbefore before starting work on ${arg_n}.")"
 }
 
 # Find sites and put info into conf for use in later commands
