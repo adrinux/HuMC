@@ -557,3 +557,6 @@ fi
 if [[ "${arg_c}" -eq 1 ]]; then
   node_cleanup
 fi
+
+
+# Update conf and sites folders
