@@ -508,6 +508,7 @@ function update_conf() {
       notice "sites/conf repository is up to date."
     elif [ $REMOTE = $BASE ]; then
       warning "You need to push you local changes to sites/conf. Stopping."
+      # Automate the push - check for changes and commit.
       return
     elif [ $LOCAL = $BASE ]; then
       notice "Pulling changes to sites/conf repository."
