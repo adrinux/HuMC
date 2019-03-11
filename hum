@@ -134,14 +134,15 @@ function help () {
 
 # shellcheck disable=SC2015
 [[ "${__usage+x}" ]] || read -r -d '' __usage <<-'EOF' || true # exits non-zero when EOF encountered
-  -f --file     [arg] Name of config file.
-  -v                  Enable verbose mode, print script as it is executed
-  -d --debug          Enables debug mode
-  -h --help           This page
-  -w --no-color       Disable color output
-  -n --new-site [arg] Create a new site with name.
-  -s --setup          Check for dependencies and setup
-  -c --node-cleanup   Remove and reinstall node_modules
+  -f  --file     [arg] Name of config file.
+  -v                   Enable verbose mode, print script as it is executed
+  -d  --debug          Enables debug mode
+  -h  --help           This page
+  -w  --no-color       Disable color output
+  -n  --new-site [arg] Create a new site with name.
+  -s  --setup          Check for dependencies and setup
+  -c  --node-cleanup   Remove and reinstall node_modules
+  -uc --update-conf    Fetch changes to sites/conf repository
 EOF
 
 # shellcheck disable=SC2015
@@ -492,6 +493,35 @@ function check_conf() {
   fi
 }
 
+function update_conf() {
+  # cd into sites/conf and git pull if changes available
+  if [[ -d "sites/conf/.git" ]]; then
+    info "Examining changes to sites/conf repository."
+    cd sites/conf
+    # Update all remotes
+    git remote update
+    # Check repo status
+    LOCAL=$(git rev-parse @)
+    REMOTE=$(git rev-parse --abbrev-ref @{u})
+    BASE=$(git merge-base @ @{u})
+    if [ $LOCAL = $REMOTE ]; then
+      notice "sites/conf repository is up to date."
+    elif [ $REMOTE = $BASE ]; then
+      warning "You need to push you local changes to sites/conf. Stopping."
+      return
+    elif [ $LOCAL = $BASE ]; then
+      notice "Pulling changes to sites/conf repository."
+      # safe pull? ff only?
+    else
+      alert "Remote and local copies of sites/conf have divereged! Stopping."
+      return
+    fi
+
+  else
+    notice "You don't appear to have a git repository in sites/conf. Run 'hum -s' to rerun setup."
+  fi
+}
+
 
 function new_site() {
   info "Adding new site in sites/${arg_n} ..."
@@ -528,10 +558,6 @@ function new_site() {
   notice "$(echo -e "Please add a git remote and\n'git push -u origin -all'\nAlso edit sites/conf/${arg_n}.conf to add the remote\nbefore before starting work on ${arg_n}.")"
 }
 
-# Find sites and put info into conf for use in later commands
-# Pull in changes in all sites
-
-
 # Create new site with name
 # 'hum -n SITENAME'
 if [[ -n "${arg_n}" ]]; then
@@ -559,4 +585,20 @@ if [[ "${arg_c}" -eq 1 ]]; then
 fi
 
 
-# Update conf and sites folders
+# Update sites/conf working copy
+if [[ "${arg_uc}" -eq 1 ]]; then
+  update_conf
+fi
+
+
+
+# Update sites/sitename working copies
+# for each site.conf file in sites/conf
+  # read conf file
+  # if loc not present
+    # git clone from remote
+  # else
+    # check for updates
+    # if update available git fetch (need all branches)
+    # find current branch and merge (but stash and pop if local changes?)
+     ## What about other branches?
