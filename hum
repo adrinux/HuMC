@@ -142,7 +142,7 @@ function help () {
   -n  --new-site [arg] Create a new site with name.
   -s  --setup          Check for dependencies and setup
   -c  --node-cleanup   Remove and reinstall node_modules
-  -uc --update-conf    Fetch changes to sites/conf repository
+  -u  --update-conf    Fetch changes to sites/conf repository
 EOF
 
 # shellcheck disable=SC2015
@@ -511,7 +511,8 @@ function update_conf() {
       return
     elif [ $LOCAL = $BASE ]; then
       notice "Pulling changes to sites/conf repository."
-      # safe pull? ff only?
+      # safe pull ff only?
+      git pull
     else
       alert "Remote and local copies of sites/conf have divereged! Stopping."
       return
@@ -586,7 +587,7 @@ fi
 
 
 # Update sites/conf working copy
-if [[ "${arg_uc}" -eq 1 ]]; then
+if [[ "${arg_u}" -eq 1 ]]; then
   update_conf
 fi
 
