@@ -472,12 +472,10 @@ function check_conf() {
     mkdir sites/conf
   fi
 
-  # create conf file if not found
-  if [[ -f "sites/conf/sites.conf" ]]; then
-    info "sites.conf found."
-  else
-    info "Creating sites configuration file"
-    echo -e '# hum sites conf file\n# One conf file per site added by new-site task' > sites/conf/sites.conf
+  # create README file if not found
+  if [[ ! -f "sites/conf/README" ]]; then
+    info "Creating sites README file"
+    echo -e '# One conf file per site is added by --new-site task\n# Push to a remote to sync sites/ between devices and users' > sites/conf/README
   fi
 
   # Check if a git repo exists in sites/conf
@@ -489,7 +487,7 @@ function check_conf() {
     cd sites/conf && git init
     info "Adding and committing config files to repository..."
     git add .
-    git commit --quiet -m"Initial Commit of HuMC sites configuration"
+    git commit --quiet -m"Initial Commit of HuMC sites conf directory"
 
     notice "Please add a git remote and git push\n to save your config"
   fi
@@ -588,18 +586,22 @@ function pull_sites() {
   for file in ${siteconf}
   do
     source $file
+
+    if [[ -d "${site[loc]}" ]]; then
+      info "${site[loc]} exists, pulling changes"
+      # TODO
+      # check for updates
+      # if update available git fetch (need all branches)
+      # find current branch and merge (but stash and pop if local changes?)
+      ## What about other branches?
+    else
+      info "Cloning new site ${site[loc]}"
+      git clone ${site[remote]} ${site[loc]}
+    fi
+
+
     echo "loc  : ${site[loc]}"
     echo "remote: ${site[remote]}"
-    echo "-----"
-
-      # if $loc doesn't exist
-        # get remote
-        # git clone from remote
-      # else
-        # check for updates
-        # if update available git fetch (need all branches)
-        # find current branch and merge (but stash and pop if local changes?)
-        ## What about other branches?
   done
 }
 
