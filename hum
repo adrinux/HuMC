@@ -547,6 +547,23 @@ function new_site() {
 
   (
     # Sub shell because of the cd
+    cd sites/conf
+    info "Adding and committing site config file..."
+    git add .
+    git commit --quiet -m"Added new site config file ${arg_n}.conf"
+
+    # TODO Check if remote actually exists before push?
+    # git diff --quiet @{u} @  <- errors if remote doesn't exist
+    if [[ -d ".git/refs/remotes" ]]; then
+      info "Attempting to push new config to remote..."
+      git push
+    else
+      warning "No remotes are defined for the conf repository. Not pushing."
+    fi 
+  )
+
+  (
+    # Sub shell because of the cd
     info "Init git repository..."
     cd sites/${arg_n} && git init
 
