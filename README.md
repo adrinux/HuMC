@@ -34,6 +34,9 @@ You'll also need nodejs installed for some asset processing.
 
 The setup task will check if these are installed, with the exception of gnu-sed.
 
+## Note
+ _Commands documented below always use the short cli flag. If you wish to learn the long option name run:_ './hum -h'.
+
 
 ## Install & setup
 
@@ -55,6 +58,17 @@ hugo serve
 
 And visit http://localhost:1313 to check everything is working.
 Use 'ctrl-c' to quit server.
+
+## Init configuration or clone existing
+
+Hum uses the sites/conf directory to store configuration files for each site. Hum will create this path and init a git repository when --create-conf is run.
+
+```bash
+./hum -c
+```
+_However_ if you use multiple devices or collaborate with other site developers you'll need portable configuration of the sites HuMC manages. On the first HuMC instance add a remote to the git repository in sites/conf and push.
+
+On further installations of HuMC you wich to keep in sync you should clone this conf repository instead of running './hum -c'.
 
 
 ## Start a new site
@@ -93,6 +107,8 @@ Then visit localhost:1313 in your browser as normal for Hugo.
 
 
 ## Workflow
+
+### Keeping synced instances up to date
 
 ### Development
 
