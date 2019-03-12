@@ -139,7 +139,8 @@ function help () {
   -d  --debug          Enables debug mode
   -h  --help           This page
   -w  --no-color       Disable color output
-  -n  --new-site [arg] Create a new site with name.
+  -n  --new-site [arg] Create a new site with name
+  -p  --pull-sites     Pull changes to sites in sites/
   -s  --setup          Check for dependencies and setup
   -j  --node-cleanup   Remove and reinstall node_modules
   -c  --create-conf    Create sites/conf and init a git repository
@@ -579,6 +580,33 @@ function new_site() {
   notice "$(echo -e "Please add a git remote and\n'git push -u origin -all'\nAlso edit sites/conf/${arg_n}.conf to add the remote\nbefore before starting work on ${arg_n}.")"
 }
 
+
+function pull_sites() {
+  # use 'command subsitution' to store results as a variable
+  siteconf=$(find "sites/conf" -type f -name "*.conf")
+
+  for file in ${siteconf}
+  do
+    source $file
+    echo "loc  : ${site[loc]}"
+    echo "remote: ${site[remote]}"
+    echo "-----"
+
+      # if $loc doesn't exist
+        # get remote
+        # git clone from remote
+      # else
+        # check for updates
+        # if update available git fetch (need all branches)
+        # find current branch and merge (but stash and pop if local changes?)
+        ## What about other branches?
+  done
+}
+
+
+#########
+# Hum logic (calls to functions)
+
 # Create new site with name
 # 'hum -n SITENAME'
 if [[ -n "${arg_n}" ]]; then
@@ -615,15 +643,8 @@ if [[ "${arg_u}" -eq 1 ]]; then
   update_conf
 fi
 
-
-
+# Checkout new sites to site/sitename
 # Update sites/sitename working copies
-# for each site.conf file in sites/conf
-  # read conf file
-  # if loc not present
-    # git clone from remote
-  # else
-    # check for updates
-    # if update available git fetch (need all branches)
-    # find current branch and merge (but stash and pop if local changes?)
-     ## What about other branches?
+if [[ "${arg_p}" -eq 1 ]]; then
+  pull_sites
+fi
