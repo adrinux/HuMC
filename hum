@@ -141,7 +141,8 @@ function help () {
   -w  --no-color       Disable color output
   -n  --new-site [arg] Create a new site with name.
   -s  --setup          Check for dependencies and setup
-  -c  --node-cleanup   Remove and reinstall node_modules
+  -j  --node-cleanup   Remove and reinstall node_modules
+  -c  --create-conf    Create sites/conf and init a git repository
   -u  --update-conf    Fetch changes to sites/conf repository
 EOF
 
@@ -501,6 +502,7 @@ function update_conf() {
     # Update all remotes
     git remote update
     # Check repo status
+    # @ is short for HEAD, @{u} is short for the upstream branch tracking current local branch
     LOCAL=$(git rev-parse @)
     REMOTE=$(git rev-parse --abbrev-ref @{u})
     BASE=$(git merge-base @ @{u})
@@ -577,15 +579,19 @@ if [[ "${arg_s}" -eq 1 ]]; then
   check_node
   check_nodemod
   check_theme_nodemod
-  check_conf
 fi
 
 # Remove and reinstall node_modules
-# 'hum -c'
-if [[ "${arg_c}" -eq 1 ]]; then
+# 'hum -j'
+if [[ "${arg_j}" -eq 1 ]]; then
   node_cleanup
 fi
 
+# Create sites/conf directory and repo
+# 'hum -c'
+if [[ "${arg_c}" -eq 1 ]]; then
+  check_conf
+fi
 
 # Update sites/conf working copy
 if [[ "${arg_u}" -eq 1 ]]; then
