@@ -558,7 +558,7 @@ function new_site() {
       git push
     else
       warning "No remotes are defined for the conf repository. Not pushing."
-    fi 
+    fi
   )
 
   (
@@ -588,12 +588,45 @@ function pull_sites() {
     source $file
 
     if [[ -d "${site[loc]}" ]]; then
-      info "${site[loc]} exists, pulling changes"
+      info "Checking status of ${site[loc]}"
+      (
+        cd "${site[loc]}"
+        git fetch
+
+        # check for unstaged changes
+        if ! git diff-files --quiet --ignore-submodules --
+        then
+          info "Unstaged changes found, resolve manually then run 'hum -p' again."
+        # check for uncommitted changes
+        elif ! git diff-index --cached --quiet @ --ignore-submodules --
+        then
+          info "Uncommitted changes found, resolve manually then run 'hum -p' again."
+
+        # check for unpushed commits
+        elif [ -n git log @{u}.. ]
+        then
+          info "Unpushed commits found, resolve manually then run 'hum -p' again."
+
+        # result of previous command is stored in $?
+        elif [ $? -eq 0 ]
+        then
+          # check for changes which at this point should be in remote repo
+          # --count would include local commits but we stop above if those exist
+          changes=$(git rev-list @...@{u} --count)
+          if [ ${changes} -gt 0 ]
+          then
+            info "${changes} remote changes found, pulling..."
+            git pull
+          fi
+
+        else
+          info "No changes found, ${site[loc]} is up to date."
+        fi
+      )
       # TODO
-      # check for updates
-      # if update available git fetch (need all branches)
-      # find current branch and merge (but stash and pop if local changes?)
-      ## What about other branches?
+      # What about other branches?
+      # Need master/staging/production all to be checked and updated
+
     else
       info "Cloning new site ${site[loc]}"
       git clone ${site[remote]} ${site[loc]}
