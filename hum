@@ -603,7 +603,7 @@ function pull_sites() {
           info "Uncommitted changes found, resolve manually then run 'hum -p' again."
 
         # check for unpushed commits
-        elif [ -n git log @{u}.. ]
+        elif [ -n "$(git log @{u}.. --ignore-submodules)" ]
         then
           info "Unpushed commits found, resolve manually then run 'hum -p' again."
 
