@@ -85,10 +85,10 @@ Or using the short cli flag:
 ./hum -n awesome
 ```
 
-This will create a new site at 'sites/awesome' with a custom theme 'sites/awesome/theme/awesome' ready to go. It will also have run 'git init', 'git add .' and 'git commit'.
+This will create a new site at 'sites/awesome' with a custom theme 'sites/awesome/theme/awesome' ready to go. It will also have run 'git init', 'git add .', 'git commit' and created staging plus production branches.
 
 (Optional, but wise) Next add a git remote and push the starter code before you begin work. (An automated git deploy setup might make this redundant in future.)
-You can use the '--all' flag to push all branches at once:
+Use the '--all' flag to push all branches at once:
 
 ```bash
 cd sites/awesome
