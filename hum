@@ -608,7 +608,7 @@ function pull_sites() {
           info "Unpushed commits found, resolve manually then run 'hum -p' again."
 
         # result of previous command is stored in $?
-        elif [ $? -eq 0 ]
+        elif [ "$(git rev-list @...@{u} --count)" -gt 0 ]
         then
           # check for changes which at this point should be in remote repo
           # --count would include local commits but we stop above if those exist
