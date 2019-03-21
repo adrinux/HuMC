@@ -6,10 +6,6 @@
   "directories": {
     "doc": "doc"
   },
-  "dependencies": {
-    "npm-check-updates": "^2.15.0",
-    "palx": "^1.0.3"
-  },
   "devDependencies": {
     "autoprefixer": "^9.4.2",
     "eslint": "^5.10.0",
