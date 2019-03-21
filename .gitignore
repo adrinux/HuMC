@@ -6,8 +6,6 @@ sites/
 !sites/.gitkeep
 sites/conf/
 
-# node folder and symlinks to it
-node_modules
 
 # OSX
 .DS_Store
