@@ -425,27 +425,14 @@ function check_node() {
   fi
 }
 
-function check_nodemod() {
-  # Check if node_modules exists
-  if [[ -d "node_modules" ]]; then
-    info "Top level node_modules found."
-  else
-    info "Running npm install to fetch node_modules"
-    npm install
-  fi
-}
-
 function check_theme_nodemod() {
-    # Check if theme/node_modules is symlinked to humc/node_modules
+    # Check if theme/node_modules exists, run install if not
   if [[ -L "starters/five-page/themes/bunait/node_modules" ]]; then
-    info "Theme level node_modules link found."
+    info "Bunait theme node_modules found."
   else
-    info "Symlinking main node_modules inside bunait theme and running npm install"
-    (
-      cd starters/five-page/themes/bunait
-      ln -s ../../../../node_modules node_modules
-      npm install
-    )
+    info "Running npm install to fetch node_modules..."
+    cd starters/five-page/themes/bunait
+    npm install
   fi
 }
 
@@ -453,13 +440,11 @@ function node_cleanup() {
   # Remove node modules ready for reinstallation
   if [[ -d "node_modules" ]]; then
     info "Removing node_modules."
-    rm -rf node_modules
-    check_nodemod
+    rm -rf starters/five-page/themes/bunait/node_modules
     check_theme_nodemod
-    cd starters/five-page/themes/bunait
-    npm install
   else
-    info "node_modules not found. Run 'hum -s'"
+    info "node_modules not found."
+    check_theme_nodemod
   fi
 }
 
@@ -654,7 +639,6 @@ fi
 # Check hum setup  'hum -s'
 if [[ "${arg_s}" -eq 1 ]]; then
   check_hugo
-  check_node
   check_nodemod
   check_theme_nodemod
 fi
