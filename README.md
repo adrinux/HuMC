@@ -30,7 +30,13 @@ sudo mv hugo-update /usr/local/bin
 sudo hugo-update
 ```
 
-You'll also need nodejs installed for some asset processing.
+You'll need nodejs installed for some asset processing.
+
+PostCSS is used to process CSS. Install postcss-cli globally, it is not listed as a dev dependency in package.json of the Bunait starter theme.
+
+```bash
+npm i -g postcss-cli
+```
 
 The setup task will check if these are installed, with the exception of gnu-sed.
 
