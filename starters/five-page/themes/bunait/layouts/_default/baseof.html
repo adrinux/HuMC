@@ -1,19 +1,22 @@
 <!doctype html>
-<html class="no-js" lang="{{ .Site.LanguageCode}}">
+<html class="no-js" lang="{{ .Site.LanguageCode }}">
+
 <head>
   {{- partial "head-meta.html" . -}}
 </head>
+
 <body>
   <div class="container">
-  {{- partial "browserupgrade.html" . -}}
+    {{- partial "browserupgrade.html" . -}}
 
-  {{- partial "header.html" . -}}
+    {{- partial "header.html" . -}}
 
-  {{- block "main" . }}{{- end }}
+    {{- block "main" . }}{{- end }}
 
-  {{- partial "footer.html" . -}}
+    {{- partial "footer.html" . -}}
   </div>
-  
+
   {{- partial "footer-scripts.html" . -}}
 </body>
+
 </html>
