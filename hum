@@ -520,6 +520,9 @@ function new_site() {
   # -v is verbose
   cp -rn starters/five-page sites/${arg_n}
 
+  info "Change sitename from bunait to ${arg_n}..."
+  find sites/${arg_n}/config/_default -name 'config.toml' -exec sed -i "s/title = \"bunait\"/title = \"${arg_n}\"/gI" {} \;
+
   info "Adding site config file sites/conf/${arg_n}.conf"
   declare -A site='( ["loc"]="sites/${arg_n}" ["remote"]="ADD-REMOTE" )'
   declare -p site > sites/conf/${arg_n}.conf
