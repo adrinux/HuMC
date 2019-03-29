@@ -520,11 +520,6 @@ function new_site() {
   # -v is verbose
   cp -rn starters/five-page sites/${arg_n}
 
-  info "Adding custom theme ${arg_n} ..."
-  # Rename bunait to new site name
-  mv -n sites/${arg_n}/themes/bunait sites/${arg_n}/themes/${arg_n}
-  find sites/${arg_n}/ -not -path '*/\.git*' -type f -readable -exec sed -i "s/bunait/${arg_n}/gI" {} \;
-
   info "Adding site config file sites/conf/${arg_n}.conf"
   declare -A site='( ["loc"]="sites/${arg_n}" ["remote"]="ADD-REMOTE" )'
   declare -p site > sites/conf/${arg_n}.conf
