@@ -15,7 +15,7 @@
 <link rel="stylesheet" href="{{ $postcssed.Permalink }}">
 {{- else -}}
 {{ $postcssed := resources.Get "css/main.css" | postCSS | minify | fingerprint }}
-<link rel="stylesheet" href="{{ $postcssed.Permalink }}">
+<link rel="stylesheet" href="{{ $postcssed.Permalink }}" integrity="{{ $postcssed.Data.Integrity }}" crossorigin="anonymous">
 {{- end -}}
 
 {{- if eq .Type "styleguide" -}}
@@ -24,7 +24,7 @@
 <link rel="stylesheet" href="{{ $guidecss.Permalink }}">
 {{- else -}}
 {{ $guidecss := resources.Get "css/styleguide.css" | postCSS | minify | fingerprint }}
-<link rel="stylesheet" href="{{ $guidecss.Permalink }}">
+<link rel="stylesheet" href="{{ $guidecss.Permalink }}" integrity="{{ $guidecss.Data.Integrity }}" crossorigin="anonymous">
 {{- end -}}
 {{- end -}}
 

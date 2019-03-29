@@ -3,4 +3,4 @@
 {{ $customModernizr := resources.Get "js/modernizr.custom.js" | fingerprint }}
 <script src="{{ $customModernizr.Permalink }}"></script>
 {{ $customJs := resources.Get "js/main.js" | minify | fingerprint }}
-<script src="{{ $customJs.Permalink }}"></script>
+<script src="{{ $customJs.Permalink }}"  integrity="{{ $customJs.Data.Integrity }}" crossorigin="anonymous"></script>
