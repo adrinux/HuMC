@@ -562,6 +562,39 @@ function new_site() {
 }
 
 
+# function remove_site() {
+#   # Check if given sitename has matching sites/conf/sitename.conf
+#   config="sites/conf/${arg_n}.conf"
+
+#   if [[ -f "${config}" ]]; then
+#     source ${config}
+#     # Remove site[loc]
+#     # Remove site conf
+#   else
+#     warn "Specified site ${arg_n} doesn't seem to exist."
+#   fi
+#   #siteconf=$(find "sites/conf" -type f -name "*.conf")
+#   #sites/conf/${arg_n}.conf
+#   #sites/${arg_n}
+
+#   # for file in ${siteconf}
+#   # do
+#   #   if [[ -d "${site[loc]}" ]]; then
+#   #     mv sits/"${site[loc]}" .Trash
+#   # done
+# }
+
+
+# function list_sites() {
+#   # loop over sites/conf and list site names
+# }
+
+# function clean_sites() {
+#   # Check if site/sitename has matching sites/conf/sitename.conf
+#   # Remove site if no match
+# }
+
+
 function pull_sites() {
   # use 'command subsitution' to store results as a variable
   siteconf=$(find "sites/conf" -type f -name "*.conf")
