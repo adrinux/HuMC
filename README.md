@@ -102,6 +102,8 @@ git remote add origin gitea@gitea.example.com:username/awesome.git
 git push -u origin --all
 ```
 
+It's a good idea to set the baseURL for the staging and production sites at this point if you know  what they'll be. For our example site 'awesome' edit 'sites/awesome/themes/bunait/config/staging/config.toml' and 'sites/awesome/themes/bunait/config/production/config.toml'.
+
 To view your new site and begin work change directory and launch Hugo's built in server:
 
 ```bash
