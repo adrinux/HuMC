@@ -573,24 +573,22 @@ function archive_site() {
   if [[ -f "${config}" ]]; then
     source ${config}
     info "Archiving site ${arg_a} and conf file..."
-    tar cjf zipped-sites/"${arg_a}"-"${date}".tar.bz --exclude="${site[loc]}"/themes/bunait/node_modules "${site[loc]}" sites/conf/"${arg_a}".conf 
-
-    notice "Removing site ${arg_a}. (Not implemented)"
-    # Remove site[loc] eg sites/sitename
-    notice "Removing site ${arg_a}.conf (Not implemented)"
-  # Remove sites/conf/sitename.conf
+    if tar cjf zipped-sites/"${arg_a}"-"${date}".tar.bz --exclude="${site[loc]}"/themes/bunait/node_modules "${site[loc]}" sites/conf/"${arg_a}".conf ; then
+      notice "Removing site ${arg_a}."
+      rm -rf "${site[loc]}"
+      notice "Removing ${arg_a}.conf"
+      rm -rf "${config}"
+      info "Updating conf repository"
+      (
+        cd sites/conf
+        git commit --quiet -m"Removing archived configuration for ${arg_a}" ${arg_a}.conf
+        git push
+      )
+    fi
   else
     warning "Specified site ${arg_a} doesn't seem to exist. ${arg_a}.conf missing. Aborting."
     return
   fi
-
-  # for file in ${siteconf}
-  # do
-  #   if [[ -d "${site[loc]}" ]]; then
-  #     mv sits/"${site[loc]}" .Trash
-  # done
-
-  # commit changed conf to git
 }
 
 
