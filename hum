@@ -146,13 +146,12 @@ function help () {
   -c  --create-conf    Create sites/conf and init a git repository
   -u  --update-conf    Fetch changes to sites/conf repository
   -a  --archive  [arg] Archive site to zipped-sites
+  -l  --list-sites     List of sites
 EOF
 
 # shellcheck disable=SC2015
 [[ "${__helptext+x}" ]] || read -r -d '' __helptext <<-'EOF' || true # exits non-zero when EOF encountered
- This is hum's help text. Feel free to add any description of your
- program or elaborate more on command-line arguments. This section is not
- parsed and will be added as-is to the help.
+ This is hum's help text.
 EOF
 
 # Translate usage string -> getopts arguments, and set $arg_<flag> defaults
@@ -563,6 +562,26 @@ function new_site() {
   notice "$(echo -e "Please add a git remote and\n'git push -u origin -all'\nAlso edit sites/conf/${arg_n}.conf to add the remote\nbefore before starting work on ${arg_n}.")"
 }
 
+function list_sites() {
+  # loop over sites/conf and list site names
+  siteconf=$(find "sites/conf" -type f -name "*.conf")
+
+  echo "Available sites"
+  echo "---------------"
+
+  for file in ${siteconf}
+  do
+    source $file
+    
+    if [[ -d "${site[loc]}" ]]; then
+      filepath="${site[loc]}"
+      echo $(basename "${filepath%.conf}")
+    else
+      warning "${file} exists but ${site[loc]} does not. Run 'hum -p' to clone site."
+    fi
+  done
+  echo "---------------"
+}
 
 function archive_site() {
   # Compress sites/sitename and sites/conf/sitename.conf into
@@ -591,15 +610,10 @@ function archive_site() {
   fi
 }
 
-
-# function list_sites() {
-#   # loop over sites/conf and list site names
-   #siteconf=$(find "sites/conf" -type f -name "*.conf")
-# }
-
 # function clean_sites() {
 #   # Check if site/sitename has matching sites/conf/sitename.conf
-
+    # to keep seperate instances in sync
+    # if conf absent, archive site files
 # }
 
 
@@ -703,6 +717,11 @@ fi
 # Update sites/sitename working copies
 if [[ "${arg_p}" -eq 1 ]]; then
   pull_sites
+fi
+
+# List sites
+if [[ "${arg_l}" -eq 1 ]]; then
+  list_sites
 fi
 
 # Archive a site
