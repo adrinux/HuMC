@@ -145,6 +145,7 @@ function help () {
   -j  --node-cleanup   Remove and reinstall node_modules
   -c  --create-conf    Create sites/conf and init a git repository
   -u  --update-conf    Fetch changes to sites/conf repository
+  -a  --archive  [arg] Archive site to zipped-sites
 EOF
 
 # shellcheck disable=SC2015
@@ -385,6 +386,7 @@ fi
 # info "arg_n is: ${arg_n}"
 # info "arg_s is: ${arg_s}"
 # info "arg_c is: ${arg_c}"
+#info "arg_a is: ${arg_a}"
 
 
 # info "$(echo -e "multiple lines example - line #1\nmultiple lines example - line #2\nimagine logging the output of 'ls -al /path/'")"
@@ -562,36 +564,44 @@ function new_site() {
 }
 
 
-# function remove_site() {
-#   # Check if given sitename has matching sites/conf/sitename.conf
-#   config="sites/conf/${arg_n}.conf"
+function archive_site() {
+  # Compress sites/sitename and sites/conf/sitename.conf into
+  # zipped-sites/sitename.tgz
+  config="sites/conf/${arg_a}.conf"
+  date=$(date +%d-%m-%Y)
 
-#   if [[ -f "${config}" ]]; then
-#     source ${config}
-#     # Remove site[loc]
-#     # Remove site conf
-#   else
-#     warn "Specified site ${arg_n} doesn't seem to exist."
-#   fi
-#   #siteconf=$(find "sites/conf" -type f -name "*.conf")
-#   #sites/conf/${arg_n}.conf
-#   #sites/${arg_n}
+  if [[ -f "${config}" ]]; then
+    source ${config}
+    info "Archiving site ${arg_a} and conf file..."
+    tar cjf zipped-sites/"${arg_a}"-"${date}".tar.bz --exclude="${site[loc]}"/themes/bunait/node_modules "${site[loc]}" sites/conf/"${arg_a}".conf 
 
-#   # for file in ${siteconf}
-#   # do
-#   #   if [[ -d "${site[loc]}" ]]; then
-#   #     mv sits/"${site[loc]}" .Trash
-#   # done
-# }
+    notice "Removing site ${arg_a}. (Not implemented)"
+    # Remove site[loc] eg sites/sitename
+    notice "Removing site ${arg_a}.conf (Not implemented)"
+  # Remove sites/conf/sitename.conf
+  else
+    warning "Specified site ${arg_a} doesn't seem to exist. ${arg_a}.conf missing. Aborting."
+    return
+  fi
+
+  # for file in ${siteconf}
+  # do
+  #   if [[ -d "${site[loc]}" ]]; then
+  #     mv sits/"${site[loc]}" .Trash
+  # done
+
+  # commit changed conf to git
+}
 
 
 # function list_sites() {
 #   # loop over sites/conf and list site names
+   #siteconf=$(find "sites/conf" -type f -name "*.conf")
 # }
 
 # function clean_sites() {
 #   # Check if site/sitename has matching sites/conf/sitename.conf
-#   # Remove site if no match
+
 # }
 
 
@@ -695,4 +705,9 @@ fi
 # Update sites/sitename working copies
 if [[ "${arg_p}" -eq 1 ]]; then
   pull_sites
+fi
+
+# Archive a site
+if [[ -n "${arg_a}" ]]; then
+  archive_site
 fi
