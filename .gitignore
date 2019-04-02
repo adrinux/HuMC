@@ -6,6 +6,8 @@ sites/
 !sites/.gitkeep
 sites/conf/
 
+zipped-sites/
+!zipped-sites/.gitkeep
 
 # OSX
 .DS_Store
