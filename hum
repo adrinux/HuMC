@@ -147,6 +147,7 @@ function help () {
   -u  --update-conf    Fetch changes to sites/conf repository
   -a  --archive  [arg] Archive site to zipped-sites
   -l  --list-sites     List of sites
+  -k  --clean-sites    Archive any site in sites/ without .conf
 EOF
 
 # shellcheck disable=SC2015
@@ -610,11 +611,14 @@ function archive_site() {
   fi
 }
 
-# function clean_sites() {
-#   # Check if site/sitename has matching sites/conf/sitename.conf
-    # to keep seperate instances in sync
-    # if conf absent, archive site files
-# }
+function clean_sites() {
+  # Get a list of site folders (exclude conf)
+  sites=$(find "sites/" -maxdepth 1 -mindepth 1 -not -name conf -type d -exec basename {} \;)
+  echo ${sites}
+  # Check if site/sitename has matching sites/conf/sitename.conf
+  # to keep seperate instances in sync
+  # if conf absent, archive site files
+}
 
 
 function pull_sites() {
@@ -722,6 +726,11 @@ fi
 # List sites
 if [[ "${arg_l}" -eq 1 ]]; then
   list_sites
+fi
+
+# Clean sites/
+if [[ "${arg_k}" -eq 1 ]]; then
+  clean_sites
 fi
 
 # Archive a site
