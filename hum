@@ -402,6 +402,11 @@ fi
 # emergency "A \"panic\" condition usually affecting multiple apps/servers/sites. At this level it would usually notify all tech staff on call."
 
 
+### Hum Global variables
+################################
+DATE=$(date +%d-%m-%Y)
+
+
 ### Hum Functions
 ################################
 
@@ -588,12 +593,11 @@ function archive_site() {
   # Compress sites/sitename and sites/conf/sitename.conf into
   # zipped-sites/sitename.tgz
   config="sites/conf/${arg_a}.conf"
-  date=$(date +%d-%m-%Y)
 
   if [[ -f "${config}" ]]; then
     source ${config}
     info "Archiving site ${arg_a} and conf file..."
-    if tar cjf zipped-sites/"${arg_a}"-"${date}".tar.bz --exclude="${site[loc]}"/themes/bunait/node_modules "${site[loc]}" sites/conf/"${arg_a}".conf ; then
+    if tar cjf zipped-sites/"${arg_a}"-"${DATE}".tar.bz --exclude="${site[loc]}"/themes/bunait/node_modules "${site[loc]}" sites/conf/"${arg_a}".conf ; then
       notice "Removing site ${arg_a}."
       rm -rf "${site[loc]}"
       notice "Removing ${arg_a}.conf"
@@ -614,10 +618,22 @@ function archive_site() {
 function clean_sites() {
   # Get a list of site folders (exclude conf)
   sites=$(find "sites/" -maxdepth 1 -mindepth 1 -not -name conf -type d -exec basename {} \;)
-  echo ${sites}
-  # Check if site/sitename has matching sites/conf/sitename.conf
-  # to keep seperate instances in sync
-  # if conf absent, archive site files
+  # et list of sitename.conf files but strip .conf extension
+  sitesconf=$(find "sites/conf" -type f -name "*.conf" -exec basename {} .conf \;)
+
+  # Filter site folders without matching sitename.conf
+  # See https://unix.stackexchange.com/a/293254/310450
+  missing_conf=$(echo ${sites[@]} ${sitesconf[@]} | sed 's/ /\n/g' | sort | uniq -d | xargs echo ${sites[@]} | sed 's/ /\n/g' | sort | uniq -u)
+  
+  for i in ${missing_conf};
+    do
+      info "Found site folder ${i} but no ${i}.conf file"
+      info "Assuming removed and archiving site to zipped-sites..."
+      if tar cjf zipped-sites/"${i}"-noconf-"${DATE}".tar.bz  sites/"${i}" ; then
+        warning "Removing site ${i}..."
+        rm -rf sites/"${i}"
+      fi
+    done
 }
 
 
