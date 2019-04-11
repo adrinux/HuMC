@@ -143,7 +143,6 @@ function help () {
   -p  --pull-sites     Pull changes to sites in sites/
   -j  --node-sync      Sync node_modules in themes
   -s  --setup          Check for dependencies and setup
-  -e  --node-cleanup   Remove and reinstall node_modules
   -c  --create-conf    Create sites/conf and init a git repository
   -u  --update-conf    Fetch changes to sites/conf repository
   -a  --archive  [arg] Archive site to zipped-sites
@@ -444,18 +443,6 @@ function check_theme_nodemod() {
   fi
 }
 
-function node_cleanup() {
-  # 'hum -e' Remove node modules ready for reinstallation
-  if [[ -d "starters/five-page/themes/bunait/node_modules" ]]; then
-    info "Removing node_modules."
-    rm -rf starters/five-page/themes/bunait/node_modules
-    check_theme_nodemod
-  else
-    info "node_modules not found."
-    check_theme_nodemod
-  fi
-}
-
 function check_conf() {
   # create conf folder if not found
   if [[ -d "sites/conf" ]]; then
@@ -733,12 +720,6 @@ if [[ "${arg_s}" -eq 1 ]]; then
   check_hugo
   check_nodemod
   check_theme_nodemod
-fi
-
-# Remove and reinstall node_modules
-# 'hum -e'
-if [[ "${arg_e}" -eq 1 ]]; then
-  node_cleanup
 fi
 
 # Create sites/conf directory and repo
