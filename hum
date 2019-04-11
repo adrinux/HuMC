@@ -141,8 +141,9 @@ function help () {
   -w  --no-color       Disable color output
   -n  --new-site [arg] Create a new site with name
   -p  --pull-sites     Pull changes to sites in sites/
+  -j  --node-sync      Sync node_modules in themes
   -s  --setup          Check for dependencies and setup
-  -j  --node-cleanup   Remove and reinstall node_modules
+  -e  --node-cleanup   Remove and reinstall node_modules
   -c  --create-conf    Create sites/conf and init a git repository
   -u  --update-conf    Fetch changes to sites/conf repository
   -a  --archive  [arg] Archive site to zipped-sites
@@ -433,7 +434,7 @@ function check_node() {
 }
 
 function check_theme_nodemod() {
-    # Check if theme/node_modules exists, run install if not
+  # Check if theme/node_modules exists, run install if not
   if [[ -L "starters/five-page/themes/bunait/node_modules" ]]; then
     info "Bunait theme node_modules found."
   else
@@ -444,8 +445,8 @@ function check_theme_nodemod() {
 }
 
 function node_cleanup() {
-  # Remove node modules ready for reinstallation
-  if [[ -d "node_modules" ]]; then
+  # 'hum -e' Remove node modules ready for reinstallation
+  if [[ -d "starters/five-page/themes/bunait/node_modules" ]]; then
     info "Removing node_modules."
     rm -rf starters/five-page/themes/bunait/node_modules
     check_theme_nodemod
@@ -618,7 +619,7 @@ function archive_site() {
 function clean_sites() {
   # Get a list of site folders (exclude conf)
   sites=$(find "sites/" -maxdepth 1 -mindepth 1 -not -name conf -type d -exec basename {} \;)
-  # et list of sitename.conf files but strip .conf extension
+  # get list of sitename.conf files but strip .conf extension
   sitesconf=$(find "sites/conf" -type f -name "*.conf" -exec basename {} .conf \;)
 
   # Filter site folders without matching sitename.conf
@@ -694,6 +695,24 @@ function pull_sites() {
   done
 }
 
+function node_modules_sync() {
+  # 'hum -j' Run 'npm install' inside themes
+  # find package.json in theme folders, limit depth to avoid node modules own package.jsons
+  themes_with_node=$(find 'sites/' 'starters' -mindepth 1 -maxdepth 4 -not -path '*/\.git*' -type f -readable -name "package.json" -exec dirname {} \; | sort -u)
+
+  # run npm i in those folders
+  for dir in ${themes_with_node}
+  do
+    (
+      info "Syncing node_modules in ${dir}..."
+      cd ${dir}
+      npm install
+      echo "------------------------------------------------------------"
+    )
+  done
+}
+
+
 
 #########
 # Hum logic (calls to functions)
@@ -717,8 +736,8 @@ if [[ "${arg_s}" -eq 1 ]]; then
 fi
 
 # Remove and reinstall node_modules
-# 'hum -j'
-if [[ "${arg_j}" -eq 1 ]]; then
+# 'hum -e'
+if [[ "${arg_e}" -eq 1 ]]; then
   node_cleanup
 fi
 
@@ -737,6 +756,13 @@ fi
 # Update sites/sitename working copies
 if [[ "${arg_p}" -eq 1 ]]; then
   pull_sites
+fi
+
+# Update node_modules in theme folders
+# Intended for use after 'hum -p'
+# 'hum -j'
+if [[ "${arg_j}" -eq 1 ]]; then
+  node_modules_sync
 fi
 
 # List sites
