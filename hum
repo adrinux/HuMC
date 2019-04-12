@@ -553,7 +553,7 @@ function new_site() {
     git branch production
   )
 
-  notice "$(echo -e "Please add a git remote and\n'git push -u origin -all'\nAlso edit sites/conf/${arg_n}.conf to add the remote\nbefore before starting work on ${arg_n}.")"
+  notice "$(echo -e "Please add a git remote and\n'git push -u origin --all'\nAlso edit sites/conf/${arg_n}.conf to add the remote\nbefore before starting work on ${arg_n}.")"
 }
 
 function list_sites() {
@@ -566,7 +566,7 @@ function list_sites() {
   for file in ${siteconf}
   do
     source $file
-    
+
     if [[ -d "${site[loc]}" ]]; then
       filepath="${site[loc]}"
       echo $(basename "${filepath%.conf}")
@@ -612,7 +612,7 @@ function clean_sites() {
   # Filter site folders without matching sitename.conf
   # See https://unix.stackexchange.com/a/293254/310450
   missing_conf=$(echo ${sites[@]} ${sitesconf[@]} | sed 's/ /\n/g' | sort | uniq -d | xargs echo ${sites[@]} | sed 's/ /\n/g' | sort | uniq -u)
-  
+
   for i in ${missing_conf};
     do
       info "Found site folder ${i} but no ${i}.conf file"
