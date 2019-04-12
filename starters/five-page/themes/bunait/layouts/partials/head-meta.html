@@ -1,4 +1,3 @@
-
 <meta charset="utf-8">
 <title>{{ if .Title }}{{ .Title }} - {{ end }}{{ .Site.Title }}</title>
 <meta name="description" content="">
@@ -15,7 +14,8 @@
 <link rel="stylesheet" href="{{ $postcssed.Permalink }}">
 {{- else -}}
 {{ $postcssed := resources.Get "css/main.css" | postCSS | minify | fingerprint }}
-<link rel="stylesheet" href="{{ $postcssed.Permalink }}" integrity="{{ $postcssed.Data.Integrity }}" crossorigin="anonymous">
+<link rel="stylesheet" href="{{ $postcssed.Permalink }}" integrity="{{ $postcssed.Data.Integrity }}"
+  crossorigin="anonymous">
 {{- end -}}
 
 {{- if eq .Type "styleguide" -}}
@@ -24,7 +24,8 @@
 <link rel="stylesheet" href="{{ $guidecss.Permalink }}">
 {{- else -}}
 {{ $guidecss := resources.Get "css/styleguide.css" | postCSS | minify | fingerprint }}
-<link rel="stylesheet" href="{{ $guidecss.Permalink }}" integrity="{{ $guidecss.Data.Integrity }}" crossorigin="anonymous">
+<link rel="stylesheet" href="{{ $guidecss.Permalink }}" integrity="{{ $guidecss.Data.Integrity }}"
+  crossorigin="anonymous">
 {{- end -}}
 {{- end -}}
 
@@ -33,9 +34,9 @@
 
 
 <!-- Hugo-specific bits -->
-{{ if .RSSLink }}
-<link href="{{ .RSSLink }}" rel="alternate" type="application/rss+xml" title="{{ .Site.Title }}" />
-<link href="{{ .RSSLink }}" rel="feed" type="application/rss+xml" title="{{ .Site.Title }}" />
-{{ end }}
+{{ with .OutputFormats.Get "rss" -}}
+{{ printf `<link rel="%s" type="%s" href="%s" title="%s" />` .Rel .MediaType.Type .Permalink $.Site.Title | safeHTML }}
+{{ end -}}
+
 {{ .Hugo.Generator }}
 <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml">
