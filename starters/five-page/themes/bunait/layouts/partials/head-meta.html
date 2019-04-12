@@ -38,5 +38,5 @@
 {{ printf `<link rel="%s" type="%s" href="%s" title="%s" />` .Rel .MediaType.Type .Permalink $.Site.Title | safeHTML }}
 {{ end -}}
 
-{{ .Hugo.Generator }}
+{{ hugo.Generator }}
 <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml">
