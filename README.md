@@ -41,18 +41,23 @@ npm i -g postcss-cli
 The setup task will check if these are installed, with the exception of gnu-sed.
 
 ## Note
- _Commands documented below always use the short cli flag. If you wish to learn the long option name run:_ './hum -h'.
+ _Commands documented below always use the short cli flag. If you wish to learn the long option name run:_ 'hum -h'.
 
 
 ## Install & setup
 
 Clone HuMC from github.
 
+Create a symbolic link into your $PATH for easier use.
+```bash
+sudo ln -s /path/to/HuMC/hum /usr/local/bin/hum
+```
+
 Run setup task.
 
 ```bash
 cd HuMC
-./hum setup
+hum --setup
 ```
 
 Test HuMC.
@@ -70,11 +75,11 @@ Use 'ctrl-c' to quit server.
 Hum uses the sites/conf directory to store configuration files for each site. Hum will create this path and init a git repository when --create-conf is run.
 
 ```bash
-./hum -c
+hum -c
 ```
 _However_ if you use multiple devices or collaborate with other site developers you'll need portable configuration of the sites HuMC manages. On the first HuMC instance add a remote to the git repository in sites/conf and push.
 
-On further installations of HuMC you wich to keep in sync you should clone this conf repository instead of running './hum -c'.
+On further installations of HuMC you wich to keep in sync you should clone this conf repository instead of running 'hum -c'.
 
 
 ## Start a new site
@@ -82,13 +87,13 @@ On further installations of HuMC you wich to keep in sync you should clone this 
 From within the HuMC directory run 'hum --new-site SITENAME' e.g. for a site named 'awesome' do:
 
 ```bash
-./hum --new-site awesome
+hum --new-site awesome
 ```
 
 Or using the short cli flag:
 
 ```bash
-./hum -n awesome
+hum -n awesome
 ```
 
 This will create a new site at 'sites/awesome' with a custom theme 'sites/awesome/theme/awesome' ready to go. It will also have run 'git init', 'git add .', 'git commit' and created staging plus production branches.
