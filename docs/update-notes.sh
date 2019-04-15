@@ -1,8 +1,18 @@
 
 # Handy update snippets
 
+# This is not a shell script! It's a file of shell commands with 
+# an .sh extension for syntax highlighting in your favourite editor 
+
+
 ## hugo 55.1
 
 ### .Hugo to hugo
 # "Page's .Hugo is deprecated and will be removed in a future release. Use the global hugo function"
-find ./ -not -path '*/\.git*' -type f -readable -exec sed -i "s/.Hugo.Generator/hugo.Generator/g" {} \;
+find ./ -not -path '*/\.git*' -type f -readable -exec sed -i "s/hugo.Generator/hugo.Generator/g" {} \;
+
+### .RSSLink is deprecated
+# "Page's .RSSLink is deprecated and will be removed in a future release. Use the Output Format's link, e.g. something like: 
+#   {{ with .OutputFormats.Get "RSS" }}{{ .RelPermalink }}{{ end }}."
+
+awk ‘/start/{f=1;print;while (getline < “update.txt”){print}}/end/{f=0}!f’ filetochange
