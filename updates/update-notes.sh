@@ -9,10 +9,14 @@
 
 ### .Hugo to hugo
 # "Page's .Hugo is deprecated and will be removed in a future release. Use the global hugo function"
+# Run this one liner:
 find ./ -not -path '*/\.git*' -type f -readable -exec sed -i "s/hugo.Generator/hugo.Generator/g" {} \;
+
 
 ### .RSSLink is deprecated
 # "Page's .RSSLink is deprecated and will be removed in a future release. Use the Output Format's link, e.g. something like: 
 #   {{ with .OutputFormats.Get "RSS" }}{{ .RelPermalink }}{{ end }}."
 
-awk ‘/start/{f=1;print;while (getline < “update.txt”){print}}/end/{f=0}!f’ filetochange
+# Assuming the problem site is in sites/
+# In HuMC/sites directory run this script:
+../updates/deprecated-RSSLink.sh
