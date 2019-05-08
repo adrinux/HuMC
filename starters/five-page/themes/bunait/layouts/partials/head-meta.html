@@ -12,10 +12,13 @@
 {{- if .Site.IsServer -}}
 {{ $postcssed := resources.Get "css/main.css" | postCSS }}
 <link rel="stylesheet" href="{{ $postcssed.Permalink }}">
+{{ $postcssed := resources.Get "css/chroma.css" }}
+<link rel="stylesheet" href="{{ $postcssed.Permalink }}">
 {{- else -}}
 {{ $postcssed := resources.Get "css/main.css" | postCSS | minify | fingerprint }}
-<link rel="stylesheet" href="{{ $postcssed.Permalink }}" integrity="{{ $postcssed.Data.Integrity }}"
-  crossorigin="anonymous">
+<link rel="stylesheet" href="{{ $postcssed.Permalink }}" integrity="{{ $postcssed.Data.Integrity }}" crossorigin="anonymous">
+{{ $postcssed := resources.Get "css/chroma.css" | minify | fingerprint }}
+<link rel="stylesheet" href="{{ $postcssed.Permalink }}" integrity="{{ $postcssed.Data.Integrity }}" crossorigin="anonymous">
 {{- end -}}
 
 {{- if eq .Type "styleguide" -}}

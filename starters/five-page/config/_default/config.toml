@@ -11,6 +11,15 @@ theme = "bunait"
 #disableKinds = ['RSS']
 #rssLimit = 6
 
+# Syntax highlighting with Chroma
+# https://gohugo.io/content-management/syntax-highlighting/
+# https://github.com/alecthomas/chroma
+# Dont forget to generate stylesheet on cli
+# hugo gen chromastyles --style=tango > themes/bunait/assets/css/chroma.css 
+pygmentsUseClasses = true
+pygmentsStyle = "tango"
+pygmentsCodefences = true
+
 [permalinks]
   blog = "/blog/:year-:month/:title/"
 
