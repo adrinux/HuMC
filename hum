@@ -718,7 +718,7 @@ fi
 # Check hum setup  'hum -s'
 if [[ "${arg_s}" -eq 1 ]]; then
   check_hugo
-  check_nodemod
+  #check_nodemod
   check_theme_nodemod
 fi
 
