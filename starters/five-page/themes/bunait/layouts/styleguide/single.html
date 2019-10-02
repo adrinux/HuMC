@@ -1,16 +1,18 @@
 {{ define "main" }}
 <main class="main-content" id="maincontent">
-  <h1>{{ .Title }}</h1>
+  <div class="wrapper">
+    <h1>{{ .Title }}</h1>
 
-  {{ if .Params.rendertoc }}
-  {{ .TableOfContents }}
-  {{ end }}
+    {{ if .Params.rendertoc }}
+    {{ .TableOfContents }}
+    {{ end }}
 
-  <article>
-    {{ .Content }}
-  </article>
+    <article>
+      {{ .Content }}
+    </article>
 
-  {{ partial "menu-styleguide.html" . }}
+    {{ partial "menu-styleguide.html" . }}
 
+  </div>
 </main>
 {{ end }}

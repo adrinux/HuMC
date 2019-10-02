@@ -130,6 +130,35 @@ textarea {
 
 }
 
+/* Non-grid Layout */
+
+.wrapper {
+  padding: 0 1rem 1rem;
+}
+
+.wrapper > * + * {
+  margin-top: 1rem;
+}
+
+header .wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.contents {
+  padding: 0;
+  list-style: none;
+}
+
+.contents > * + * {
+  margin-top: 1rem;
+}
+
+footer .wrapper {
+  margin-bottom: 1rem;
+}
 
 /* End Layout */
 
@@ -179,19 +208,16 @@ a:active {
 }
 
 header {
-  padding: 0 1.6em 0.8em;
   background-color: var(--blue9);
   color: var(--blue0);
 }
 
 main {
-  padding: 0 1.6em 0.8em;
   background-color: var(--blue0);
   color: var(--blue9);
 }
 
 footer {
-  padding: 1.6em;
   background-color: var(--blue9);
   color: var(--blue0);
 }

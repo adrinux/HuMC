@@ -1,12 +1,16 @@
 <header>
-  {{ if .IsHome }}<h1>{{ .Site.Title }}</h1>{{ end }}
-  {{ if not .IsHome }}<h2>{{ .Site.Title }}</h2>{{ end }}
-  <p> Header content here. </p>
+  <div class="wrapper">
 
-  <div class="skip-link visuallyhidden">
-    <a href="#maincontent">Skip to main content</a>
+    {{ if .IsHome }}
+    <h1>{{ .Site.Title }}</h1>{{ end }}
+    {{ if not .IsHome }}
+    <h2>{{ .Site.Title }}</h2>{{ end }}
+    <p> Header content here. </p>
+
+    <div class="skip-link visuallyhidden">
+      <a href="#maincontent">Skip to main content</a>
+    </div>
+
+    {{- partial "menu-main.html" . -}}
   </div>
-
-  {{- partial "menu-main.html" . -}}
-
 </header>

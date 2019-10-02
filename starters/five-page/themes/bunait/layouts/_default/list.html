@@ -1,10 +1,12 @@
 {{ define "main" }}
 <main class="main-content" id="maincontent">
-  <h1>{{ .Title }}</h1>
-  <ul>
-    {{ range .Data.Pages }}
-    <li><a href="{{ .Permalink }}">{{ .Title }}</a></li>
-    {{ end }}
-  </ul>
+  <div class="wrapper">
+    <h1>{{ .Title }}</h1>
+    <ul>
+      {{ range .Data.Pages }}
+      <li><a href="{{ .Permalink }}">{{ .Title }}</a></li>
+      {{ end }}
+    </ul>
+  </div>
 </main>
 {{ end }}

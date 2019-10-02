@@ -1,13 +1,15 @@
 {{ define "main" }}
 <main class="main-content" id="maincontent">
-  <h1>{{ .Title }}</h1>
+  <article class="wrapper">
+    <h1>{{ .Title }}</h1>
 
-  {{ if .Params.rendertoc }}
-  {{ .TableOfContents }}
-  {{ end }}
+    {{ if .Params.rendertoc }}
+    {{ .TableOfContents }}
+    {{ end }}
 
-  <article>
-    {{ .Content }}
+    <div class="content">
+      {{ .Content }}
+    </div>
   </article>
 </main>
 {{ end }}

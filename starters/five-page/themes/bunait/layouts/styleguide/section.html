@@ -1,18 +1,20 @@
 {{ define "main" }}
 <main class="main-content" id="maincontent">
-  <h1>{{ .Title }}</h1>
-  {{ .Content }}
-  <ul class="contents">
-    {{ range .Pages.ByWeight }}
-    <li><a href="{{ .Permalink }}">{{ .Title }}</a>
-      <p>{{ .Description }}</p>
-    </li>
-    {{ end }}
-  </ul>
+  <div class="wrapper">
+    <h1>{{ .Title }}</h1>
+    {{ .Content }}
+    <ul class="contents">
+      {{ range .Pages.ByWeight }}
+      <li><a href="{{ .Permalink }}">{{ .Title }}</a>
+        <p>{{ .Description }}</p>
+      </li>
+      {{ end }}
+    </ul>
 
-  <hr>
+    <hr>
 
-  {{- partial "menu-styleguide.html" . -}}
+    {{- partial "menu-styleguide.html" . -}}
 
+  </div>
 </main>
 {{ end }}

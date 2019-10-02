@@ -7,11 +7,10 @@
   </time>
 </div>
 <div class="post-author">{{ .Params.author }}</div>
-{{ if .Params.Summary }}
-{{ .Params.Summary }}
-{{ else }}
+{{ if .Summary }}
 {{ .Summary }}
 {{ end }}
+
 
 {{ if .Truncated }}
 <a href="{{ .Permalink }}">Read more →</a>

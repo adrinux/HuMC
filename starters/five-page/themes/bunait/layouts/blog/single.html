@@ -1,20 +1,24 @@
 {{ define "main" }}
 <main class="main-content" id="maincontent">
-  <h1>{{ .Title }}</h1>
-  <div class="published-date">
-    <time datetime="{{ .Date.Format "2006-01-02 15:04:05 MST" }}">
-      <span class="published-day">{{ .Date.Format "02" }}</span>
-      <span class="published-month">{{ .Date.Format "Jan" }}</span>
-      <span class="published-year">{{ .Date.Format "2006" }}</span>
-    </time>
-  </div>
-  <div class="post-author">{{ .Params.author }}</div>
-  {{ if .Params.rendertoc }}
-  {{ .TableOfContents }}
-  {{ end }}
+  <article itemscope itemtype="http://schema.org/BlogPosting" class="blog wrapper">
+    <header>
+      <h1 itemprop="headline">{{ .Title }}</h1>
+      <div class="published-date">
+        <time itemprop="dateCreated pubdate datePublished" datetime="{{ .Date.Format "2006-01-02 15:04:05 MST" }}">
+          <span class="published-day">{{ .Date.Format "02" }}</span>
+          <span class="published-month">{{ .Date.Format "Jan" }}</span>
+          <span class="published-year">{{ .Date.Format "2006" }}</span>
+        </time>
+      </div>
+      <div itemprop="author" class="post-author">{{ .Params.author }}</div>
+    </header>
+    {{ if .Params.rendertoc }}
+    {{ .TableOfContents }}
+    {{ end }}
 
-  <article>
-    {{ .Content }}
+    <div class="content">
+      {{ .Content }}
+    </div>
   </article>
 </main>
 {{ end }}
