@@ -7,18 +7,18 @@
     "doc": "doc"
   },
   "devDependencies": {
-    "acorn": "^6.1.1",
-    "autoprefixer": "^9.4.2",
-    "browserslist": "^4.5.2",
-    "eslint": "^5.10.0",
-    "eslint-config-standard": "^12.0.0",
-    "eslint-plugin-import": "^2.14.0",
-    "eslint-plugin-node": "^8.0.0",
-    "eslint-plugin-promise": "^4.0.1",
-    "eslint-plugin-standard": "^4.0.0",
+    "acorn": "^7.1.0",
+    "autoprefixer": "^9.6.1",
+    "browserslist": "^4.7.0",
+    "eslint": "^6.5.1",
+    "eslint-config-standard": "^14.1.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-node": "^10.0.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
     "postcss-import": "^12.0.1",
-    "postcss-preset-env": "^6.4.0",
-    "postcss-reporter": "^6.0.0"
+    "postcss-preset-env": "^6.7.0",
+    "postcss-reporter": "^6.0.1"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -28,5 +28,8 @@
     "url": "git+https://github.com/adrinux/Bunait.git"
   },
   "author": "Adrian Simmons",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "npm-check-updates": "^3.1.23"
+  }
 }
