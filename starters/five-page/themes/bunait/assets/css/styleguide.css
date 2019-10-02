@@ -1,25 +1,14 @@
 @import 'colors.css';
 
 .menu-styleguide {
-  background-color: var(--blue0);
-  position: fixed;
-  right: 0.6em;
-  top: 3em;
-  padding: 0.6em 0;
-  box-shadow: 0 0 8px var(--blue9);
+  clear: both;
+  border-top: 1px solid var(--blue1);
+  margin-top: 1.6rem;
 }
 
 .menu-styleguide ul li a {
-  padding: 0 10px;
   display: block;
 }
-
-.menu-styleguide ul li a:hover,
-.menu-styleguide ul li a:focus {
-  background-color: var(--blue9);
-  color: var(--grey0);
-}
-
 
 .image-wrapper.wide {
   max-width: 480px;
