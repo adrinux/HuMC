@@ -105,32 +105,27 @@ textarea {
 
 @supports (display: grid) {
 
-  body {
-    display: grid;
-    grid-template-columns: [left-gutter] 20px [container] 1fr [right-gutter] 20px;
-  }
-
-
   .container {
-    grid-column: container;
     display: grid;
-    grid-template-rows: [header] auto [main] 1fr [footer] auto;
-    grid-template-columns: [sidebar] 4fr [content] 8fr;
+    grid-template-columns:
+      [left-gutter] minmax(0.75rem, 1fr) [main] minmax(240px, 68rem) [right-gutter] minmax(0.75rem, 1fr);
+    grid-template-rows:
+      [top-gutter] 1rem [header] auto [main] 1fr [footer] auto [bottom-gutter] 1rem;
   }
 
   header {
     grid-row: header;
-    grid-column: sidebar / right-gutter;
+    grid-column: main / right-gutter;
   }
 
   main {
     grid-row: main;
-    grid-column: sidebar / right-gutter;
+    grid-column: main / right-gutter;
   }
 
   footer {
     grid-row: footer;
-    grid-column: sidebar / right-gutter;
+    grid-column: main / right-gutter;
   }
 
 }
