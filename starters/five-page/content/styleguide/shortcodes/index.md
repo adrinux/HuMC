@@ -40,35 +40,68 @@ These shortcodes are included with this theme.
 
 ----
 
-#### Responsive Image with image srcset
+#### Responsive Images with image srcset
 
 MDN documentation for image [srcset](https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images#Resolution_switching_Different_sizes).
 
-##### Example shortcode:
+Two available shortcodes, imgsrc requires externally generated resized images. img-auto-src will use Hugo's built in image processing to create the resized images.
+
+##### imgsrc shortcode:
 
 <textarea rows="8" cols="46">
-{{%/* imgsrc
+{{</* imgsrc
   src="styleguide/example-mini.jpg"
   srcRoot="styleguide/example"
   alt="Description of example Photo"
   class="normal"
-*/%}}
+*/>}}
 </textarea>
 
-##### Example output:
+##### Example imgsrc output:
 
-{{% imgsrc
+{{< imgsrc
   src="styleguide/example-mini.jpg"
   srcRoot="styleguide/example"
   alt="Description of example Photo"
   class="normal"
-%}}
+>}}
 
-##### Files to edit when this needs change:
+##### Files to edit when imgsrc needs change:
 
 - themes/bunait/layouts/shortcodes/imgsrc.html
 - themes/bunait/assets/css/styleguide.css
 - content/styleguide/shortcodes.md (this page)
+
+----
+
+##### img-auto-src shortcode:
+
+<textarea rows="8" cols="46">
+{{</* img-auto-src
+  src="example.jpg"
+  alt="Description of example photo"
+  class="normal"
+  loadingAttribute="lazy"
+  sizes="100vw"
+*/>}}
+</textarea>
+
+##### Example img-auto-src output:
+
+{{< img-auto-src
+  src="example.jpg"
+  alt="Description of example photo"
+  class="normal"
+  loadingAttribute="lazy"
+  sizes="100vw"
+>}}
+
+##### Files to edit when img-auto-src needs change:
+
+- themes/bunait/layouts/shortcodes/img-auto-src.html
+- themes/bunait/assets/css/styleguide.css
+- content/styleguide/shortcodes.md (this page)
+
 
 ----
 
@@ -77,12 +110,16 @@ MDN documentation for image [srcset](https://developer.mozilla.org/en-US/docs/Le
 ##### Example shortcode:
 
 <textarea rows="4" cols="46">
-{{%/* figure-imgsrc src="styleguide/example" title="The optional figure title" caption="An optional caption for this test figure." class="responsive" */%}}
+{{</* figure-imgsrc src="styleguide/example"
+  title="The optional figure title"
+  caption="An optional caption for this test figure."
+  class="responsive"
+*/>}}
 </textarea>
 
 ##### Example output:
 
-{{% figure-imgsrc src="styleguide/example" title="The optional figure title" caption="An optional caption for this test figure." class="responsive" %}}
+{{< figure-imgsrc src="styleguide/example" title="The optional figure title" caption="An optional caption for this test figure." class="responsive" >}}
 
 ##### File to edit when this needs to change:
 
