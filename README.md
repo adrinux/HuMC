@@ -79,7 +79,7 @@ hum -c
 ```
 _However_ if you use multiple devices or collaborate with other site developers you'll need portable configuration of the sites HuMC manages. On the first HuMC instance add a remote to the git repository in sites/conf and push.
 
-On further installations of HuMC you wich to keep in sync you should clone this conf repository instead of running 'hum -c'.
+On further installations of HuMC you wish to keep in sync you should clone this conf repository instead of running 'hum -c'.
 
 
 ## Start a new site
@@ -96,7 +96,7 @@ Or using the short cli flag:
 hum -n awesome
 ```
 
-This will create a new site at 'sites/awesome' with a custom theme 'sites/awesome/theme/awesome' ready to go. It will also have run 'git init', 'git add .', 'git commit' and created staging plus production branches.
+This will create a new site at 'sites/awesome' with a the base theme bunait 'sites/awesome/theme/bunait' ready to go. It will also have run 'git init', 'git add .', 'git commit' and created staging plus production branches.
 
 (Optional, but wise) Next add a git remote and push the starter code before you begin work. (An automated git deploy setup might make this redundant in future.)
 Use the '--all' flag to push all branches at once:
@@ -123,6 +123,14 @@ Then visit localhost:1313 in your browser as normal for Hugo.
 
 ### Keeping synced instances up to date
 
+Run with -u to updates the sites/conf directory, then -p to update sites/sitename working copies (note that currently this only updates the checked out branch, not all branches) and finally with -j to update node_modules in any site directories. 
+
+```bash
+hum -u
+hum -p
+hun -j
+```
+
 ### Development
 
 ### Content editing
@@ -130,3 +138,14 @@ Then visit localhost:1313 in your browser as normal for Hugo.
 ### Deployment to Staging
 
 ### Deployment to production
+
+## List of available hum commands
+
+- 'hum -s' Check hum setup.
+- 'hum -c' Creates the sites/conf directory
+- 'hum -u' Update the sites/conf directory working - copy.
+- 'hum -p' Update sites/sitename working copies including checking out any new sites.
+- 'hum -j' Update node_modules in theme folders (use after hum -p).
+- 'hum -l' List sites.
+- 'hum -k' Clean sites/ directory. Any site found in sites/ but without a matching sitename.conf will be archived.
+- 'hum -a' Archive site. Creates a tar+zip of the named site and moves it to archived/ then removes the sitename.conf file and updates plus pushes changes to the conf repository.
