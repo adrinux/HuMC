@@ -1,7 +1,7 @@
 ## Note
 
 This project is evolving from 'web-starter-hugo' which is on the git branch 'wsh-1.0'.
-It's a WIP and whilst rudimentary it is usable.
+It is rudimentary but usable.
 
 # HuMC
 
