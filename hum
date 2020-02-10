@@ -683,7 +683,7 @@ function pull_sites() {
 }
 
 
-function stage_site() {
+#function stage_site() {
   # Get cwd
   # Get current branch
   # check we are on master
@@ -693,7 +693,7 @@ function stage_site() {
   # dry run push to remote staging branch or check remote staging for changes
   # if no changes in remote and it safe to push, push to remote staging branch
   # switch working copy back to master branch
-}
+#}
 
 
 
