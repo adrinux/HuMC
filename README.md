@@ -133,11 +133,23 @@ hun -j
 
 ### Development
 
+cd into sites/sitename and run 'hugo serve'. Normal Hugo site development applies.
+
+The new site command creates staging and production branches in addition to master. Developement happens on master, the use of staging and production branches should be self evident!
+
+The site is created with a duplicate of the bunait theme. Bunait is intended as a starter theme which you modify per site. You can add any other theme's you choose, however - don't forget to update hugo config to use them.
+
 ### Content editing
 
-### Deployment to Staging
+Content should be edited as normal.
 
-### Deployment to production
+### Deployment
+
+Deployment will be assumed to be via Git.
+
+Add a post commit script to your git repository that deploys code from the staging branch to a staging site and ditto for production.
+
+(TODO: Add an example post-commit script to the repository and document this in more detail. [Issue here](https://github.com/adrinux/HuMC/issues/72).)
 
 ## List of available hum commands
 
@@ -146,6 +158,7 @@ hun -j
 - 'hum -u' Update the sites/conf directory working - copy.
 - 'hum -p' Update sites/sitename working copies including checking out any new sites.
 - 'hum -j' Update node_modules in theme folders (use after hum -p).
+- 'hum -n sitename' Creates a new site in sites/sitename with config file in sites/conf/sitename.conf.
 - 'hum -l' List sites.
 - 'hum -k' Clean sites/ directory. Any site found in sites/ but without a matching sitename.conf will be archived.
 - 'hum -a' Archive site. Creates a tar+zip of the named site and moves it to archived/ then removes the sitename.conf file and updates plus pushes changes to the conf repository.
