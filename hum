@@ -682,6 +682,21 @@ function pull_sites() {
   done
 }
 
+
+function stage_site() {
+  # Get cwd
+  # Get current branch
+  # check we are on master
+  # if on master dry-run merge to staging
+  # if dry run finds merge conflict stop and report
+  # if dry run ends successfully do the actual merge
+  # dry run push to remote staging branch or check remote staging for changes
+  # if no changes in remote and it safe to push, push to remote staging branch
+  # switch working copy back to master branch
+}
+
+
+
 function node_modules_sync() {
   # 'hum -j' Run 'npm install' inside themes
   # find package.json in theme folders, limit depth to avoid node modules own package.jsons
@@ -759,4 +774,9 @@ fi
 # Archive a site
 if [[ -n "${arg_a}" ]]; then
   archive_site
+fi
+
+# Archive a site
+if [[ -n "${arg_t}" ]]; then
+  stage_site
 fi
