@@ -123,12 +123,12 @@ Then visit localhost:1313 in your browser as normal for Hugo.
 
 ### Keeping synced instances up to date
 
-Run with -u to updates the sites/conf directory, then -p to update sites/sitename working copies (note that currently this only updates the checked out branch, not all branches) and finally with -j to update node_modules in any site directories. 
+Run with -u to update the sites/conf directory, then -p to update sites/sitename working copies (note that currently this only updates the checked out branch, not all branches) and finally with -j to update node_modules in any site directories. 
 
 ```bash
 hum -u
 hum -p
-hun -j
+hum -j
 ```
 
 ### Development
