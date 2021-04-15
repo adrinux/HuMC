@@ -10,4 +10,5 @@ module.exports = {
     require('autoprefixer'),
     require('postcss-reporter')
   ]
-}
+};
+
