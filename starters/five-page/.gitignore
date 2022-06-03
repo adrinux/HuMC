@@ -8,7 +8,7 @@ resources/_gen/assets/css/
 resources/_gen/assets/js/
 starters/five-page/resources/_gen/assets/css/
 starters/five-page/resources/_gen/assets/js/
-
+.hugo_build.lock
 
 # node folder
 node_modules/
