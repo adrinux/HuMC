@@ -9,7 +9,7 @@
 
 {{/* get file that matches the filename as specified as src="" in shortcode */}}
 {{ $src := .Page.Resources.GetMatch (printf "*%s*" (.Get "src")) }}
-
+{{ if $src }}
 {{/* resize the src image to the given sizes */}}
 {{ $femto := ($src.Resize "320x") }}
 {{ $nano := ($src.Resize "360x") }}
@@ -65,3 +65,4 @@
   {{ if ge $src.Width "2560" }}
     {{ with $max.RelPermalink }},{{.}} 2560w {{ end }}
   {{ end }}" {{ with .Get "sizes" }}sizes="{{.}}" {{ else }}sizes="100vw" {{ end }} alt="{{.Get "alt"}}" {{ with .Get "class" }}class="{{.}}" {{ end }}>
+{{ end }}

@@ -1,30 +1,86 @@
-<!-- Image srcset sizes should be tailored to your site design
-     You also need to generate the pre-sized images with the name extensions
-     listed in the srcset declaration below.
- -->
-<figure {{ with .Get "class" }}class="{{.}}"{{ end }}>
-    {{ with .Get "link"}}<a href="{{.}}">{{ end }}
-        <img src="/images/{{ .Get "src" }}-mini.jpg"
-             srcset="/images/{{ .Get "src" }}-micro.jpg 320w,
-                     /images/{{ .Get "src" }}-mini.jpg 380w,
-                     /images/{{ .Get "src" }}-small.jpg 510w,
-                     /images/{{ .Get "src" }}-medium.jpg 680w,
-                     /images/{{ .Get "src" }}-large.jpg 800w,
-                     /images/{{ .Get "src" }}-wide.jpg 960w,
-                     /images/{{ .Get "src" }}-xwide.jpg 1380w"
-             {{ if eq .Params.class "wide" }}sizes="90vw"{{ end }}
-             {{ if eq .Params.class "tall" }}sizes="50vw"{{ else }}sizes="75vw"{{ end }}
-        {{ if or (.Get "alt") (.Get "caption") }}alt="{{ with .Get "alt"}}{{.}}{{else}}{{ .Get "caption" }}{{ end }}"{{ end }} />
+{{/* Image srcset sizes should be tailored to your site design */}}
+{{/* This shortcode assumes you are using Hugo Page Resources
+https://gohugo.io/content-management/page-resources/
+*/}}
+
+{{/* Modified from Laura Kalbag's original, see:
+https://laurakalbag.com/processing-responsive-images-with-hugo/*/}}
+
+
+{{/* get file that matches the filename as specified as src="" in shortcode */}}
+{{ $src := .Page.Resources.GetMatch (printf "*%s*" (.Get "src")) }}
+{{ if $src }}
+{{/* resize the src image to the given sizes */}}
+{{ $femto := ($src.Resize "320x") }}
+{{ $nano := ($src.Resize "360x") }}
+{{ $micro :=($src.Resize "380x") }}
+{{ $mini := ($src.Resize "420x") }}
+{{ $midi := ($src.Resize "480x") }}
+{{ $small := ($src.Resize "640x") }}
+{{ $medium := ($src.Resize "768x") }}
+{{ $large := ($src.Resize "1080x") }}
+{{ $xlarge := ($src.Resize "1280x") }}
+{{ $wide := ($src.Resize "1366x") }}
+{{ $xwide := ($src.Resize "1920x") }}
+{{ $max := ($src.Resize "2560x") }}
+
+
+{{/* only use images smaller than or equal to the src (original) image size, don't upscale src */}}
+{{/* set the sizes attribute to 100vw unless overridden in shortcode */}}
+
+<figure {{ with .Get "class" }}class="{{.}}" {{ end }}>
+  {{ with .Get "link"}}<a href="{{.}}">{{ end }}
+    <img {{ with .Get "loadingAttribute" }}loading="{{.}}" {{ else }} loading="lazy" {{ end }} srcset="
+      {{ if ge $src.Width " 320" }}
+        {{ with $femto.RelPermalink }}{{.}} 320w{{ end }}
+      {{ end }}
+      {{ if ge $src.Width "360" }}
+        {{ with $nano.RelPermalink }},{{.}} 360w{{ end }}
+      {{ end }}
+      {{ if ge $src.Width "380" }}
+        {{ with $micro.RelPermalink }},{{.}} 380w{{ end }}
+      {{ end }}
+      {{ if ge $src.Width "420" }}
+        {{ with $mini.RelPermalink }},{{.}} 420w{{ end }}
+      {{ end }}
+      {{ if ge $src.Width "480" }}
+        {{ with $midi.RelPermalink }},{{.}} 480w{{ end }}
+      {{ end }}
+      {{ if ge $src.Width "640" }}
+        {{ with $small.RelPermalink }},{{.}} 640w{{ end }}
+      {{ end }}
+      {{ if ge $src.Width "768" }}
+        {{ with $medium.RelPermalink }},{{.}} 768w{{ end }}
+      {{ end }}
+      {{ if ge $src.Width "1080" }}
+        {{ with $large.RelPermalink }},{{.}} 1080w{{ end }}
+      {{ end }}
+      {{ if ge $src.Width "1280" }}
+        {{ with $xlarge.RelPermalink }},{{.}} 1280w{{ end }}
+      {{ end }}
+      {{ if ge $src.Width "1366" }}
+        {{ with $wide.RelPermalink }},{{.}} 1366w{{ end }}
+      {{ end }}
+      {{ if ge $src.Width "1920" }}
+        {{ with $xwide.RelPermalink }},{{.}} 1920w{{ end }}
+      {{ end }}
+      {{ if ge $src.Width "2560" }}
+        {{ with $max.RelPermalink }},{{.}} 2560w {{ end }}
+      {{ end }}
+      " {{ with .Get "sizes" }}sizes="{{.}}" {{ else }}sizes="100vw" {{ end }} {{ with .Get "class" }}class="{{.}}" {{ end }}{{ if or (.Get "alt" ) (.Get "caption" ) }}alt="{{ with .Get " alt"}}{{.}}
+    {{else}}{{ .Get "caption" }}{{ end }}" {{ end }} />
     {{ if .Get "link"}}</a>{{ end }}
-    {{ if or (or (.Get "title") (.Get "caption")) (.Get "attr")}}
-    <figcaption>{{ if isset .Params "title" }}
-        <h4>{{ .Get "title" | markdownify | safeHTML }}</h4>{{ end }}
-        {{ if or (.Get "caption") (.Get "attr")}}<p>
-        {{ .Get "caption" | markdownify | safeHTML }}
-        {{ with .Get "attrlink"}}<a href="{{.}}"> {{ end }}
-            {{ .Get "attr" }}
+  {{ if or (or (.Get "title") (.Get "caption")) (.Get "attr")}}
+  <figcaption>{{ if isset .Params "title" }}
+    <h4>{{ .Get "title" | markdownify | safeHTML }}</h4>{{ end }}
+    {{ if or (.Get "caption") (.Get "attr")}}
+    <p>
+      {{ .Get "caption" | markdownify | safeHTML }}
+      {{ with .Get "attrlink"}}<a href="{{.}}"> {{ end }}
+        {{ .Get "attr" }}
         {{ if .Get "attrlink"}}</a> {{ end }}
-        </p> {{ end }}
-    </figcaption>
-    {{ end }}
+    </p> {{ end }}
+  </figcaption>
+  {{ end }}
 </figure>
+{{ end }}
