@@ -776,7 +776,7 @@ if [[ -n "${arg_a}" ]]; then
   archive_site
 fi
 
-# Archive a site
-if [[ -n "${arg_t}" ]]; then
-  stage_site
-fi
+# Stage a site
+#if [[ -n "${arg_t}" ]]; then
+#  stage_site
+#fi
