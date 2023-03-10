@@ -5,64 +5,49 @@
 
 {{/* Modified from Laura Kalbag's original, see:
     https://laurakalbag.com/processing-responsive-images-with-hugo/*/}}
-
-
 {{/* get file that matches the filename as specified as src="" in shortcode */}}
 {{ $src := .Page.Resources.GetMatch (printf "*%s*" (.Get "src")) }}
 {{ if $src }}
 {{/* resize the src image to the given sizes */}}
 {{ $femto := ($src.Resize "320x") }}
-{{ $nano := ($src.Resize "360x") }}
-{{ $micro :=($src.Resize "380x") }}
-{{ $mini := ($src.Resize "420x") }}
 {{ $midi := ($src.Resize "480x") }}
 {{ $small := ($src.Resize "640x") }}
 {{ $medium := ($src.Resize "768x") }}
+{{ $xmedium := ($src.Resize "900x") }}
 {{ $large := ($src.Resize "1080x") }}
 {{ $xlarge := ($src.Resize "1280x") }}
 {{ $wide := ($src.Resize "1366x") }}
+{{ $wider := ($src.Resize "1600x") }}
 {{ $xwide := ($src.Resize "1920x") }}
 {{ $max := ($src.Resize "2560x") }}
 
-
 {{/* only use images smaller than or equal to the src (original) image size, don't upscale src */}}
-{{/* set the sizes attribute to 100vw unless overridden in shortcode */}}
+{{/* Sizes attribute is useful when media queries change layout */}}
+<img {{ with .Get "isProduct" }}itemprop="image" {{ end }}
+  {{ with .Get "loadingAttribute" }}loading="{{.}}" {{ else }} loading="lazy" {{ end }}
+  srcset="
+  {{ if ge $src.Width "320" }}{{ with $femto.RelPermalink }},{{.}} 320w{{ end }}{{ end }}
+  {{ if ge $src.Width "480" }}{{ with $midi.RelPermalink }},{{.}} 480w{{ end }}{{ end }}
+  {{ if ge $src.Width "640" }}{{ with $small.RelPermalink }},{{.}} 640w{{ end }}{{ end }}
+  {{ if ge $src.Width "768" }}{{ with $medium.RelPermalink }},{{.}} 768w{{ end }}{{ end }}
+  {{ if ge $src.Width "900" }}{{ with $xmedium.RelPermalink }},{{.}} 900w{{ end }}{{ end }}
+  {{ if ge $src.Width "1080" }}{{ with $large.RelPermalink }},{{.}} 1080w{{ end }}{{ end }}
+  {{ if ge $src.Width "1280" }}{{ with $xlarge.RelPermalink }},{{.}} 1280w{{ end }}{{ end }}
+  {{ if ge $src.Width "1366" }}{{ with $wide.RelPermalink }},{{.}} 1366w{{ end }}{{ end }}
+  {{ if ge $src.Width "1600" }}{{ with $wider.RelPermalink }},{{.}} 1600w{{ end }}{{ end }}
+  {{ if ge $src.Width "1920" }}{{ with $xwide.RelPermalink }},{{.}} 1920w{{ end }}{{ end }}
+  {{ if ge $src.Width "2560" }}{{ with $max.RelPermalink }},{{.}} 2560w{{ end }}{{ end }}"
+  {{ if in .Params.class "small"}} sizes="(min-width: 320px) 320w, 240px"
+  {{ else if in .Params.class "activity-image"}} sizes="(max-width: 479px) 90vw,
+    (max-width: 1023px) 43vw,
+    (min-width: 1024px) 30vw"
+  {{ else if in .Params.class "inline"}} sizes="(max-width: 745px) 320w,
+    (min-width: 746px) 480w, 346px"
+  {{ else }} sizes="100vw" {{ end }}
+  width="{{ $medium.Width }}"
+  height="{{ $medium.Height }}"
+  alt="{{.Get "alt"}}"
+  {{ with .Get "class" }}class="{{.}}" {{ end }}
+  src="{{ if ge $src.Width "768" }}{{ with $medium.RelPermalink }}{{.}} 768w{{ end }}{{ end }}">
 
-<img {{ with .Get "loadingAttribute" }}loading="{{.}}" {{ else }} loading="lazy" {{ end }} srcset="
-  {{ if ge $src.Width "320" }}
-    {{ with $femto.RelPermalink }}{{.}} 320w{{ end }}
-  {{ end }}
-  {{ if ge $src.Width "360" }}
-    {{ with $nano.RelPermalink }},{{.}} 360w{{ end }}
-  {{ end }}
-  {{ if ge $src.Width "380" }}
-    {{ with $micro.RelPermalink }},{{.}} 380w{{ end }}
-  {{ end }}
-  {{ if ge $src.Width "420" }}
-    {{ with $mini.RelPermalink }},{{.}} 420w{{ end }}
-  {{ end }}
-  {{ if ge $src.Width "480" }}
-    {{ with $midi.RelPermalink }},{{.}} 480w{{ end }}
-  {{ end }}
-  {{ if ge $src.Width "640" }}
-    {{ with $small.RelPermalink }},{{.}} 640w{{ end }}
-  {{ end }}
-  {{ if ge $src.Width "768" }}
-    {{ with $medium.RelPermalink }},{{.}} 768w{{ end }}
-  {{ end }}
-  {{ if ge $src.Width "1080" }}
-    {{ with $large.RelPermalink }},{{.}} 1080w{{ end }}
-  {{ end }}
-  {{ if ge $src.Width "1280" }}
-    {{ with $xlarge.RelPermalink }},{{.}} 1280w{{ end }}
-  {{ end }}
-  {{ if ge $src.Width "1366" }}
-    {{ with $wide.RelPermalink }},{{.}} 1366w{{ end }}
-  {{ end }}
-  {{ if ge $src.Width "1920" }}
-    {{ with $xwide.RelPermalink }},{{.}} 1920w{{ end }}
-  {{ end }}
-  {{ if ge $src.Width "2560" }}
-    {{ with $max.RelPermalink }},{{.}} 2560w {{ end }}
-  {{ end }}" {{ with .Get "sizes" }}sizes="{{.}}" {{ else }}sizes="100vw" {{ end }} alt="{{.Get "alt"}}" {{ with .Get "class" }}class="{{.}}" {{ end }}>
 {{ end }}

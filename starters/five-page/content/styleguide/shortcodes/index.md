@@ -50,7 +50,7 @@ Two available shortcodes, imgsrc requires externally generated resized images. i
 
 ##### img-auto-src shortcode
 
-<textarea rows="8" cols="46">
+```golang
 {{</*img-auto-src
   src="example.jpg"
   alt="Description of example photo"
@@ -58,7 +58,7 @@ Two available shortcodes, imgsrc requires externally generated resized images. i
   loadingAttribute="lazy"
   sizes="100vw"
 */>}}
-</textarea>
+```
 
 ##### Example img-auto-src output
 
@@ -83,13 +83,13 @@ Two available shortcodes, imgsrc requires externally generated resized images. i
 
 ##### Example shortcode
 
-<textarea rows="4" cols="46">
+```golang
 {{</*figure-imgsrc src="styleguide/shortcodes/example.jpg"
   title="The optional figure title"
   caption="An optional caption for this test figure."
   class="responsive"
 */>}}
-</textarea>
+```
 
 ##### Example output
 
