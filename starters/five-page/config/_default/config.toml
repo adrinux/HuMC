@@ -15,7 +15,7 @@ theme = "bunait"
 # https://gohugo.io/content-management/syntax-highlighting/
 # https://github.com/alecthomas/chroma
 # Dont forget to generate stylesheet on cli
-# hugo gen chromastyles --style=tango > themes/bunait/assets/css/chroma.css 
+# hugo gen chromastyles --style=tango > themes/bunait/assets/css/chroma.css
 pygmentsUseClasses = true
 pygmentsStyle = "tango"
 pygmentsCodefences = true
@@ -26,7 +26,7 @@ pygmentsCodefences = true
 [imaging]
 # For filter options see https://github.com/disintegration/imaging
 resampleFilter = "Lanczos"
-quality = "86"
+quality = 86
 anchor = "smart"
 
 # Personal/Organizational Params
