@@ -675,7 +675,7 @@ function pull_sites() {
 
     else
       info "Cloning new site ${site[loc]}"
-      git clone ${site[remote]} ${site[loc]}
+      git clone "${site[remote]}" "${site[loc]}"
     fi
 
     echo "------------------------------------------------------------"
