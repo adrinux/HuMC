@@ -1,5 +1,6 @@
-@import 'normalize.css';
-@import 'colors.css';
+@import "normalize.css";
+@import "colors.css";
+@import "chroma.css";
 
 /*! HTML5 Boilerplate v7.0.1 | MIT License | https://html5boilerplate.com/ */
 

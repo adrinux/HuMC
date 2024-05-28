@@ -1,6 +1,6 @@
 <meta charset="utf-8">
 <title>{{ if .Title }}{{ .Title }} - {{ end }}{{ .Site.Title }}</title>
-<meta name="description" content="">
+<meta name="description" content="{{ site.Params.Description }}">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <link rel="manifest" href="site.webmanifest">
@@ -8,12 +8,12 @@
 <!-- Place favicon.ico in the root directory -->
 
 {{- if hugo.IsServer -}}
-{{ $postcssed := resources.Get "css/main.css" | postCSS }}
+{{ $postcssed := resources.Get "css/main.css" | resources.PostCSS (dict "inlineImports" true) }}
 <link rel="stylesheet" href="{{ $postcssed.Permalink }}">
 {{ $postcssed := resources.Get "css/chroma.css" }}
 <link rel="stylesheet" href="{{ $postcssed.Permalink }}">
 {{- else -}}
-{{ $postcssed := resources.Get "css/main.css" | postCSS | minify | fingerprint }}
+{{ $postcssed := resources.Get "css/main.css" | resources.PostCSS (dict "inlineImports" true) | minify | fingerprint }}
 <link rel="stylesheet" href="{{ $postcssed.Permalink }}" integrity="{{ $postcssed.Data.Integrity }}" crossorigin="anonymous">
 {{ $postcssed := resources.Get "css/chroma.css" | minify | fingerprint }}
 <link rel="stylesheet" href="{{ $postcssed.Permalink }}" integrity="{{ $postcssed.Data.Integrity }}" crossorigin="anonymous">
@@ -21,10 +21,10 @@
 
 {{- if eq .Type "styleguide" -}}
 {{- if hugo.IsServer -}}
-{{ $guidecss := resources.Get "css/styleguide.css" | postCSS }}
+{{ $guidecss := resources.Get "css/styleguide.css" | resources.PostCSS (dict "inlineImports" true) }}
 <link rel="stylesheet" href="{{ $guidecss.Permalink }}">
 {{- else -}}
-{{ $guidecss := resources.Get "css/styleguide.css" | postCSS | minify | fingerprint }}
+{{ $guidecss := resources.Get "css/styleguide.css" | resources.PostCSS (dict "inlineImports" true) | minify | fingerprint }}
 <link rel="stylesheet" href="{{ $guidecss.Permalink }}" integrity="{{ $guidecss.Data.Integrity }}"
   crossorigin="anonymous">
 {{- end -}}
@@ -35,7 +35,7 @@
 
 
 <!-- Hugo-specific bits -->
-{{ with .OutputFormats.Get "rss" -}}
+{{ with .OutputFormats.Get "RSS" -}}
 {{ printf `<link rel="%s" type="%s" href="%s" title="%s" />` .Rel .MediaType.Type .Permalink $.Site.Title | safeHTML }}
 {{ end -}}
 
