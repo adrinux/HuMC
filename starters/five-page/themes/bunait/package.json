@@ -1,6 +1,6 @@
 {
   "name": "bunait",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A hugo theme",
   "main": "postcss.config.js",
   "directories": {
