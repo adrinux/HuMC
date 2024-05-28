@@ -7,8 +7,6 @@
 <link rel="apple-touch-icon" href="icon.png">
 <!-- Place favicon.ico in the root directory -->
 
-{{ template "_internal/google_analytics_async.html" . }}
-
 {{- if .Site.IsServer -}}
 {{ $postcssed := resources.Get "css/main.css" | postCSS }}
 <link rel="stylesheet" href="{{ $postcssed.Permalink }}">
