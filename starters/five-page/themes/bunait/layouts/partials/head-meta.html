@@ -7,7 +7,7 @@
 <link rel="apple-touch-icon" href="icon.png">
 <!-- Place favicon.ico in the root directory -->
 
-{{- if .Site.IsServer -}}
+{{- if hugo.IsServer -}}
 {{ $postcssed := resources.Get "css/main.css" | postCSS }}
 <link rel="stylesheet" href="{{ $postcssed.Permalink }}">
 {{ $postcssed := resources.Get "css/chroma.css" }}
@@ -20,7 +20,7 @@
 {{- end -}}
 
 {{- if eq .Type "styleguide" -}}
-{{- if .Site.IsServer -}}
+{{- if hugo.IsServer -}}
 {{ $guidecss := resources.Get "css/styleguide.css" | postCSS }}
 <link rel="stylesheet" href="{{ $guidecss.Permalink }}">
 {{- else -}}
