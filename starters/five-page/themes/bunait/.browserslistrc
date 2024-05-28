@@ -1,5 +1,10 @@
 # Browserslist supported browsers
 
-> 1%
-Last 2 versions
+# Check coverage at:
+# https://browserslist.dev/?q=PiAwLjIlLCBsYXN0IDMgdmVyc2lvbnMsIG1haW50YWluZWQgbm9kZSB2ZXJzaW9ucywgbm90IGRlYWQ%3D
 
+defaults
+> 0.2%
+last 2 versions
+not dead
+maintained node versions
