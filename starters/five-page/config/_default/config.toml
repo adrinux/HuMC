@@ -1,6 +1,6 @@
 # Option used in all environments
 
-languageCode = "en-us"
+languageCode = "en-GB"
 title = "Bunait"
 description = "A web site built with Hugo & HuMC"
 
