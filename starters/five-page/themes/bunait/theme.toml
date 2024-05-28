@@ -1,13 +1,11 @@
 # See https://github.com/gohugoio/hugoThemes#themetoml for an example
 
 name = "Bunait"
-description = "A Hugo theme based on HTML5boilerplate and using hugo pipes."
+description = "A Hugo theme based on HTML5boilerplate"
 tags = []
 features = []
-min_version = "0.54"
+min_version = "0.126.1"
 
 [author]
-  name = "Adrian Simmons"
-  homepage = "https://perlucida.com"
-
-
+name = "Adrian Simmons"
+homepage = "https://perlucida.co.uk"

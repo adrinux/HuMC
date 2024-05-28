@@ -1,7 +1,7 @@
 # Option used in all environments
 
 languageCode = "en-us"
-title = "bunait"
+title = "Bunait"
 description = "A web site built with Hugo & HuMC"
 
 theme = "bunait"
@@ -21,7 +21,7 @@ pygmentsStyle = "tango"
 pygmentsCodefences = true
 
 [permalinks]
-  blog = "/blog/:year-:month/:title/"
+blog = "/blog/:year-:month/:title/"
 
 [imaging]
 # For filter options see https://github.com/disintegration/imaging
@@ -31,6 +31,6 @@ anchor = "smart"
 
 # Personal/Organizational Params
 [params.social]
-  # github = "username"
-  # linkedin = "username"
-  # twitter = "username"
+# github = "username"
+# linkedin = "username"
+# twitter = "username"
