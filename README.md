@@ -147,7 +147,7 @@ Deployment will be assumed to be via Git.
 
 Add a post commit script to your git repository that deploys code from the staging branch to a staging site and ditto for production.
 
-(TODO: Add an example post-commit script to the repository and document this in more detail. [Issue here](https://github.com/adrinux/HuMC/issues/72).)
+(TODO: Link to my Momod project as an example of automated deployment setup. [Issue here](https://github.com/adrinux/HuMC/issues/72).)
 
 ## List of available hum commands
 
