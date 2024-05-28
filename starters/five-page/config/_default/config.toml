@@ -29,6 +29,10 @@ resampleFilter = "Lanczos"
 quality = 86
 anchor = "smart"
 
+# Allow raw html in markdown files
+# [markup.goldmark.renderer]
+# unsafe = true
+
 # Personal/Organizational Params
 [params.social]
 # github = "username"
