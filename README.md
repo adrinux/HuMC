@@ -6,7 +6,7 @@ HuMC is:
 
 - A script, 'hum' to help manage, develop and deploy a collection of web sites built with [Hugo](https://gohugo.io/).
 - A starter site for [Hugo](https://gohugo.io/) (it may become several possible starter sites).
-- A starter theme for [Hugo](https://gohugo.io/) based on [HTML5 Biolerplate](https://html5boilerplate.com/) called __Bunait__.
+- A starter theme for [Hugo](https://gohugo.io/) based on [HTML5 Boilerplate](https://html5boilerplate.com/) called __Bunait__.
 
 I pronounce HuMC as 'hum'.
 
@@ -14,7 +14,7 @@ I pronounce HuMC as 'hum'.
 
 The new-site task relies on sed, this works fine on Linux but some BSD based sed versions don't allow case insensitive search - AFAIK that includes OSX - so install gnu-sed using your preferred package manager (Brew, Macports etc).
 
-You'll need Hugo of course. You'll need a hugo-extended version to have the PostCSS asset processing in Bunait work. I use a script -- you'll find a copy at `extras/hugo-update.sh` -- derived from DKebler's original`hugo-update` script. See `extras/hugo-update.sh` for details and links.
+You'll need Hugo of course. You'll need a hugo-extended version to have the PostCSS asset processing in Bunait work. I use a script -- you'll find a copy at `extras/hugo-update.sh` -- derived from David Kebler's original`hugo-update` script. See the comments in`extras/hugo-update.sh` for details and links.
 
 Setup and run the hugo-update script:
 
