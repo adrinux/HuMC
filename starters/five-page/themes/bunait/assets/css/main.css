@@ -1,6 +1,120 @@
-@import "normalize.css";
 @import "colors.css";
 @import "chroma.css";
+
+
+/* ==========================================================================
+  Reset and Normalize browser defaults
+
+  Derived from:
+  - Andy Bell's https://piccalil.li/blog/a-more-modern-css-reset/
+  - Chris Coyier's critique https://chriscoyier.net/2023/10/03/being-picky-about-a-css-reset-for-fun-pleasure/
+  - Matt Brictson https://mattbrictson.com/blog/css-normalize-and-reset
+  - Josh W Comeau https://www.joshwcomeau.com/css/custom-css-reset/
+  - Stephanie Eckles https://moderncss.dev/modern-css-for-dynamic-component-based-architecture/
+
+   ========================================================================== */
+
+/* Box sizing rules */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Prevent font size inflation on mobile landscape view */
+html {
+  -moz-text-size-adjust: none;
+  -webkit-text-size-adjust: none;
+  text-size-adjust: none;
+  line-height: 1.5;
+}
+
+/* Remove default margin in favour of better control in authored CSS */
+body, h1, h2, h3, h4, h5, h6, p,
+figure, blockquote, dl, dd, ol, ul, pre {
+  margin-block-end: 0;
+}
+
+/* Remove list styles on ul, ol elements with a list role, which suggests default styling will be removed */
+ul[class],
+ol[class] {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Set body to full viewport height */
+body {
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased; /* For MacOS only */
+}
+
+/* Set shorter line heights on headings and interactive elements */
+h1, h2, h3, h4, h5, h6,
+button, input, label {
+  line-height: 1.1;
+}
+
+/* Balance text wrapping on headings */
+h1, h2,
+h3, h4 {
+  text-wrap: balance;
+}
+
+/* Avoid text overflows */
+p, h1, h2, h3, h4, h5, h6 {
+  overflow-wrap: break-word;
+}
+
+/* Make images easier to work with */
+img, picture,
+video, canvas, svg {
+  max-inline-size: 100%;
+  display: block;
+}
+
+/* Inherit fonts for inputs and buttons */
+input, button,
+textarea, select {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+/* Make sure textareas without a rows attribute are not tiny */
+textarea:not([rows]) {
+  min-height: 10em;
+}
+
+/* Scroll margin allowance above anchor links */
+/* You might want to adjust this if you have a fixed header */
+:target {
+  scroll-padding-block-start: 1rlh;
+}
+
+/* Scroll margin allowance below focused elements
+  to ensure they are clearly in view */
+/* You might want to adjust this if you have a fixed footer */
+:focus {
+  scroll-padding-block-end: 8vh;
+}
+
+/* Baseline for default links */
+a:not([class]) {
+  /* Relatively sized thickness and offset */
+  text-decoration-thickness: max(0.08em, 1px);
+  text-underline-offset: 0.15em;
+}
+
+/* Focus outline only in the focus-visible state  */
+:focus-visible {
+  --outline-size: max(2px, 0.15em);
+
+  outline: var(--outline-width, var(--outline-size)) var(--outline-style, solid)
+    var(--outline-color, currentColor);
+  outline-offset: var(--outline-offset, var(--outline-size));
+}
+
+/* ==== End Reset and Normalize browser defaults ============================ */
 
 /*! HTML5 Boilerplate v9.0.1 | MIT License | https://html5boilerplate.com/ */
 
@@ -18,7 +132,6 @@
 html {
   color: var(--black);
   font-size: 1em;
-  line-height: 1.4;
 }
 
 /*
