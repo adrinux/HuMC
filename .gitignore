@@ -3,10 +3,12 @@
 
 # Sites folder - all sites should have their own repo
 sites/
+sites/**
 !sites/.gitkeep
 sites/conf/
 
 zipped-sites/
+zipped-sites/**
 !zipped-sites/.gitkeep
 
 # OSX
